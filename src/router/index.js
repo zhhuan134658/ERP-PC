@@ -63,6 +63,12 @@ const routes = [
             name: "orderView",
             component: () => import("../pages/spreadsheet/orderView.vue"),
             props: true
+          },
+          {
+            path: "/spreadsheet/goodsObvious", //库存商品sn明细表
+            name: "goodsObvious",
+            component: () => import("../pages/spreadsheet/goodsObvious.vue"),
+            props: true
           }
         ]
       },
@@ -131,6 +137,22 @@ const routes = [
             path: "/finance/bizAssociate", //软件采购列表页面
             name: "bizAssociate",
             component: () => import("../pages/finance/bizAssociate/index.vue")
+          },
+          {
+            path: "/finance/accountInformation", //账户信息页面
+            name: "accountInformation",
+            component: () =>
+              import("../pages/finance/accountInformation/index.vue")
+          },
+          {
+            path: "/finance/productionKey", //河南生产秘钥页面
+            name: "productionKey",
+            component: () => import("../pages/finance/productionKey/index.vue")
+          },
+          {
+            path: "/finance/brushMachine", //代刷机页面
+            name: "brushMachine",
+            component: () => import("../pages/finance/brushMachine/index.vue")
           }
         ]
       },

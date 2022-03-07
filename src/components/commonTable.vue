@@ -28,7 +28,7 @@
         :min-width="watchMinWidth(item.label)"
       >
       </el-table-column>
-      <el-table-column v-if="showStatus" label="审批状态" align="left">
+            <el-table-column v-if="showStatus" label="审批状态" align="left">
         <template slot-scope="scope">
           <span v-if="scope.row.status == '2'" style="color: #17c298"
             >已同意</span
@@ -41,6 +41,43 @@
           ><span v-else style="color: #409eff">外部数据</span>
         </template>
       </el-table-column>
+      <el-table-column v-if="jieSuanStatus" label="结算状态" align="left">
+        <template slot-scope="scope">
+            <span>{{scope.row.sett_status}}</span>
+          <!-- <span v-if="scope.row.sett_status == '1'" style="color: #17c298"
+            >已结算</span
+          >
+          <span v-else-if="scope.row.sett_status == '2'" style="color: #e8a54c"
+            >未结算</span
+          >
+          <span v-else-if="scope.row.sett_status == '3'" style="color: #f16d6d"
+            >无需结算</span
+          ><span v-else style="color: #409eff">外部数据</span> -->
+        </template>
+      </el-table-column>
+           <el-table-column v-if="jieSuanStatus" label="说明" align="left">
+        <template slot-scope="scope">
+          <span  
+            >{{scope.row.explain}}</span
+          >
+        </template>
+      </el-table-column>
+
+            <el-table-column v-if="jieSuanStatus" label="操作" align="left">
+        <template slot-scope="scope">
+            <!-- v-if="scope.row.extend_five == 2"
+            :disabled="scope.row.status != '2'"
+             -->
+          <el-button
+            type="text"
+            slot="reference"
+            size="mini"
+            @click.native.stop="addIllustrates(scope.row)"
+            >修改</el-button
+          >
+        </template>
+      </el-table-column>
+
       <el-table-column v-if="hasReturn" label="归还状态" align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.wz_return === 0" style="color: #f16d6d"
@@ -334,6 +371,40 @@
         <el-button type="primary" @click="submitReturn">确 定</el-button>
       </div>
     </el-dialog>
+
+            <el-dialog
+      title="修改"
+      :visible.sync="producVisible"
+      :close-on-click-modal="false"
+      width="600px"
+      @close="producVisible=false"
+      class="view_change_title"
+    >
+    <div class="return_content">
+        <el-form :label-position="'right'" :model="producitnForm" ref="producitnForm">
+          </el-form-item>
+          <el-form-item label="结算状态">
+                    <el-select v-model="producitnForm.sett_status" placeholder="请选择结算状态">
+                <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="说明">
+            <el-input v-model="producitnForm.explain" placeholder="请输入说明"></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="medium" @click="producVisible=false">取 消</el-button>
+        <el-button size="medium" type="primary" @click="addShouMing">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 <script>
@@ -342,7 +413,7 @@ import ImgUpload from "@/components/imgUpload.vue";
 export default {
   name: "commonTable",
   components: {
-    ImgUpload
+    ImgUpload,
   },
   props: {
     tpList: Array,
@@ -354,32 +425,50 @@ export default {
     isdele2: Boolean,
     hasPrint: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasReturn: {
       type: Boolean,
-      default: false
+      default: false,
     },
-
     hasUpload: {
       type: Boolean,
-      default: false
+      default: false,
     },
     printTableName: {
       type: String,
-      default: ""
+      default: "",
     },
     showStatus: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
+    jieSuanStatus: {
+      type: Boolean,
+      default: false,
+    },
+    daiShuaStatus: {
+      type: Boolean,
+      default: false,
+    },
   },
-  data: props => {
+  data: (props) => {
     return {
+            options: [{
+            value: '已结算',
+            label: '已结算'
+        }, {
+            value: '未结算',
+            label: '未结算'
+        }, {
+            value: '无需结算',
+            label: '无需结算'
+        }],
       multSelectData: [],
       printable: props.hasPrint,
       uploadVisible: false,
       returnVisible: false,
+      producVisible: false,
       isAdmin: false,
       upImgList: [],
       isShow: [],
@@ -396,8 +485,13 @@ export default {
         materialId: null,
         returnNum: null,
         returned: null,
-        maxReturnNum: null
-      }
+        maxReturnNum: null,
+      },
+      producitnForm: {
+        id: null,
+        sett_status: null,
+        explain: null,
+      },
     };
   },
   methods: {
@@ -418,6 +512,41 @@ export default {
         this.returnForm.returnNum = current;
       } else {
         this.returnForm.returnNum = this.returnForm.maxReturnNum;
+      }
+    },
+    addIllustrates(item) {
+      this.producVisible = true;
+      this.producitnForm = item;
+    },
+    addIllustrate() {
+      this.producVisible = false;
+      this.producitnForm.sett_status = null;
+      this.producitnForm.explain = null;
+      this.producitnForm.id = 0;
+      this.$emit("refresh");
+    },
+    async addShouMing() {
+      var urls = "";
+      if (this.daiShuaStatus) {
+        urls = "/mobile/daiBrushSettlement";
+      } else {
+        urls = "/mobile/henanSettlement";
+      }
+      const returnData = {
+        id: this.producitnForm.id,
+        sett_status: this.producitnForm.sett_status,
+        explain: this.producitnForm.explain,
+      };
+      const res = await this.$axios.post(urls, returnData);
+      if (res.data.code === 1) {
+        this.$message.success("修改成功");
+        this.producVisible = false;
+        this.producitnForm.sett_status = null;
+        this.producitnForm.explain = null;
+        this.producitnForm.id = 0;
+        this.$emit("refresh");
+      } else {
+        this.$message.error(res.data.msg);
       }
     },
     cancelReturn() {
@@ -441,7 +570,7 @@ export default {
           Number(this.returnForm.returnNum) ===
           Number(this.returnForm.maxReturnNum)
             ? "全部归还"
-            : "部分归还"
+            : "部分归还",
       };
       const res = await this.$axios.post(
         "/project/equipmentReturnAdd",
@@ -464,18 +593,18 @@ export default {
     },
     async showReturn(id) {
       const res = await this.$axios.post("/project/equipmentLendDetailed", {
-        id: id
+        id: id,
       });
       if (res.data.code === 1) {
         if (res.data.data && res.data.data.length > 0) {
           const data = res.data.data;
-          data.forEach(e => {
+          data.forEach((e) => {
             const material = {
               name: e.name,
               id: e.id,
               returnNumMax: e.quantity - e.re_number,
               returned: e.re_number,
-              totalQuantity: e.quantity
+              totalQuantity: e.quantity,
             };
             this.returnForm.returnMaterialList.push(material);
           });
@@ -487,7 +616,7 @@ export default {
     },
     selectReturnMaterial(id) {
       const currentMaterial = this.returnForm.returnMaterialList.find(
-        e => e.id === id
+        (e) => e.id === id
       );
       this.returnForm.id = currentMaterial.id;
       this.returnForm.maxReturnNum = currentMaterial.returnNumMax;
@@ -516,7 +645,7 @@ export default {
           {
             id: uploadId,
             type: uploadType === "payment" ? "fk_image" : "fp_image",
-            url: uploadImg
+            url: uploadImg,
           }
         );
         if (uploadRes.data.code === 1) {
@@ -567,7 +696,7 @@ export default {
       const _this = this;
       const res = await _this.$axios.post("/finance/dc_pdf", {
         tableName: this.printTableName,
-        id: id
+        id: id,
       });
       if (res.data.code === 1) {
         console.log(res);
@@ -585,7 +714,7 @@ export default {
     //筛选
     handleSelectionChange(val) {
       this.$emit("newlistenChild", this.$utils.canDelete(val));
-      this.multSelectData = val.map(item => {
+      this.multSelectData = val.map((item) => {
         if (!item.id) return "";
         return item.id;
       });
@@ -625,16 +754,16 @@ export default {
         } else {
           newUrl = row.url;
         }
-        dd.ready(function() {
+        dd.ready(function () {
           dd.biz.util.openSlidePanel({
             url: newUrl, //打开侧边栏的url
             title: "详情", //侧边栏顶部标题
-            onSuccess: function() {},
-            onFail: function() {}
+            onSuccess: function () {},
+            onFail: function () {},
           });
         });
       }
-    }
+    },
   },
   mounted() {
     this.setAdmin();
@@ -657,7 +786,7 @@ export default {
         setTimeout(() => {
           this.adjustWidth();
         }, 500);
-      }
+      },
     },
     titleList: {
       //深度监听，可监听到对象、数组的变化
@@ -665,9 +794,9 @@ export default {
         setTimeout(() => {
           this.adjustWidth();
         }, 500);
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

@@ -105,7 +105,7 @@
               v-model="checkedLists"
               @change="handleCheckedListChange"
             >
-              <draggable animation="1000">
+              <draggable animation="1000" v-model="myArray">
                 <transition-group>
                   <el-checkbox
                     v-for="element in myArray"
@@ -160,7 +160,7 @@ export default {
         status: "",
         startTime: "",
         endTime: "",
-        theme: ""
+        theme: "",
       },
       approveStatus: 3,
       currentPage: 1,
@@ -176,7 +176,7 @@ export default {
       wFormVisible: false,
       checkedLists: [],
       titleList: [],
-      allProjectList: []
+      allProjectList: [],
     };
   },
   created() {
@@ -214,7 +214,7 @@ export default {
   methods: {
     watchMore() {
       this.$router.push({
-        path: "/appIndex8/appIndexWarn"
+        path: "/appIndex8/appIndexWarn",
       });
     },
     closeD() {
@@ -239,7 +239,7 @@ export default {
     },
     goNow(url) {
       this.$router.push({
-        path: url
+        path: url,
       });
     },
     goapp(tname, tid) {
@@ -259,7 +259,7 @@ export default {
     getNum() {
       this.$axios
         .post("/mobile/dingApprovalCount")
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             if (res.data.data.wait_count > 99) {
               this.udata.dai = res.data.data.wait_count;
@@ -275,7 +275,7 @@ export default {
             this.udata.fa = res.data.data.my_count;
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -284,14 +284,14 @@ export default {
       if (row.extend_first == 1) {
         _this.$axios
           .post("/projectfour/yujingEdit", {
-            id: row.id
+            id: row.id,
           })
-          .then(res => {
+          .then((res) => {
             if (res.data.code == 1) {
               _this.getList();
             }
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       }
@@ -301,36 +301,36 @@ export default {
     getUseList() {
       this.$axios
         .post("/mobile/commonlyTypeList", { type: 1 })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.useTypeList = res.data.data;
           } else {
             this.$message({
               message: res.data.msg,
               type: "warning",
-              duration: "1500"
+              duration: "1500",
             });
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
     getAllList() {
       this.$axios
         .post("/mobile/commonlyTypeAllList", { type: 1 })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.allTypeList = res.data.data;
           } else {
             this.$message({
               message: res.data.msg,
               type: "warning",
-              duration: "1500"
+              duration: "1500",
             });
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -338,7 +338,7 @@ export default {
       if (this.isUse) {
         this.$axios
           .post("/mobile/commonlyTypeDel", { id: item.id })
-          .then(res => {
+          .then((res) => {
             if (res.data.code == 1) {
               // this.useTypeList.splice(index, 1);
               this.getUseList();
@@ -346,22 +346,22 @@ export default {
               this.$message({
                 message: "删除成功",
                 type: "success",
-                duration: 1500
+                duration: 1500,
               });
             } else {
               this.$message({
                 message: res.data.msg,
                 type: "warning",
-                duration: 1500
+                duration: 1500,
               });
             }
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       } else {
         this.$router.push({
-          path: item.url
+          path: item.url,
         });
       }
     },
@@ -370,7 +370,7 @@ export default {
         if (list.isselected == 0) {
           this.$axios
             .post("/mobile/commonlyTypeAdd", { cid: list.id })
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 1) {
                 // this.useTypeList.push(list);
                 this.getUseList();
@@ -378,50 +378,50 @@ export default {
                 this.$message({
                   message: "添加成功",
                   type: "success",
-                  duration: 1500
+                  duration: 1500,
                 });
               } else {
                 this.$message({
                   message: res.data.msg,
                   type: "warning",
-                  duration: 1500
+                  duration: 1500,
                 });
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log(error);
             });
         } else {
           let newID = list.id;
-          let newArr = this.useTypeList.filter(item =>
+          let newArr = this.useTypeList.filter((item) =>
             newID.includes(item.cid)
           );
           this.$axios
             .post("/mobile/commonlyTypeDel", { id: newArr[0].id })
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 1) {
                 this.getUseList();
                 this.getAllList();
                 this.$message({
                   message: "删除成功",
                   type: "warning",
-                  duration: 1500
+                  duration: 1500,
                 });
               } else {
                 this.$message({
                   message: res.data.msg,
                   type: "warning",
-                  duration: 1500
+                  duration: 1500,
                 });
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log(error);
             });
         }
       } else {
         this.$router.push({
-          path: list.url
+          path: list.url,
         });
       }
     },
@@ -429,7 +429,7 @@ export default {
       this.multSelectData = val;
     },
     handleCheckedListChange(value) {
-      this.myArray.forEach(element => {
+      this.myArray.forEach((element) => {
         if (value.includes(element.label)) {
           element.check = true;
         } else {
@@ -439,8 +439,8 @@ export default {
     },
     wCancel() {
       this.wFormVisible = false;
-      let Ids = this.titleList.map(item => item.value);
-      this.myArray.forEach(item => {
+      let Ids = this.titleList.map((item) => item.value);
+      this.myArray.forEach((item) => {
         if (!Ids.includes(item.value)) {
           item.check = false;
         } else {
@@ -450,7 +450,7 @@ export default {
     },
     wInfo() {
       let newT = [];
-      this.myArray.forEach(element => {
+      this.myArray.forEach((element) => {
         if (element.check) {
           newT.push(element);
         }
@@ -462,8 +462,8 @@ export default {
           this.sendTitleList();
           if (this.isFooter == 1) {
             let newFArr = [];
-            this.titleList.map(item => {
-              this.newFooter.forEach(element => {
+            this.titleList.map((item) => {
+              this.newFooter.forEach((element) => {
                 if (element.value == item.value) {
                   newFArr.push(element);
                 }
@@ -477,7 +477,7 @@ export default {
         this.$message({
           type: "warning",
           message: "不能为空！",
-          duration: 1500
+          duration: 1500,
         });
       }
     },
@@ -492,19 +492,19 @@ export default {
       this.$axios
         .post("/spread/editFiledCurrency", {
           name: "software_order",
-          mould_data: JSON.stringify(this.myArray)
+          mould_data: JSON.stringify(this.myArray),
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code !== 1) {
             this.$message({
               title: "提示",
               message: res.data.msg,
               type: "error",
-              duration: 1500
+              duration: 1500,
             });
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -521,20 +521,20 @@ export default {
       const _this = this;
       _this.$axios
         .post("/project/softwareOrder")
-        .then(res => {
+        .then((res) => {
           if (res.data.code === 1) {
             let newUrl =
               "https://aflow.dingtalk.com/dingtalk/pc/query/pchomepage.htm?ddtab=true&corpid=" +
               _this.$store.state.cid +
               "#/custom/?processCode=" +
               res.data.data;
-            dd.ready(function() {
+            dd.ready(function () {
               dd.biz.util.openLink({
                 url: newUrl, //要打开链接的地址
-                onSuccess: function() {
+                onSuccess: function () {
                   /**/
                 },
-                onFail: function() {}
+                onFail: function () {},
               });
             });
           } else {
@@ -542,11 +542,11 @@ export default {
               title: "提示",
               message: res.data.msg,
               type: "error",
-              duration: 1500
+              duration: 1500,
             });
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -561,7 +561,7 @@ export default {
         status: "",
         startTime: "",
         endTime: "",
-        theme: ""
+        theme: "",
       };
       this.getList();
     },
@@ -574,15 +574,15 @@ export default {
         .post("/mobile/dingApprovalList", {
           page: this.currentPage,
           number: this.pagesize,
-          type: this.approveStatus
+          type: this.approveStatus,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             if (ntype == 1) {
               this.$message({
                 message: "列表刷新成功",
                 type: "success",
-                duration: 1500
+                duration: 1500,
               });
             }
             const data = res.data.data;
@@ -596,7 +596,7 @@ export default {
             }
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -604,12 +604,12 @@ export default {
       const _this = this;
       _this.$axios
         .post("/project/fileDownloadDel", { path: url })
-        .then(res => {
+        .then((res) => {
           if (res.data.code === 1) {
             return true;
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -619,42 +619,42 @@ export default {
       if (_this.multSelectData.length > 0) {
         _this.$axios
           .post("/project/softwareOrderload", {
-            id: _this.multSelectData
+            id: _this.multSelectData,
           })
-          .then(res => {
+          .then((res) => {
             if (res.data.code == 1) {
               dd.biz.util.downloadFile({
                 url: res.data.data.url, //要下载的文件的url
                 name: res.data.data.name, //定义下载文件名字
-                onProgress: function() {
+                onProgress: function () {
                   // 文件下载进度回调
                 },
-                onSuccess: function() {
+                onSuccess: function () {
                   _this.deleteExport(res.data.data.path);
                 },
-                onFail: function() {
+                onFail: function () {
                   _this.deleteExport(res.data.data.path);
-                }
+                },
               });
             } else {
               _this.$message({
                 message: res.data.msg,
                 type: "warning",
-                duration: 1500
+                duration: 1500,
               });
             }
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       } else {
         _this.$message({
           message: "请先勾选要导出的数据！",
           type: "warning",
-          duration: 1500
+          duration: 1500,
         });
       }
-    }
+    },
   },
   mounted() {
     this.allProjectList = JSON.parse(this.$store.state.allPro);
@@ -673,7 +673,7 @@ export default {
   computed: {
     userData() {
       return this.$store.state.userInfo;
-    }
+    },
   },
   watch: {
     userData: {
@@ -688,9 +688,9 @@ export default {
         }
       },
       deep: true,
-      immediate: true
-    }
-  }
+      immediate: true,
+    },
+  },
 };
 </script>
 

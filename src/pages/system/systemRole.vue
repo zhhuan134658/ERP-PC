@@ -127,6 +127,8 @@ mikey.zhaopeng * @Last Modified time: 2022-01-06 14:44:08 */
                             :disabled="editable"
                             v-model="ilist.checkAll"
                             :key="lindex"
+                           
+                            :class="[lindex ==4 ? 'rightCheckOne' :'',lindex == 5 ?'rightCheckTwo':'']"
                             @change="
                               handlecheckedRoleChange(
                                 $event,
@@ -405,6 +407,7 @@ export default {
     },
     //子级选择
     handlecheckedRoleChange(e, list, ilist, index, liindex) {
+        console.log(e,list, ilist, index, liindex)
       let tickCount = 0, //二级判断选中数
         unTickCount = 0, //二级判断未选中数
         tottc = 0; //一级判断选中数//一级判断未选中数
@@ -415,10 +418,26 @@ export default {
       } else {
         ilist.check = false;
       }
-      console.log("123", e, ilist);
+    //   console.log("123", e, ilist);
+
+        if(ilist.title == '全部'){
+            list.map((item, index) => {
+            if (item.title == "参与") {
+              list[index].checkAll = false;
+              list[index].check = false;
+            }
+          });
+        }else if(ilist.title == '参与'){
+            list.map((item, index) => {
+            if (item.title == "全部") {
+              list[index].checkAll = false;
+              list[index].check = false;
+            }
+          });
+        }
 
       if (ilist.title == "新增") {
-        console.log("122", list);
+        // console.log("122", list);
         if (e) {
           list.map((item, index) => {
             if (item.title == "查看") {
@@ -860,5 +879,15 @@ export default {
 <style lang="less">
 .el-collapse {
   border-top: none;
+}
+.rightCheckOne{
+    position: relative;
+    right: -50px;
+    bottom: 10px;
+}
+.rightCheckTwo{
+    position: relative;
+    left: 379px;
+    bottom: 10px;
 }
 </style>
