@@ -107,7 +107,7 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
             <el-checkbox
               v-for="element in myArray"
               :key="element.value"
-              :label="element.label"
+              :label="element.value"
               border
             >
               <span> {{ element.label }}</span>
@@ -160,9 +160,11 @@ export default {
     getMult(val) {
       this.multSelectData = val;
     },
-    handleCheckedListChange(value) {
+    handleCheckedListChange(values) {
+        console.log(values)
       this.myArray.forEach((element) => {
-        if (value.includes(element.label)) {
+          console.log(element.label)
+        if (values.includes(element.value)) {
           element.check = true;
         } else {
           element.check = false;
@@ -230,7 +232,7 @@ export default {
             this.myArray.forEach((element) => {
               if (element.check) {
                 this.titleList.push(element);
-                this.checkedLists.push(element.label);
+                this.checkedLists.push(element.value);
               }
             });
             this.getList();
@@ -248,6 +250,7 @@ export default {
         });
     },
     sendTitleList() {
+        console.log(this.myArray)
       this.$axios
         .post("/spread/editFiledCurrency", {
           name: "material_library",
