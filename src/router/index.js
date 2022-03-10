@@ -59,6 +59,12 @@ const routes = [
             component: () => import("../pages/spreadsheet/storageOverview.vue")
           },
           {
+            path: "/spreadsheet/Invoice", //订单中心
+            name: "Invoice",
+            component: () => import("../pages/spreadsheet/Invoice.vue"),
+            props: true
+          },
+          {
             path: "/spreadsheet/orderView/:type", //订单中心
             name: "orderView",
             component: () => import("../pages/spreadsheet/orderView.vue"),

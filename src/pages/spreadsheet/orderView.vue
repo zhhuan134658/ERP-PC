@@ -264,9 +264,9 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
             label="发票状态"
           >
             <template slot-scope="scope">
-              <span v-if="scope.row.b_status == 2">已开发票</span>
-              <span v-else-if="scope.row.b_status == 1">开票中</span>
-              <span v-else-if="scope.row.b_status == 0">未开票</span>
+              <span v-if="scope.row.b_status == 2" @click="jupDetail(scope.row.id)">已开发票</span>
+              <span v-else-if="scope.row.b_status == 1" @click="jupDetail(scope.row.id)">开票中</span>
+              <span v-else-if="scope.row.b_status == 0" >未开票</span>
               <span v-else>数据有误</span>
             </template>
           </el-table-column>
@@ -591,6 +591,9 @@ export default {
     };
   },
   methods: {
+       jupDetail(data) {
+            this.$router.push({ path: '/spreadsheet/Invoice', query: { data } });
+        },
     getMult(val) {
       this.multSelectData = val;
     },

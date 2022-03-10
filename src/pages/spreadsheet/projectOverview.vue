@@ -8,11 +8,29 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
         <div class="headerContent">
           <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <div class="hlBottom">
-              <el-form-item label="项目名称:">
+              <el-form-item label="项目名称:" >
                 <el-input
                   v-model="formInline.name"
                   clearable
                   placeholder="请输入项目名称"
+                  style="width:160px"
+                >
+                </el-input>
+              </el-form-item>
+                    <el-form-item label="单位名称:" >
+                <el-input
+                  v-model="formInline.unit_name"
+                  clearable
+                  placeholder="请输单位名称"
+                  style="width:160px"
+                >
+                </el-input>
+              </el-form-item>
+                    <el-form-item label="申请人:">
+                <el-input
+                  v-model="formInline.income_send_name"
+                  clearable
+                  placeholder="请输入申请人名称"
                 >
                 </el-input>
               </el-form-item>
@@ -379,7 +397,9 @@ export default {
         start_riqi: "",
         end_riqi: "",
         theme: "",
-        wj_status: ""
+        wj_status: "",
+        unit_name:'',
+        income_send_name:''
       },
       currentPage: 1,
       total: 0,
@@ -421,25 +441,25 @@ export default {
       }
     },
     spanMethod({ row, column, rowIndex, columnIndex }) {
-      if (column) {
-        if (
-          this.tpList[rowIndex + 1] &&
-          row.id === this.tpList[rowIndex + 1].id &&
-          (columnIndex < 4 || columnIndex >= 25) &&
-          columnIndex !== 0
-        ) {
-          return [2, 1];
-        } else if (
-          this.tpList[rowIndex - 1] &&
-          row.id === this.tpList[rowIndex - 1].id &&
-          (columnIndex < 4 || columnIndex >= 25) &&
-          columnIndex !== 0
-        ) {
-          return [0, 0];
-        } else {
-          return [1, 1];
-        }
-      }
+    //   if (column) {
+    //     if (
+    //       this.tpList[rowIndex + 1] &&
+    //       row.id === this.tpList[rowIndex + 1].id &&
+    //       (columnIndex < 4 || columnIndex >= 25) &&
+    //       columnIndex !== 0
+    //     ) {
+    //       return [2, 1];
+    //     } else if (
+    //       this.tpList[rowIndex - 1] &&
+    //       row.id === this.tpList[rowIndex - 1].id &&
+    //       (columnIndex < 4 || columnIndex >= 25) &&
+    //       columnIndex !== 0
+    //     ) {
+    //       return [0, 0];
+    //     } else {
+    //       return [1, 1];
+    //     }
+    //   }
     },
     edit(row, label) {
       let labelstr;
@@ -558,7 +578,9 @@ export default {
         start_riqi: "",
         end_riqi: "",
         theme: "",
-        wj_status: ""
+        wj_status: "",
+         unit_name:'',
+        income_send_name:''
       };
       this.getList();
     },
@@ -572,7 +594,9 @@ export default {
           page: this.currentPage,
           number: this.pagesize,
           name: this.formInline.name,
-          wj_status: this.formInline.wj_status
+          wj_status: this.formInline.wj_status,
+          unit_name:this.formInline.unit_name,
+          income_send_name:this.formInline.income_send_name
         })
         .then(res => {
           if (res.data.code == 1) {
@@ -585,13 +609,14 @@ export default {
             }
             this.total = res.data.count;
             this.tpList = res.data.data;
+            console.log(res.data.data,'data')
             this.footerNumList = [];
             const total = [
               { id: "subtotal", name: "小计", ...res.data.total["subtotal"] },
               { id: "total", name: "合计", ...res.data.total["total"] }
             ];
             this.subTotalList = total;
-            this.tpList = this.tpList.concat(this.subTotalList);
+            // this.tpList = this.tpList.concat(this.subTotalList);
             if (this.total > 0 && this.tpList.length < 1) {
               this.currentPage = res.data.page_number;
               this.getList();
