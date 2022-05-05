@@ -161,9 +161,9 @@ export default {
       this.multSelectData = val;
     },
     handleCheckedListChange(values) {
-        console.log(values)
+      console.log(values);
       this.myArray.forEach((element) => {
-          console.log(element.label)
+        console.log(element.label);
         if (values.includes(element.value)) {
           element.check = true;
         } else {
@@ -250,7 +250,7 @@ export default {
         });
     },
     sendTitleList() {
-        console.log(this.myArray)
+      console.log(this.myArray);
       this.$axios
         .post("/spread/editFiledCurrency", {
           name: "material_library",

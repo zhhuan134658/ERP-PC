@@ -1,5 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-11-12 16:49:08 * @Last Modified by:
-NorthWind * @Last Modified time: 2022-01-10 11:41:30 */
 <template>
   <div id="home">
     <el-container class="homeContain" style="border: 1px solid #eee">
@@ -18,9 +16,14 @@ NorthWind * @Last Modified time: 2022-01-10 11:41:30 */
               >
                 <div style="height: 70px; line-height: 70px">
                   <div
-                    style="white-space: nowrap;line-height: inherit;display:flex;align-items:center;"
+                    style="
+                      white-space: nowrap;
+                      line-height: inherit;
+                      display: flex;
+                      align-items: center;
+                    "
                   >
-                    <span>{{ item.title }}</span>
+                    <span>{{ item.name }}</span>
                   </div>
                 </div>
               </li>
@@ -45,11 +48,7 @@ NorthWind * @Last Modified time: 2022-01-10 11:41:30 */
               <img :src="Image" v-if="Image" />
               <img src="../assets/menu/YH.png" v-else />
               <div
-                style="
-                                    white-space: nowrap;
-                                    margin-left: 20px;
-                                    overflow: hidden;
-                                "
+                style="white-space: nowrap; margin-left: 20px; overflow: hidden"
               >
                 {{ uname }}
               </div>
@@ -125,14 +124,14 @@ export default {
       menushow: false,
       muvisible: false,
       formInline: {
-        region: ""
+        region: "",
       },
       allregion: [],
       helplist: [
         "https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/user-dir/zXDkXNeNkd1609724091928.png",
         "https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/user-dir/7s26jHzTtf1609724267189.png",
         "https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/user-dir/KHEMpJfKJT1609724623208.png",
-        "https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/user-dir/7KAxBPaE7F1609724624335.png"
+        "https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/user-dir/7KAxBPaE7F1609724624335.png",
       ],
       createVisible: false,
       addFormRules: {
@@ -140,16 +139,16 @@ export default {
           {
             required: true,
             message: "请输入意见",
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         tel: [
           {
             required: true,
             message: "请选择手机号",
-            trigger: "blur"
-          }
-        ]
+            trigger: "blur",
+          },
+        ],
       },
       loaded: false,
       addFormVisible: false,
@@ -165,9 +164,9 @@ export default {
       titleList: [],
       addForm: {
         tel: "",
-        parere: ""
+        parere: "",
       },
-      logoUrl: ""
+      logoUrl: "",
     };
   },
   methods: {
@@ -177,19 +176,19 @@ export default {
     },
     viewMore() {
       this.$router.push({
-        path: "/appIndex8/appIndexMsg"
+        path: "/appIndex8/appIndexMsg",
       });
     },
     // 所有路由
     getallrouter() {
       this.$axios
         .post("/order/menuSou")
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.allregion = res.data.data;
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -197,101 +196,22 @@ export default {
       this.logoUrl =
         "https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/user-dir/H4wMiseYbS1617767784128.png"; //写死LOGO地址
     },
-    //刷新表单
-    updateForm() {
-      const _this = this;
-      let newID = _this.$store.state.cid;
-      _this.$axios
-        .post("/projecttwo/projectInfoRegisterUpdate1", {
-          corp_id: newID
-        })
-        .then(() => {
-          _this.$message({
-            message: "刷新审批表单成功",
-            type: "success",
-            duration: 1500
-          });
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      _this.$axios
-        .post("/projecttwo/projectInfoRegisterUpdate2", {
-          corp_id: newID
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      _this.$axios
-        .post("/projecttwo/projectInfoRegisterUpdate3", {
-          corp_id: newID
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      _this.$axios
-        .post("/projecttwo/projectInfoRegisterUpdate4", {
-          corp_id: newID
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      _this.$axios
-        .post("/projecttwo/projectInfoRegisterUpdate5", {
-          corp_id: newID
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      _this.$axios
-        .post("/projecttwo/projectInfoRegisterUpdate6", {
-          corp_id: newID
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      _this.$axios
-        .post("/projecttwo/projectAddUpdate", {
-          corp_id: newID
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
+
     gohelp() {
-      dd.ready(function() {
+      dd.ready(function () {
         dd.biz.util.openLink({
-          url:
-            "https://www.yuque.com/books/share/834d6476-ad45-4f80-8a94-51d767673b9d?#", //要打开链接的地址
-          onSuccess: function() {
+          url: "https://www.yuque.com/books/share/834d6476-ad45-4f80-8a94-51d767673b9d?#", //要打开链接的地址
+          onSuccess: function () {
             /**/
           },
-          onFail: function() {}
+          onFail: function () {},
         });
       });
     },
     open() {
       this.$notify.error({
         title: "错误",
-        message: "获取数据失败，请刷新页面"
+        message: "获取数据失败，请刷新页面",
       });
     },
     addBack() {
@@ -301,15 +221,15 @@ export default {
     addSave(formName) {
       const _this = this;
       _this.loaded = true;
-      _this.$refs[formName].validate(valid => {
+      _this.$refs[formName].validate((valid) => {
         if (valid) {
           _this.$axios
             .post("/finance/parereadd", {
               tel: this.addForm.tel,
               img: "",
-              parere: this.addForm.parere
+              parere: this.addForm.parere,
             })
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 1) {
                 _this.loaded = false;
                 _this.addFormVisible = false;
@@ -317,18 +237,18 @@ export default {
                 _this.$message({
                   message: "提交意见成功",
                   type: "success",
-                  duration: 1500
+                  duration: 1500,
                 });
               } else {
                 _this.loaded = false;
                 _this.$message({
                   message: res.data.msg,
                   type: "error",
-                  duration: 1500
+                  duration: 1500,
                 });
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               _this.loaded = false;
               console.log(error);
             });
@@ -346,10 +266,15 @@ export default {
     },
     getMenuList() {
       this.$axios
-        .post("/user/menu", { type: 0 })
-        .then(res => {
+        .post("/erp_check/roles", {
+          type: 0,
+          corp_id: this.$store.state.cid,
+          userid: this.$store.state.userInfo.uid,
+        })
+        .then((res) => {
           if (res.data.code == 1) {
             this.titleList = res.data.data;
+            console.log(this.titleList);
             //新手指引
             // this.$nextTick(() => {
             //     this.guide();
@@ -358,11 +283,11 @@ export default {
             this.$message({
               message: res.data.msg,
               type: "warning",
-              duration: "1500"
+              duration: "1500",
             });
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -397,20 +322,20 @@ export default {
       let corpId = that.GetQueryString("corpid");
       // 免登录信息获取
       console.log("CorpId", corpId);
-      dd.ready(function() {
+      dd.ready(function () {
         // dd.ready参数为回调函数，在环境准备就绪时触发，jsapi的调用需要保证在该回调函数触发后调用，否则无效。
         dd.runtime.permission.requestAuthCode({
           // corpId: "dingea47c602975497f935c2f4657eb6378f",
           corpId: corpId,
-          onSuccess: function(result) {
+          onSuccess: function (result) {
             console.log("code", result.code);
             if (result.code != "") {
               that.$axios
-                .post("/user/userinfo", {
+                .post("/erp_user/userinfo", {
                   corp_id: corpId,
-                  code: result.code
+                  code: result.code,
                 })
-                .then(res => {
+                .then((res) => {
                   if (res.data.code == 1) {
                     that.$nextTick(() => {
                       that.menushow = true;
@@ -471,57 +396,37 @@ export default {
                 });
             }
           },
-          onFail: function() {}
+          onFail: function () {},
         });
       });
     },
     login() {
       const that = this;
-      const code = "321";
+      const code = "";
       that.$axios
-        .post("/user/userinfo", {
+        .post("/erp_user/userinfo", {
           corp_id: that.$store.state.cid,
-          code: code
+          code: code,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             that.$nextTick(() => {
               that.menushow = true;
             });
+            that.getMenuList();
             that.getLogo();
             sessionStorage.setItem("errcode", 1);
             let userData = JSON.parse(JSON.stringify(res.data.data.content));
-            if (userData.jobnumber == 0) {
-              that.createVisible = true;
-            } else {
-              that.createVisible = false;
-            }
-            let user = userData.userid;
-            that.Image = userData.avatar;
-            that.uname = userData.name;
-            that.$store.commit("setUname", that.uname);
+
+            that.$store.commit("setUname", userData.name);
             that.$store.commit("setCname", userData.company);
             that.$store.commit("setAvatar", that.Image);
-            that.$store.commit("setUid", user);
+            that.$store.commit("setUid", "612812294724352370");
             that.$store.commit("setAdmin", userData.zk_admin);
-            // 判断是不是个人版   个人版 2  企业版 1
-            // if (res.data.data.content.type == 2) {
-            //     that.firstshow = true;
-            // } else {
-            //     that.firstshow = false;
-            // }
-            that.$store.commit(
-              "setmaincorpid",
-              res.data.data.content.mainCorpId
-            );
-            that.$store.commit("setfirstshow", res.data.data.content.type);
-            that.maincorpid = res.data.data.content.mainCorpId;
 
-            that.$utils.checkding();
-            that.getMenuList();
-            that.$utils.utilProjectType();
-            that.$utils.utilProjectStatus();
-            that.$utils.utilAllProject();
+            // that.$utils.utilProjectType();
+            // that.$utils.utilProjectStatus();
+            // that.$utils.utilAllProject();
           } else if (res.data.code == 2) {
             sessionStorage.setItem("errMsg", res.data.msg);
             sessionStorage.setItem("errcode", 2);
@@ -553,37 +458,42 @@ export default {
       newUrl = newPath.substring(0, index + 1);
       valUrl = val.substring(0, valIndex + 1);
       console.log(newUrl, valUrl);
-      if (valUrl == "/home/index/") {
-        if (newUrl == "/home/index/") {
+      if (valUrl == "/appIndex8/") {
+        if (newUrl == "/appIndex8/") {
           return this.cNameOne;
         } else {
           return this.cNameTwo;
         }
-      } else if (valUrl == "/project/") {
-        if (newUrl == "/project/") {
+      } else if (valUrl == "/libraryTube/") {
+        //库管
+        if (newUrl == "/libraryTube/") {
           return this.cNameOne;
         } else {
           return this.cNameFour;
         }
-      } else if (valUrl == "/projectincome/") {
-        if (newUrl == "/projectincome/") {
+      } else if (valUrl == "/purchase/") {
+        //   采购
+        if (newUrl == "/purchase/") {
           return this.cNameOne;
         } else {
           return this.cNameFour;
         }
-      } else if (valUrl == "/projetcout/") {
-        if (newUrl == "/projetcout/") {
+      } else if (valUrl == "/maintain/") {
+        //   维护
+        if (newUrl == "/maintain/") {
           return this.cNameOne;
         } else {
           return this.cNameFour;
         }
-      } else if (valUrl == "/projectcost/") {
-        if (newUrl == "/projectcost/") {
+      } else if (valUrl == "/system/") {
+        //系统管理
+        if (newUrl == "/system/") {
           return this.cNameOne;
         } else {
           return this.cNameFour;
         }
       } else if (valUrl == "/finance/") {
+        //财务
         if (newUrl == "/finance/") {
           return this.cNameOne;
         } else {
@@ -647,28 +557,28 @@ export default {
           steps: [
             {
               element: document.querySelector(".firstInjs"),
-              intro: "您可以在这里选择操作"
+              intro: "您可以在这里选择操作",
             },
             {
               element: document.querySelector(".secondInjs"),
-              intro: "在这里联系我们"
+              intro: "在这里联系我们",
             },
             {
               element: document.querySelector(".thirdInjs"),
-              intro: "在这里获取更多帮助"
-            }
+              intro: "在这里获取更多帮助",
+            },
 
             // {
             //     title: 'Farewell!',
             //     element: document.querySelector('.card__image'),
             //     intro: 'And this is our final step!'
             // }
-          ]
+          ],
         })
-        .oncomplete(function() {
+        .oncomplete(function () {
           //点击跳过按钮后执行的事件
         })
-        .onexit(function() {
+        .onexit(function () {
           _this.createVisible = true;
           // introJs().refresh();
           //点击结束按钮后， 执行的事件
@@ -685,7 +595,7 @@ export default {
         //     }
         // })
         .start();
-    }
+    },
   },
   mounted() {
     // this.framework();
@@ -705,10 +615,12 @@ export default {
 
     // _this.getallrouter();
     if (process.env.VUE_APP_AUTH_CODE == 666) {
-      console.log("测试环境");
-      _this.$message(`测试环境`);
-      _this.$store.commit("setCid", "dingea47c602975497f935c2f4657eb6378f");
-      _this.login();
+      console.log("测试1环境");
+      _this.$message(`测试1环境`);
+      //   _this.$store.commit("setCid", "dingea47c602975497f935c2f4657eb6378f");
+      //   _this.login();
+
+      _this.getReady();
     } else {
       _this.getReady();
     }
@@ -733,7 +645,7 @@ export default {
       }
     },
     cNameTwoS() {
-      return function(value) {
+      return function (value) {
         return this.changeColor(value);
       };
     },
@@ -745,7 +657,7 @@ export default {
     },
     cNameTS() {
       return true;
-    }
-  }
+    },
+  },
 };
 </script>

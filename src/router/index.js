@@ -22,190 +22,334 @@ const routes = [
     path: "/home",
     name: "home",
     component: () => import("../pages/home.vue"),
-    redirect: "/home/index",
+    redirect: "/appIndex8/appIndex",
     children: [
+      //   {
+      //     path: "/system",
+      //     name: "system",
+      //     component: () => import("../pages/system/system.vue"),
+      //     children: [
+      //       {
+      //         path: "/system/systemRole", //用户权限管理
+      //         name: "systemRole",
+      //         component: () => import("../pages/system/systemRole.vue")
+      //       },
+      //       // 初始化
+      //       {
+      //         path: "/system/initializeApp",
+      //         name: "initializeApp",
+      //         component: () => import("@/pages/system/initializeApp")
+      //       }
+      //     ]
+      //   },
+
+      {
+        path: "/appIndex8",
+        name: "appIndex8",
+        component: () => import("../pages/homepage/index.vue"),
+        redirect: "/appIndex8/appIndex",
+        children: [
+          {
+            path: "/appIndex8/appIndex", //首页-我的工作
+            name: "appIndex",
+            component: () => import("../pages/homepage/mywork/index.vue")
+          },
+          {
+            path: "/appIndex8/appIndexProject", //资产看板
+            name: "appIndexProject",
+            component: () => import("../pages/homepage/assetinfo/index.vue")
+          },
+          {
+            path: "/appIndex8/projectApprovalList", //项目立项
+            name: "projectApprovalList",
+            component: () => import("../pages/homepage/initiation/index.vue")
+          }
+        ]
+      },
+      //   库管
+      {
+        path: "/librarytube",
+        name: "librarytube",
+        component: () => import("../pages/librarytube/index.vue"),
+        redirect: "/librarytube/OfficeList",
+        children: [
+          // 办公耗材
+          {
+            path: "/librarytube/OfficeList", //办公耗材清单   改为/librarytube/OfficeList
+            name: "OfficeList1",
+            component: () =>
+              import("../pages/librarytube/OfficeList1/index.vue")
+          },
+          {
+            path: "/librarytube/storage", //办公耗材入库
+            name: "storage",
+            component: () => import("../pages/librarytube/storage/index.vue")
+          },
+          {
+            path: "/librarytube/outLibrary", //办公耗材领用
+            name: "outLibrary",
+            component: () => import("../pages/librarytube/outLibrary/index.vue")
+          },
+          {
+            path: "/librarytube/returnLibrary", //办公耗材退库
+            name: "returnLibrary",
+            component: () =>
+              import("../pages/librarytube/returnLibrary/index.vue")
+          },
+          {
+            path: "/librarytube/Allocate", //办公耗材调拨
+            name: "Allocate",
+            component: () => import("../pages/librarytube/Allocate/index.vue")
+          },
+          {
+            path: "/librarytube/peopleOut", //数据报表
+            name: "appIndex",
+            component: () => import("../pages/librarytube/OfficeList/index.vue")
+          },
+
+          //   固定资产
+          {
+            path: "/librarytube/assetList", //资产清单
+            name: "assetList",
+            component: () => import("../pages/librarytube/assetList/index.vue")
+          },
+          {
+            path: "/librarytube/peopleIns", //资产入库导入任务查询
+            name: "appIndex",
+            component: () => import("../pages/librarytube/peopleIns/index.vue")
+          },
+          {
+            path: "/librarytube/peopleInsyun", //资产入库-云入库
+            name: "appIndex",
+            component: () =>
+              import("../pages/librarytube/peopleIns/peopleInsyun.vue")
+          },
+          {
+            path: "/librarytube/peopleInsru", //资产入库-采购入库管理
+            name: "appIndex",
+            component: () =>
+              import("../pages/librarytube/peopleIns/peopleInsru.vue")
+          },
+          {
+            path: "/librarytube/lendList", //资产借出归还
+            name: "DistributedList",
+            component: () => import("../pages/librarytube/lendList/index.vue")
+          },
+          {
+            path: "/librarytube/DistributedList", //资产派发退库
+            name: "DistributedList",
+            component: () =>
+              import("../pages/librarytube/DistributedList/index.vue")
+          },
+          {
+            path: "/librarytube/Inventory", //资产盘点
+            name: "Inventory",
+            component: () => import("../pages/librarytube/Inventory/index.vue")
+          },
+          {
+            path: "/librarytube/AllocateList", //资产调拨
+            name: "AllocateList",
+            component: () =>
+              import("../pages/librarytube/AllocateList/index.vue")
+          },
+          {
+            path: "/librarytube/Dataview", //数据报表
+            name: "appIndex",
+            component: () => import("../pages/librarytube/OfficeList/index.vue")
+          }
+        ]
+      },
+      //   采购
+      {
+        path: "/purchase",
+        name: "purchase",
+        component: () => import("../pages/purchase/index.vue"),
+        redirect: "/purchase/materialNeedPlan",
+        children: [
+          // 采购申请
+          {
+            path: "/purchase/materialNeedPlan", //采购申请
+            name: "materialNeedPlan",
+            component: () =>
+              import("../pages/purchase/materialNeedPlan/index.vue")
+          },
+          {
+            path: "/purchase/materialContract", //采购合同
+            name: "materialContract",
+            component: () =>
+              import("../pages/purchase/materialContract/index.vue")
+          },
+          {
+            path: "/purchase/materialPurchaseOrder", //采购订单
+            name: "materialPurchaseOrder",
+            component: () =>
+              import("../pages/purchase/materialPurchaseOrder/index.vue")
+          },
+          {
+            path: "/purchase/materialReturn", //采购退货
+            name: "materialReturn",
+            component: () =>
+              import("../pages/purchase/materialReturn/index.vue")
+          },
+          {
+            path: "/purchase/materialApply", //付款申请
+            name: "appIndex",
+            component: () => import("../pages/librarytube/OfficeList/index.vue")
+          },
+          {
+            path: "/purchase/collectionReport", //统计报表
+            name: "collectionReport",
+            component: () =>
+              import("../pages/purchase/collectionReport/index.vue")
+          }
+        ]
+      },
+      //   维护
+      {
+        path: "/maintain",
+        name: "maintain",
+        component: () => import("../pages/maintain/index.vue"),
+        redirect: "/maintain/InventoryList",
+        children: [
+          {
+            path: "/maintain/InventoryList", //资产维修
+            name: "InventoryList",
+            component: () => import("../pages/maintain/InventoryList/index.vue")
+          },
+          {
+            path: "/maintain/disposalList", //资产处置
+            name: "disposalList",
+            component: () => import("../pages/maintain/disposalList/index.vue")
+          },
+          //   资产信息管理
+          {
+            path: "/maintain/biaoqianSet", //资产标签设置
+            name: "biaoqianSet",
+            component: () => import("../pages/maintain/biaoqianSet/index.vue")
+          },
+          {
+            path: "/maintain/depreciation", //资质折旧设置
+            name: "appIndex",
+            component: () => import("../pages/maintain/depreciation/index.vue")
+          },
+          {
+            path: "/maintain/materialBasic", //资产分类设置
+            name: "materialBasic",
+            component: () => import("../pages/maintain/materialBasic/index.vue")
+          },
+          {
+            path: "/maintain/management", //资产位置设置
+            name: "management",
+            component: () => import("../pages/maintain/management/index.vue")
+          },
+          {
+            path: "/maintain/Print", //资产打印设置
+            name: "appIndex",
+            component: () => import("../pages/librarytube/OfficeList/index.vue")
+          },
+          {
+            path: "/maintain/information", //资产扩展信息
+            name: "information",
+            component: () => import("../pages/maintain/information/index.vue")
+          },
+          {
+            path: "/maintain/biaomaSet", //资产编码设置
+            name: "biaomaSet",
+            component: () => import("../pages/maintain/biaomaSet/index.vue")
+          }
+        ]
+      },
+      //系统管理
       {
         path: "/system",
         name: "system",
-        component: () => import("../pages/system/system.vue"),
+        component: () => import("../pages/system/index.vue"),
+        redirect: "/system/systemRole",
         children: [
           {
-            path: "/system/systemRole", //用户权限管理
+            path: "/system/systemRole", //角色管理
             name: "systemRole",
-            component: () => import("../pages/system/systemRole.vue")
-          },
-          // 初始化
-          {
-            path: "/system/initializeApp",
-            name: "initializeApp",
-            component: () => import("@/pages/system/initializeApp")
-          }
-        ]
-      },
-      {
-        path: "/spreadsheet",
-        name: "spreadSheet",
-        component: () => import("../pages/spreadsheet/index.vue"),
-        redirect: "/spreadsheet/projectOverview",
-        children: [
-          {
-            path: "/spreadsheet/projectOverview", //项目一览
-            name: "projectOverview",
-            component: () => import("../pages/spreadsheet/projectOverview.vue")
+            component: () => import("../pages/system/systemRole/index.vue")
           },
           {
-            path: "/spreadsheet/storageOverview", //库存一览
-            name: "storageOverview",
-            component: () => import("../pages/spreadsheet/storageOverview.vue")
+            path: "/system/basicHouseManage", //仓库管理
+            name: "basicHouseManage",
+            component: () =>
+              import("../pages/system/basicHouseManage/index.vue")
           },
-          {
-            path: "/spreadsheet/Invoice", //订单中心
-            name: "Invoice",
-            component: () => import("../pages/spreadsheet/Invoice.vue"),
-            props: true
-          },
-          {
-            path: "/spreadsheet/orderView/:type", //订单中心
-            name: "orderView",
-            component: () => import("../pages/spreadsheet/orderView.vue"),
-            props: true
-          },
-          {
-            path: "/spreadsheet/goodsObvious", //库存商品sn明细表
-            name: "goodsObvious",
-            component: () => import("../pages/spreadsheet/goodsObvious.vue"),
-            props: true
-          }
-        ]
-      },
 
+          {
+            path: "/system/contactCorp", //往来单位
+            name: "contactCorp",
+            component: () => import("../pages/system/contactCorp/index.vue")
+          },
+          {
+            path: "/system/materBasic", //物资基础库
+            name: "materBasic",
+            component: () => import("../pages/system/materBasic/index.vue")
+          },
+          {
+            path: "/system/warningindex", //预警设置
+            name: "warningindex",
+            component: () => import("../pages/system/warningindex/index.vue")
+          },
+          {
+            path: "/system/formSet", //表单设置
+            name: "formSet",
+            component: () => import("../pages/system/formSet/index.vue")
+          }
+        ]
+      },
+      //财务
       {
         path: "/finance",
         name: "finance",
-        component: () => import("../pages/finance/finance.vue"),
-        redirect: "/finance/hardwarePurchase",
+        component: () => import("../pages/finance/index.vue"),
+        redirect: "/finance/financeAccountInfo",
         children: [
           {
-            path: "/finance/hardwarePurchase", //硬件采购列表页面
-            name: "hardwarePurchase",
+            path: "/finance/financeAccountInfo", //账户管理
+            name: "financeAccountInfo",
             component: () =>
-              import("../pages/finance/hardwarePurchase/index.vue")
+              import("../pages/finance/financeAccountInfo/index.vue")
           },
           {
-            path: "/finance/hardwareRent", //硬件出借列表页面
-            name: "hardwareRent",
-            component: () => import("../pages/finance/hardwareRent/index.vue")
+            path: "/finance/payApply", //付款申请
+            name: "payApply",
+            component: () => import("../pages/finance/payApply/index.vue")
           },
+
           {
-            path: "/finance/materialIn", //材料入库列表页面
-            name: "materialIn",
-            component: () => import("../pages/finance/materialIn/index.vue")
-          },
-          {
-            path: "/finance/income", //收入列表页面
-            name: "income",
-            component: () => import("../pages/finance/income/index.vue")
-          },
-          {
-            path: "/finance/installReimburse", //安装报销列表页面
-            name: "installReimburse",
+            path: "/finance/materialPayment", //付款登记
+            name: "materialPayment",
             component: () =>
-              import("../pages/finance/installReimburse/index.vue")
+              import("../pages/finance/materialPayment/index.vue")
           },
           {
-            path: "/finance/invoiceApplication", //开票申请列表页面
-            name: "invoiceApplication",
+            path: "/finance/otherCollection", //收款登记
+            name: "otherCollection",
             component: () =>
-              import("../pages/finance/invoiceApplication/index.vue")
+              import("../pages/finance/otherCollection/index.vue")
           },
           {
-            path: "/finance/materialOut", //材料出库列表页面
-            name: "materialOut",
-            component: () => import("../pages/finance/materialOut/index.vue")
+            path: "/finance/invoiceOpen", //发票开具申请
+            name: "invoiceOpen",
+            component: () => import("../pages/finance/invoiceOpen/index.vue")
           },
           {
-            path: "/finance/reimbursement", //报销列表页面
-            name: "reimbursement",
-            component: () => import("../pages/finance/reimbursement/index.vue")
+            path: "/finance/invoiceOut", //开票登记
+            name: "invoiceOut",
+            component: () => import("../pages/finance/invoiceOut/index.vue")
           },
           {
-            path: "/finance/returnFavor", //返佣列表页面
-            name: "returnFavor",
-            component: () => import("../pages/finance/returnFavor/index.vue")
+            path: "/finance/invoiceIn", //收票登记
+            name: "invoiceIn",
+            component: () => import("../pages/finance/invoiceIn/index.vue")
           },
           {
-            path: "/finance/softwarePurchase", //软件采购列表页面
-            name: "softwarePurchase",
-            component: () =>
-              import("../pages/finance/softwarePurchase/index.vue")
-          },
-          {
-            path: "/finance/bizAssociate", //软件采购列表页面
-            name: "bizAssociate",
-            component: () => import("../pages/finance/bizAssociate/index.vue")
-          },
-          {
-            path: "/finance/accountInformation", //账户信息页面
-            name: "accountInformation",
-            component: () =>
-              import("../pages/finance/accountInformation/index.vue")
-          },
-          {
-            path: "/finance/productionKey", //河南生产秘钥页面
-            name: "productionKey",
-            component: () => import("../pages/finance/productionKey/index.vue")
-          },
-          {
-            path: "/finance/brushMachine", //代刷机页面
-            name: "brushMachine",
-            component: () => import("../pages/finance/brushMachine/index.vue")
-          }
-        ]
-      },
-      {
-        path: "/project",
-        name: "project",
-        component: () => import("../pages/project/index.vue"),
-        redirect: "/project/projects",
-        children: [
-          {
-            path: "/project/projects", //立项信息列表页面
-            name: "projects",
-            component: () => import("../pages/project/projects/index.vue")
-          },
-          {
-            path: "/project/material", //材料基础库列表页面
-            name: "material",
-            component: () => import("../pages/project/material/index.vue")
-          },
-          {
-            path: "/project/supplier", //供应商信息库列表页面
-            name: "supplier",
-            component: () => import("../pages/project/supplier/index.vue")
-          }
-        ]
-      },
-      {
-        path: "/home/index",
-        name: "index",
-        component: () => import("../pages/index.vue"),
-        redirect: "/home/index/AppIndex",
-        children: [
-          {
-            path: "/home/index/AppIndex", //首页-我的工作
+            path: "/finance/financeReport", //统计报表
             name: "appIndex",
-            component: () => import("../pages/appIndex.vue")
-          },
-          {
-            path: "/home/index/orderDelay", //订单延期
-            name: "orderDelayApply",
-            component: () =>
-              import("../pages/finance/orderDelayApply/index.vue")
-          },
-          {
-            path: "/home/index/orderAlert", //订单预警
-            name: "orderAlert",
-            component: () => import("../pages/project/orderAlert/index.vue")
+            component: () => import("../pages/librarytube/OfficeList/index.vue")
           }
         ]
       }

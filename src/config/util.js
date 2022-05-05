@@ -82,7 +82,8 @@ export default {
   },
   checkding: function() {
     axios
-      .post("/dingding/jsapiAuth", {
+      .post("/erp_check/jsapiAuth", {
+        corp_id: store.state.cid,
         url: window.location.href
       })
       .then(res => {
@@ -420,5 +421,37 @@ export default {
     }
 
     return iconindex;
+  },
+  //钉钉通讯录选人
+  DDaddPeople(isMultiple) {
+    dd.ready(function() {
+      dd.biz.contact.complexPicker({
+        title: "通讯录", //标题
+        corpId: store.state.cid, //企业的corpId
+        multiple: isMultiple, //是否多选
+        limitTips: "超出了", //超过限定人数返回提示
+        maxUsers: 99, //最大可选人数
+        pickedUsers: [], //已选用户
+        pickedDepartments: [], //已选部门
+        disabledUsers: [], //不可选用户
+        disabledDepartments: [], //不可选部门
+        requiredUsers: [], //必选用户（不可取消选中状态）
+        requiredDepartments: [], //必选部门（不可取消选中状态）
+        appId: "", //微应用的Id
+        permissionType: "GLOBAL", //可添加权限校验，选人权限，目前只有GLOBAL这个参数
+        responseUserOnly: true, //返回人，或者返回人和部门
+        startWithDepartmentId: 0, //仅支持0和-1
+        onSuccess: function(result) {
+          console.log(result);
+          return result;
+        },
+        onFail: function(err) {
+          console.log(err);
+        }
+      });
+    });
+    dd.error(function(err) {
+      console.log(err);
+    });
   }
 };

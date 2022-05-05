@@ -18,17 +18,141 @@
     >
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column type="index" width="55" label="序号" />
+      <el-table-column v-if="assetlist" label="资产状态">
+        <template slot-scope="scope">
+          <span
+            v-if="scope.row.status == '0'"
+            style="
+              color: #fff;
+              text-align: center;
+              display: block;
+              width: 100%;
+              height: 100%;
+              background-color: #ffc547;
+            "
+            >空闲</span
+          >
+          <span
+            v-else-if="scope.row.status == '1'"
+            style="
+              color: #fff;
+              text-align: center;
+              display: block;
+              width: 100%;
+              height: 100%;
+              background-color: #83b24b;
+            "
+            >领用</span
+          >
+          <span
+            v-else-if="scope.row.status == '2'"
+            style="
+              color: #fff;
+              text-align: center;
+              display: block;
+              width: 100%;
+              height: 100%;
+              background-color: #25b893;
+            "
+            >借用</span
+          >
+        </template>
+      </el-table-column>
       <el-table-column
+        v-if="assetlist"
+        type="index"
+        width="55"
+        prop="zznumber"
+        label="资产编码"
+      />
+      <el-table-column v-if="DistributedList" label="状态">
+        <template slot-scope="scope">
+          <span
+            v-if="scope.row.status == '1'"
+            style="
+              color: #fff;
+              text-align: center;
+              display: block;
+              width: 100%;
+              height: 100%;
+              background-color: #ffc547;
+            "
+            >领用完成</span
+          >
+          <span
+            v-else-if="scope.row.status == '0'"
+            style="
+              color: #fff;
+              text-align: center;
+              display: block;
+              width: 100%;
+              height: 100%;
+              background-color: #83b24b;
+            "
+          ></span>
+          <span
+            v-else-if="scope.row.status == '2'"
+            style="
+              color: #fff;
+              text-align: center;
+              display: block;
+              width: 100%;
+              height: 100%;
+              background-color: #25b893;
+            "
+          ></span>
+        </template>
+      </el-table-column>
+      <el-table-column v-if="AllocateList" label="状态">
+        <template slot-scope="scope">
+          <span
+            v-if="scope.row.status == '1'"
+            style="
+              color: #fff;
+              text-align: center;
+              display: block;
+              width: 100%;
+              height: 100%;
+              background-color: #ffc547;
+            "
+            >领用完成</span
+          >
+          <span
+            v-else-if="scope.row.status == '0'"
+            style="
+              color: #fff;
+              text-align: center;
+              display: block;
+              width: 100%;
+              height: 100%;
+              background-color: #83b24b;
+            "
+          ></span>
+          <span
+            v-else-if="scope.row.status == '2'"
+            style="
+              color: #fff;
+              text-align: center;
+              display: block;
+              width: 100%;
+              height: 100%;
+              background-color: #25b893;
+            "
+          ></span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        sortable
         v-for="(item, index) in titleList"
         :key="index"
         :prop="item.value"
-        :label="item.label"
+        :label="item.name"
         :show-overflow-tooltip="true"
         align="left"
-        :min-width="watchMinWidth(item.label)"
+        :min-width="watchMinWidth(item.name)"
       >
       </el-table-column>
-            <el-table-column v-if="showStatus" label="审批状态" align="left">
+      <el-table-column v-if="showStatus" label="审批状态" align="left">
         <template slot-scope="scope">
           <span v-if="scope.row.status == '2'" style="color: #17c298"
             >已同意</span
@@ -41,33 +165,9 @@
           ><span v-else style="color: #409eff">外部数据</span>
         </template>
       </el-table-column>
-      <el-table-column v-if="jieSuanStatus" label="结算状态" align="left">
-        <template slot-scope="scope">
-            <span>{{scope.row.sett_status}}</span>
-          <!-- <span v-if="scope.row.sett_status == '1'" style="color: #17c298"
-            >已结算</span
-          >
-          <span v-else-if="scope.row.sett_status == '2'" style="color: #e8a54c"
-            >未结算</span
-          >
-          <span v-else-if="scope.row.sett_status == '3'" style="color: #f16d6d"
-            >无需结算</span
-          ><span v-else style="color: #409eff">外部数据</span> -->
-        </template>
-      </el-table-column>
-           <el-table-column v-if="jieSuanStatus" label="说明" align="left">
-        <template slot-scope="scope">
-          <span  
-            >{{scope.row.explain}}</span
-          >
-        </template>
-      </el-table-column>
 
-            <el-table-column v-if="jieSuanStatus" label="操作" align="left">
+      <!-- <el-table-column label="操作" align="left">
         <template slot-scope="scope">
-            <!-- v-if="scope.row.extend_five == 2"
-            :disabled="scope.row.status != '2'"
-             -->
           <el-button
             type="text"
             slot="reference"
@@ -76,161 +176,8 @@
             >修改</el-button
           >
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
-      <el-table-column v-if="hasReturn" label="归还状态" align="center">
-        <template slot-scope="scope">
-          <span v-if="scope.row.wz_return === 0" style="color: #f16d6d"
-            >未归还</span
-          >
-          <span v-else-if="scope.row.wz_return === 1" style="color: #17c298"
-            >已归还</span
-          >
-          <span v-else style="color: #e8a54c">部分归还</span>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="hasReturn" label="归还操作" align="center">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            disabled
-            v-if="scope.row.status !== '2'"
-            >审批中</el-button
-          >
-
-          <el-button
-            size="mini"
-            type="text"
-            disabled
-            v-if="scope.row.wz_return == '1' && scope.row.status == '2'"
-            >已归还</el-button
-          >
-          <el-button
-            v-if="scope.row.wz_return != '1' && scope.row.status == '2'"
-            type="text"
-            size="mini"
-            :disabled="!isAdmin"
-            @click.stop="showReturn(scope.row.id)"
-            >归还</el-button
-          >
-        </template>
-      </el-table-column>
-
-      <el-table-column label="付款状态" align="left" v-if="isdele">
-        <template slot-scope="scope">
-          <span v-if="scope.row.creationtime == '2'">已付款</span>
-          <span v-else>待付款</span>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="isdele" label="操作" align="left" width="200">
-        <template slot-scope="scope">
-          <el-button
-            v-if="scope.row.creationtime == 2"
-            :disabled="scope.row.status != '2'"
-            type="text"
-            slot="reference"
-            size="mini"
-            @click.native.stop="creation(scope.row)"
-            >撤销</el-button
-          >
-
-          <!--        -->
-          <el-button
-            v-if="scope.row.creationtime != 2"
-            :disabled="scope.row.status != '2'"
-            type="text"
-            slot="reference"
-            size="mini"
-            @click.native.stop="creation(scope.row)"
-            >付款</el-button
-          >
-        </template>
-      </el-table-column>
-      <el-table-column label="收款状态" align="left" v-if="isdele2">
-        <template slot-scope="scope">
-          <span v-if="scope.row.extend_five == '2'">已收款</span>
-          <span v-else>待收款</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="付款状态" align="left" v-if="hasUpload">
-        <template slot-scope="scope">
-          <el-button
-            v-if="!(scope.row.fk_image && scope.row.fk_image.length > 0)"
-            type="text"
-            size="mini"
-            :disabled="
-              (scope.row.fk_image && scope.row.fk_image.length > 0) ||
-                scope.row.status != '2' ||
-                !isAdmin
-            "
-            @click.stop="uploadPayment(scope.row.id)"
-            >{{ scope.row.fk_image ? "已付款" : "待付款" }}</el-button
-          >
-          <el-button
-            v-else
-            type="text"
-            size="mini"
-            @click.stop="showImg(scope.row.fk_image)"
-            >{{ "付款详情" }}</el-button
-          >
-        </template>
-      </el-table-column>
-      <el-table-column label="发票状态" align="left" v-if="hasUpload">
-        <template slot-scope="scope">
-          <el-button
-            v-if="
-              !(scope.row.fp_image && scope.row.fp_image.length > 0) &&
-                scope.row.unit_name === '是'
-            "
-            type="text"
-            size="mini"
-            :disabled="
-              (scope.row.fp_image && scope.row.fp_image.length > 0) ||
-                scope.row.status != '2' ||
-                !isAdmin
-            "
-            @click.stop="uploadInvoice(scope.row.id)"
-            >{{ scope.row.fp_image ? "已收发票" : "待收发票" }}</el-button
-          >
-          <el-button
-            v-else-if="
-              scope.row.fp_image &&
-                scope.row.fp_image.length > 0 &&
-                scope.row.unit_name === '是'
-            "
-            type="text"
-            size="mini"
-            @click.stop="showImg(scope.row.fp_image)"
-            >{{ "发票详情" }}</el-button
-          >
-          <el-button v-else type="text" size="mini" disabled>
-            {{ "无需发票" }}
-          </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="isdele2" label="操作" align="left">
-        <template slot-scope="scope">
-          <el-button
-            v-if="scope.row.extend_five == 2"
-            :disabled="scope.row.status != '2'"
-            type="text"
-            slot="reference"
-            size="mini"
-            @click.native.stop="creation(scope.row)"
-            >撤销</el-button
-          >
-          <el-button
-            v-if="scope.row.extend_five != 2"
-            :disabled="scope.row.status != '2'"
-            type="text"
-            slot="reference"
-            size="mini"
-            @click.native.stop="creation(scope.row)"
-            >收款</el-button
-          >
-        </template>
-      </el-table-column>
       <el-table-column v-if="printable" label="打印" align="center">
         <template slot-scope="scope">
           <el-button
@@ -315,96 +262,6 @@
         <img :src="uploadImg" alt="详情图片" />
       </div>
     </el-dialog>
-
-    <el-dialog
-      style="text-align:left;"
-      title="归还"
-      :visible.sync="returnVisible"
-      @close="cancelReturn"
-    >
-      <div class="return_content">
-        <el-form :label-position="'right'" :model="returnForm" ref="returnForm">
-          <el-form-item label="物资名称">
-            <el-select
-              v-model="returnForm.materialId"
-              @change="selectReturnMaterial"
-            >
-              <el-option
-                v-for="item in returnForm.returnMaterialList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="已借出数量">
-            <el-input v-model="returnForm.totalQuantity" disabled></el-input>
-          </el-form-item>
-
-          <el-form-item label="已归还数量">
-            <el-input v-model="returnForm.returned" disabled></el-input>
-          </el-form-item>
-          <el-form-item label="本次归还数量">
-            <el-input
-              v-model="returnForm.returnNum"
-              :max="returnForm.returnNumMax"
-              :step="1"
-              @change="roundToMax"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="归还时间">
-            <el-date-picker
-              v-model="returnForm.returnTime"
-              type="date"
-              placeholder="选择日期"
-              value-format="timestamp"
-              format="yyyy-MM-dd"
-              :editable="false"
-              :clearable="true"
-              :size="'small'"
-            ></el-date-picker>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelReturn">取 消</el-button>
-        <el-button type="primary" @click="submitReturn">确 定</el-button>
-      </div>
-    </el-dialog>
-
-            <el-dialog
-      title="修改"
-      :visible.sync="producVisible"
-      :close-on-click-modal="false"
-      width="600px"
-      @close="producVisible=false"
-      class="view_change_title"
-    >
-    <div class="return_content">
-        <el-form :label-position="'right'" :model="producitnForm" ref="producitnForm">
-          </el-form-item>
-          <el-form-item label="结算状态">
-                    <el-select v-model="producitnForm.sett_status" placeholder="请选择结算状态">
-                <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-                </el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item label="说明">
-            <el-input v-model="producitnForm.explain" placeholder="请输入说明"></el-input>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div slot="footer" class="dialog-footer">
-        <el-button size="medium" @click="producVisible=false">取 消</el-button>
-        <el-button size="medium" type="primary" @click="addShouMing">确 定</el-button>
-      </div>
-    </el-dialog>
-
   </div>
 </template>
 <script>
@@ -421,8 +278,10 @@ export default {
     isFooter: Number,
     footerNumList: Array,
     isdele: Boolean,
+    AllocateList: Boolean,
+    DistributedList: Boolean,
     tableloading: Boolean,
-    isdele2: Boolean,
+    assetlist: Boolean,
     hasPrint: {
       type: Boolean,
       default: false,
@@ -454,16 +313,20 @@ export default {
   },
   data: (props) => {
     return {
-            options: [{
-            value: '已结算',
-            label: '已结算'
-        }, {
-            value: '未结算',
-            label: '未结算'
-        }, {
-            value: '无需结算',
-            label: '无需结算'
-        }],
+      options: [
+        {
+          value: "已结算",
+          label: "已结算",
+        },
+        {
+          value: "未结算",
+          label: "未结算",
+        },
+        {
+          value: "无需结算",
+          label: "无需结算",
+        },
+      ],
       multSelectData: [],
       printable: props.hasPrint,
       uploadVisible: false,
@@ -514,9 +377,12 @@ export default {
         this.returnForm.returnNum = this.returnForm.maxReturnNum;
       }
     },
+    // 修改
     addIllustrates(item) {
-      this.producVisible = true;
-      this.producitnForm = item;
+      console.log("445", item);
+      this.$emit("editFrom", item.id);
+      //   this.producVisible = true;
+      //   this.producitnForm = item;
     },
     addIllustrate() {
       this.producVisible = false;
@@ -713,7 +579,7 @@ export default {
     },
     //筛选
     handleSelectionChange(val) {
-      this.$emit("newlistenChild", this.$utils.canDelete(val));
+      //   this.$emit("newlistenChild", this.$utils.canDelete(val));
       this.multSelectData = val.map((item) => {
         if (!item.id) return "";
         return item.id;
