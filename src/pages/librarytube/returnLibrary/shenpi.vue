@@ -1,133 +1,17 @@
-/* * @Author: NorthWind * @Date: 2020-12-15 14:17:29 * @Last Modified by:
-NorthWind * @Last Modified time: 2022-01-13 14:17:20 */
+/* * @Author: NorthWind * @Date: 2020-12-08 14:59:31 * @Last Modified by:
+NorthWind * @Last Modified time: 2022-01-13 10:20:12 */
 <template>
-  <div id="financeAccountInfo">
-    <!-- 账户信息列表 -->
+  <div id="materialBackHouse">
+    <!-- 材料退库列表 -->
     <div class="main">
-      <div class="header">
-        <div class="headerContent">
-          <el-form
-            @submit.native.prevent
-            :inline="true"
-            :model="formInline"
-            label-width="120px"
-            class="demo-form-inline"
-          >
-            <div class="hlBottom">
-              <el-form-item label="账户名称:">
-                <!-- <el-input
-                                    v-model="formInline.accountname"
-                                    clearable
-                                    placeholder="请输入账户名称"
-                                ></el-input> -->
-                <el-select
-                  v-model="formInline.accountid"
-                  @change="accChange"
-                  clearable
-                  filterable
-                  placeholder="请选择账户"
-                >
-                  <el-option
-                    v-for="(item, index) in accountList"
-                    :key="index"
-                    :label="item.accountname"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item class="searchTime" label="开始时间:">
-                <el-date-picker
-                  v-model="formInline.startTime"
-                  :picker-options="pickerStart"
-                  type="date"
-                  placeholder="选择日期"
-                  format="yyyy 年 MM 月 dd 日"
-                  value-format="yyyy-MM-dd"
-                ></el-date-picker>
-              </el-form-item>
-              <el-form-item class="searchTime" label="结束时间:">
-                <el-date-picker
-                  v-model="formInline.endTime"
-                  :picker-options="pickerEnd"
-                  type="date"
-                  placeholder="选择日期"
-                  format="yyyy 年 MM 月 dd 日"
-                  value-format="yyyy-MM-dd"
-                ></el-date-picker>
-              </el-form-item>
-              <el-form-item label="账号:">
-                <!-- <el-input
-                                    v-model="formInline.accountnumber"
-                                    clearable
-                                    placeholder="请输入账号"
-                                ></el-input> -->
-                <el-select
-                  v-model="formInline.accountnumber"
-                  clearable
-                  filterable
-                  placeholder="请选择账号"
-                >
-                  <el-option
-                    v-for="(item, index) in accountNumList"
-                    :key="index"
-                    :label="item.accountnumber"
-                    :value="item.accountnumber"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="审批状态:">
-                <el-select
-                  v-model="formInline.status"
-                  clearable
-                  filterable
-                  placeholder="请选择审批状态"
-                >
-                  <el-option
-                    v-for="(item, index) in approvalStatus"
-                    :key="index"
-                    :label="item.name"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-
-              <el-form-item label="申请人:">
-                <el-input
-                  @focus="addManyP1"
-                  v-model="formInline.namesa"
-                  clearable
-                  placeholder="请输入"
-                ></el-input>
-              </el-form-item>
-
-              <el-form-item label="项目性质:">
-                <el-select
-                  v-model="formInline.lian_ying"
-                  clearable
-                  filterable
-                  placeholder="请选择项目性质"
-                >
-                  <el-option label="自营" value="1"></el-option>
-                  <el-option label="联营" value="2"></el-option>
-                </el-select>
-              </el-form-item>
-
-              <div style="text-align: center">
-                <el-button
-                  type="primary"
-                  size="medium"
-                  @click="searchClick"
-                  style="margin-right: 10px"
-                  >搜索</el-button
-                >
-                <el-button plain size="medium" @click="resetClick"
-                  >重置</el-button
-                >
-              </div>
-            </div>
-          </el-form>
-        </div>
-      </div>
+      <!-- 搜索条件 -->
+      <commonSearch
+        :formcommonList="formcommonList"
+        :formInline="formInline"
+        @searchClick="searchClick"
+        @getList="getList"
+        :isShen="true"
+      ></commonSearch>
       <div class="mainContent">
         <el-row class="maincBtn mainMoveBtn">
           <div class="mmbLeft">
@@ -170,15 +54,50 @@ NorthWind * @Last Modified time: 2022-01-13 14:17:20 */
               >设置显示字段</el-button
             >
           </div>
+          <!-- <div class="mmbLeft">
+                        <el-button
+                            type="primary"
+                            plain
+                            size="medium"
+                            round
+                            @click="deleteList"
+                            >删除</el-button
+                        >
+                        <el-button
+                            type="primary"
+                            plain
+                            size="medium"
+                            round
+                            @click="exportList"
+                            >导出</el-button
+                        >
+                        <el-button
+                            type="primary"
+                            plain
+                            size="medium"
+                            round
+                            @click="updateList"
+                            >刷新</el-button
+                        >
+                    </div>
+                    <div
+                        class="mmbRight"
+                        v-if="$store.state.userInfo.admin == 1"
+                    >
+                        <i class="el-icon-s-tools"></i>
+                        <el-button type="text" @click="viewShow"
+                            >设置显示字段</el-button
+                        >
+                    </div> -->
         </el-row>
         <commonTable
-          :tableloading="tableloading"
           :tpList="tpList"
           :titleList="titleList"
           :footerNumList="footerNumList"
           :isFooter="isFooter"
           @listenChild="getMult"
-          printTableName="zhukuai_finance_accountnews"
+          @newlistenChild="isDelete"
+          printTableName="material_return"
         ></commonTable>
         <div class="page">
           <el-pagination
@@ -230,22 +149,45 @@ NorthWind * @Last Modified time: 2022-01-13 14:17:20 */
 import * as dd from "dingtalk-jsapi";
 import draggable from "vuedraggable";
 import commonTable from "@/components/commonTablenew.vue";
+import commonSearch from "@/components/commonSearch.vue";
+
 export default {
-  name: "financeAccountInfo",
-  components: { draggable, commonTable },
+  name: "materialBackHouse",
+  components: { draggable, commonTable, commonSearch },
   data() {
     return {
-      tableloading: false,
+      //搜索条件
+      formcommonList: [
+        {
+          labelName: "项目名称",
+          labelData: "project_name",
+        },
+        {
+          labelName: "库房",
+          labelData: "cang_ku",
+        },
+
+        {
+          labelName: "审批状态",
+          labelData: "status",
+        },
+        {
+          labelName: "项目性质",
+          labelData: "lian_ying",
+        },
+      ],
+      newdata: "",
       formInline: {
-        accountname: "",
-        accountnumber: "",
+        name: "",
         status: "",
         startTime: "",
         endTime: "",
-        accountid: "",
+        project_name: "",
+        inputer: "",
+        b_number: "",
+        cang_ku: "",
         send_name: "",
         send_userid: "",
-        namesa: "请选择申请人",
         lian_ying: "",
       },
       currentPage: 1,
@@ -253,7 +195,6 @@ export default {
       pagesize: 10,
       tpList: [],
       multSelectData: [],
-      projectType: [],
       approvalStatus: [],
       myArray: [],
       wFormVisible: false,
@@ -262,66 +203,24 @@ export default {
       footerNumList: [],
       newFooter: [],
       isFooter: 0,
-      accountList: [],
-      accountNumList: [],
+      allProjectList: [],
     };
   },
   methods: {
     onEnd() {}, // 因为是未定义补充的
     onStart() {}, // 因为是未定义补充的
-    getAccNumber() {
-      this.$axios
-        .post("/task/accountlinkage", {
-          id: this.formInline.accountid,
-          type: 1,
-        })
-        .then((res) => {
-          if (res.data.code == 1) {
-            this.accountNumList = res.data.content;
-            this.formInline.accountnumber =
-              this.accountNumList[0].accountnumber;
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-    getAccount() {
-      this.$axios
-        .post("/task/accountselect", {
-          corp_id: this.$store.state.cid,
-          type: 1,
-        })
-        .then((res) => {
-          if (res.data.code == 1) {
-            this.accountList = res.data.content;
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-    accChange(val) {
-      if (val) {
-        this.formInline.accountname = this.accountList.find(
-          (item) => item.id == val
-        ).accountname;
-      } else {
-        this.formInline.accountname = "";
-      }
-      this.getAccNumber();
-    },
     resetClick() {
       this.formInline = {
-        accountname: "",
-        accountnumber: "",
+        name: "",
         status: "",
         startTime: "",
         endTime: "",
-        accountid: "",
+        project_name: "",
+        inputer: "",
+        b_number: "",
+        cang_ku: "",
         send_name: "",
         send_userid: "",
-        namesa: "请选择申请人",
         lian_ying: "",
       };
       this.getList();
@@ -389,7 +288,7 @@ export default {
     getTitleList() {
       this.$axios
         .post("/spread/showFiledCurrencyList", {
-          name: "zhukuai_finance_accountnews",
+          name: "material_return",
         })
         .then((res) => {
           if (res.data.code == 1) {
@@ -416,50 +315,10 @@ export default {
           console.log(error);
         });
     },
-    addManyP1() {
-      const that = this;
-      dd.ready(function () {
-        dd.biz.contact.complexPicker({
-          title: "通讯录", //标题
-          corpId: that.$store.state.cid, //企业的corpId
-          multiple: true, //是否多选
-          limitTips: "超出了", //超过限定人数返回提示
-          maxUsers: 1, //最大可选人数
-          pickedUsers: [], //已选用户
-          pickedDepartments: [], //已选部门
-          disabledUsers: [], //不可选用户
-          disabledDepartments: [], //不可选部门
-          requiredUsers: [], //必选用户（不可取消选中状态）
-          requiredDepartments: [], //必选部门（不可取消选中状态）
-          appId: that.agentid, //微应用的Id
-          permissionType: "GLOBAL", //可添加权限校验，选人权限，目前只有GLOBAL这个参数
-          responseUserOnly: true, //返回人，或者返回人和部门
-          startWithDepartdeptId: 0, //仅支持0和-1
-          onSuccess: function (result) {
-            // let newPeople = [];
-            // newPeople = result.users.map((item) => {
-            //     if (!item.emplId) return '';
-            //     return item.emplId;
-            // }); send_name: '',
-            console.log(result.users[0], "**---**--*-");
-            // that.addRoleUser(result.users);
-            that.formInline.send_name = result.users[0].name;
-            that.formInline.namesa = result.users[0].name;
-            that.formInline.send_userid = result.users[0].emplId;
-          },
-          onFail: function (err) {
-            console.log(err);
-          },
-        });
-      });
-      dd.error(function (err) {
-        console.log(err);
-      });
-    },
     sendTitleList() {
       this.$axios
         .post("/spread/editFiledCurrency", {
-          name: "zhukuai_finance_accountnews",
+          name: "material_return",
           mould_data: JSON.stringify(this.myArray),
         })
         .then((res) => {
@@ -489,14 +348,14 @@ export default {
     newAdd() {
       const _this = this;
       _this.$axios
-        .post("/finance/accountnews")
+        .post("/project/materialReturn")
         .then((res) => {
           if (res.data.code == 1) {
             let newUrl =
               "https://aflow.dingtalk.com/dingtalk/pc/query/pchomepage.htm?ddtab=true&corpid=" +
               _this.$store.state.cid +
               "#/custom/?processCode=" +
-              res.data.content.process_code;
+              res.data.data;
             dd.ready(function () {
               dd.biz.util.openLink({
                 url: newUrl, //要打开链接的地址
@@ -528,18 +387,15 @@ export default {
     },
     //获取列表
     getList(ntype) {
-      this.tableloading = true;
       this.$axios
-        .post("/finance/accountnewslist", {
-          current_page: this.currentPage,
-          starttime: this.formInline.startTime,
-          stoptime: this.formInline.endTime,
-          bankofdeposit: "",
-          accountname: this.formInline.accountname,
-          agent: "",
-          accountnumber: this.formInline.accountnumber,
-          zstatus: this.formInline.status,
-          num: this.pagesize,
+        .post("/project/materialReturnList", {
+          page: this.currentPage,
+          number: this.pagesize,
+          inputer: this.formInline.inputer,
+          project_name: this.formInline.project_name,
+          cang_ku: this.formInline.cang_ku,
+          shenpi: this.formInline.status,
+          b_number: this.formInline.b_number,
           send_name: this.formInline.send_name,
           send_userid: this.formInline.send_userid,
           lian_ying: this.formInline.lian_ying,
@@ -553,8 +409,8 @@ export default {
                 duration: 1500,
               });
             }
-            this.total = res.data.content.total;
-            this.tpList = res.data.content.list;
+            this.total = res.data.count;
+            this.tpList = res.data.data;
             this.footerNumList = [];
             this.isFooter = res.data.mould_data.is_heji;
             if (this.isFooter == 1) {
@@ -568,10 +424,9 @@ export default {
               });
             }
             if (this.total > 0 && this.tpList.length < 1) {
-              this.currentPage = res.data.content.page;
+              this.currentPage = res.data.page_number;
               this.getList();
             }
-            this.tableloading = false;
           }
         })
         .catch(function (error) {
@@ -585,8 +440,18 @@ export default {
         return item.id;
       });
     },
+    isDelete(val) {
+      this.newdata = val;
+    },
     //删除列表
     deleteList() {
+      //   if (this.newdata) {
+      //     return this.$message({
+      //       message: '已同意的审批不能删除',
+      //       type: 'warning',
+      //       duration: 1500,
+      //     });
+      //   }
       if (this.multSelectData.length > 0) {
         this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
           confirmButtonText: "确定",
@@ -595,7 +460,7 @@ export default {
         })
           .then(() => {
             this.$axios
-              .post("/finance/accountnewsdel", {
+              .post("/project/materialReturnDel", {
                 id: this.multSelectData,
               })
               .then((res) => {
@@ -635,7 +500,7 @@ export default {
     //还原列表
     backList() {
       this.$axios
-        .post("/finance/reduction", { type: 3 })
+        .post("/project/materialReturnReduction")
         .then((res) => {
           if (res.data.code == 1) {
             this.getList();
@@ -656,24 +521,40 @@ export default {
           console.log(error);
         });
     },
+    deleteExport(url) {
+      const _this = this;
+      _this.$axios
+        .post("/project/fileDownloadDel", { path: url })
+        .then((res) => {
+          if (res.data.code == 1) {
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     //导出列表
     exportList() {
       const _this = this;
       if (_this.multSelectData.length > 0) {
         _this.$axios
-          .post("/finance/template_download", {
+          .post("/project/materialReturnDownload", {
             id: _this.multSelectData,
           })
           .then((res) => {
             if (res.data.code == 1) {
               dd.biz.util.downloadFile({
-                url: res.data.content.path, //要下载的文件的url
-                name: res.data.content.filename, //定义下载文件名字
+                url: res.data.data.url, //要下载的文件的url
+                name: res.data.data.name, //定义下载文件名字
                 onProgress: function (msg) {
                   // 文件下载进度回调
                 },
-                onSuccess: function (result) {},
-                onFail: function () {},
+                onSuccess: function (result) {
+                  _this.deleteExport(res.data.data.path);
+                },
+                onFail: function () {
+                  _this.deleteExport(res.data.data.path);
+                },
               });
             } else {
               _this.$message({
@@ -688,39 +569,21 @@ export default {
           });
       } else {
         _this.$message({
-          message: "请先勾选要导出的数据！",
+          message: "请先勾选要删除的请先勾选要导出的数据！数据！",
           type: "warning",
           duration: 1500,
         });
       }
     },
-    createType() {
-      this.$axios
-        .post("/project/supplierTypeCreate")
-        .then((res) => {
-          if (res.data.code == 1) {
-          } else {
-            this.$message({
-              message: res.data.msg,
-              type: "warning",
-              duration: 1500,
-            });
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
   },
   mounted() {
-    this.createType();
-    this.$utils.checkding();
-    this.getTitleList();
-    this.getAccount();
+    this.allProjectList = JSON.parse(this.$store.state.allPro);
   },
   created() {
-    this.projectType = JSON.parse(this.$store.state.pType);
+    this.$utils.checkding();
+    this.$utils.utilAllProject();
     this.approvalStatus = this.$utils.utilApprovalStatus();
+    this.getTitleList();
   },
   computed: {
     pickerStart() {
@@ -749,11 +612,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.names {
-  border: 1px solid #dcdfe6 !important;
-  padding-left: 13px;
-  border-radius: 5px;
-  color: #c0c9db;
-}
-</style>

@@ -142,7 +142,11 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
                 prop="extendcontent"
               >
                 <el-button @click="selectAddCorp" plain style="width: 100%">
-                  <!-- <span v-for="(item,index) in info.extendcontentNmae">{{item}}</span> -->
+                  <span
+                    style="width: initial"
+                    v-for="(item, index) in info.extendcontentNmae"
+                    >{{ item }},</span
+                  >
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <div class="addNewDiv" v-if="newAddView">
@@ -449,7 +453,7 @@ export default {
       basicNodeID: "0",
       basicGoods: [],
       newView: false,
-      newAddView: true,
+      newAddView: false,
       noLastList: [],
       noLastList1: [],
       manySelectData: [],
@@ -727,6 +731,7 @@ export default {
       this.info.extendcontentNmae = arr;
       this.info.extendcontent = checkedData.checkedKeys;
       this.$nextTick(function () {
+        this.newAddView = false;
         // this.$refs.trees.setCurrentKey(this.info.extendcontent);
       });
     },

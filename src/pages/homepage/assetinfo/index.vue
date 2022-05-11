@@ -1279,6 +1279,7 @@ export default {
 }
 .hlBottom {
   width: 1240px !important;
+  margin: auto;
   .el-select,
   .el-input {
     width: 280px;

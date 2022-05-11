@@ -338,7 +338,7 @@ export default {
         p_number: "",
         bstatus: "",
         newstatus: "",
-        xz_pro: ""
+        xz_pro: "",
       },
       currentPage: 1,
       total: 0,
@@ -356,8 +356,8 @@ export default {
         zj_count: 0,
         zj_money: 0,
         zong_count: 0,
-        zong_money: 0
-      }
+        zong_money: 0,
+      },
     };
   },
   methods: {
@@ -371,7 +371,7 @@ export default {
     goPanel(row) {
       this.$router.push({
         path: "/appIndex8/appPanel",
-        query: { id: row.id, name: row.name }
+        query: { id: row.id, name: row.name },
       });
     },
     lookinfo(val) {
@@ -408,7 +408,7 @@ export default {
         p_number: "",
         bstatus: "",
         newstatus: "",
-        xz_pro: ""
+        xz_pro: "",
       };
       this.getList();
     },
@@ -439,19 +439,19 @@ export default {
     checkList(row, column) {
       const _this = this;
       if (column.label != "项目名称") {
-        dd.ready(function() {
+        dd.ready(function () {
           dd.biz.util.openSlidePanel({
             url: row.url, //打开侧边栏的url
             title: "详情", //侧边栏顶部标题
-            onSuccess: function(result) {},
-            onFail: function() {
+            onSuccess: function (result) {},
+            onFail: function () {
               setTimeout(() => {
                 _this.getList();
               }, 5000);
               setTimeout(() => {
                 _this.getList();
               }, 10000);
-            }
+            },
           });
         });
       }
@@ -480,9 +480,9 @@ export default {
           shenpi: this.formInline.status,
           p_number: this.formInline.p_number,
           status: this.formInline.newstatus,
-          xz_pro: this.formInline.xz_pro
+          xz_pro: this.formInline.xz_pro,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.total = res.data.count;
             this.tpList = res.data.data;
@@ -493,13 +493,13 @@ export default {
             }
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
     //筛选
     handleSelectionChange(val) {
-      this.multSelectData = val.map(item => {
+      this.multSelectData = val.map((item) => {
         if (!item.id) return "";
         return item.id;
       });
@@ -509,32 +509,32 @@ export default {
       if (this.multSelectData.length > 0) {
         this.$axios
           .post("/project/projectInfoRegisterDel", {
-            id: this.multSelectData
+            id: this.multSelectData,
           })
-          .then(res => {
+          .then((res) => {
             if (res.data.code == 1) {
               this.getList();
               this.$message({
                 message: res.data.msg,
                 type: "success",
-                duration: 1500
+                duration: 1500,
               });
             } else {
               this.$message({
                 message: res.data.msg,
                 type: "warning",
-                duration: 1500
+                duration: 1500,
               });
             }
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       } else {
         this.$message({
           message: "请您先多选",
           type: "warning",
-          duration: 1500
+          duration: 1500,
         });
       }
     },
@@ -542,23 +542,23 @@ export default {
     backList() {
       this.$axios
         .post("/project/projectInfoRegisterReduction")
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.getList();
             this.$message({
               message: "已还原",
               type: "success",
-              duration: 1500
+              duration: 1500,
             });
           } else {
             this.$message({
               message: res.data.msg,
               type: "warning",
-              duration: 1500
+              duration: 1500,
             });
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -566,11 +566,11 @@ export default {
       const _this = this;
       _this.$axios
         .post("/project/fileDownloadDel", { path: url })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -580,42 +580,42 @@ export default {
       if (_this.multSelectData.length > 0) {
         _this.$axios
           .post("/project/projectInfoRegisterDownload", {
-            id: _this.multSelectData
+            id: _this.multSelectData,
           })
-          .then(res => {
+          .then((res) => {
             if (res.data.code == 1) {
               dd.biz.util.downloadFile({
                 url: res.data.data.url, //要下载的文件的url
                 name: res.data.data.name, //定义下载文件名字
-                onProgress: function(msg) {
+                onProgress: function (msg) {
                   // 文件下载进度回调
                 },
-                onSuccess: function(result) {
+                onSuccess: function (result) {
                   _this.deleteExport(res.data.data.path);
                 },
-                onFail: function() {
+                onFail: function () {
                   _this.deleteExport(res.data.data.path);
-                }
+                },
               });
             } else {
               _this.$message({
                 message: res.data.msg,
                 type: "warning",
-                duration: 1500
+                duration: 1500,
               });
             }
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       } else {
         _this.$message({
           message: "请您先多选",
           type: "warning",
-          duration: 1500
+          duration: 1500,
         });
       }
-    }
+    },
   },
   created() {
     this.$utils.checkding();
@@ -627,17 +627,17 @@ export default {
   computed: {
     pickerStart() {
       return {
-        disabledDate: time => {
+        disabledDate: (time) => {
           let endDateVal = this.formInline.endTime;
           if (endDateVal) {
             return time.getTime() > new Date(endDateVal).getTime();
           }
-        }
+        },
       };
     },
     pickerEnd() {
       return {
-        disabledDate: time => {
+        disabledDate: (time) => {
           let beginDateVal = this.formInline.startTime;
           if (beginDateVal) {
             return (
@@ -645,10 +645,10 @@ export default {
               time.getTime() < new Date(beginDateVal).getTime() - 8.64e7
             );
           }
-        }
+        },
       };
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -761,6 +761,7 @@ export default {
 }
 .hlBottom {
   width: 1240px !important;
+  margin: auto;
   .el-select,
   .el-input {
     width: 280px;

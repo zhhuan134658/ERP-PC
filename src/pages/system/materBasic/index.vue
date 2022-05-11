@@ -118,7 +118,7 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
                       align="left"
                     >
                     </el-table-column>
-                    <el-table-column prop="name" label="物品名称" align="left">
+                    <el-table-column prop="name" label="物资名称" align="left">
                     </el-table-column>
                     <el-table-column
                       prop="type_name"
@@ -444,7 +444,7 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
                   </el-table-column>
                   <el-table-column prop="number" label="物品编码" align="left">
                   </el-table-column>
-                  <el-table-column prop="name" label="物品名称" align="left">
+                  <el-table-column prop="name" label="物资名称" align="left">
                   </el-table-column>
                   <el-table-column
                     prop="type_name"
@@ -626,13 +626,13 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
               <el-tab-pane label="基本信息" name="basic">
                 <div class="dBasicInfo">
                   <el-form-item
-                    label="物品名称"
+                    label="物资名称"
                     prop="name"
                     class="dRemarkList"
                   >
                     <el-input
                       v-model="addUserForm.name"
-                      placeholder="请输入物品名称"
+                      placeholder="请输入物资名称"
                       maxlength="50"
                     ></el-input>
                   </el-form-item>
@@ -972,7 +972,11 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
         >
           <el-form-item class="newtijiao" label="上传文件：">
             <div class="newcom">
-              <img width="50" src="../../../assets/workbench/exceladd.png" alt />
+              <img
+                width="50"
+                src="../../../assets/workbench/exceladd.png"
+                alt
+              />
               <p>请上传文件</p>
               <eupload
                 @listenToChild="showe"
@@ -1048,7 +1052,7 @@ export default {
         name: [
           {
             required: true,
-            message: "请输入物品名称",
+            message: "请输入物资名称",
             trigger: "blur",
           },
         ],

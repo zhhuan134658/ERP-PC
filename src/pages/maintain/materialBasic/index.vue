@@ -302,7 +302,7 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
                   </el-table-column>
                   <el-table-column prop="number" label="物品编码" align="left">
                   </el-table-column>
-                  <el-table-column prop="name" label="物品名称" align="left">
+                  <el-table-column prop="name" label="物资名称" align="left">
                   </el-table-column>
                   <el-table-column
                     prop="type_name"
@@ -927,7 +927,7 @@ export default {
         name: [
           {
             required: true,
-            message: "请输入物品名称",
+            message: "请输入物资名称",
             trigger: "blur",
           },
         ],

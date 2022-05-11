@@ -78,28 +78,104 @@ const routes = [
             path: "/librarytube/OfficeList", //办公耗材清单   改为/librarytube/OfficeList
             name: "OfficeList1",
             component: () =>
-              import("../pages/librarytube/OfficeList1/index.vue")
+              import("../pages/librarytube/OfficeList1/index.vue"),
+            redirect: "/librarytube/OfficeList/shenpi",
+            children: [
+              {
+                path: "/librarytube/OfficeList/shenpi", //办公耗材清单审批
+                name: "shenpi",
+                component: () =>
+                  import("../pages/librarytube/OfficeList1/shenpi.vue")
+              },
+              {
+                path: "/librarytube/OfficeList/baobiao", //办公耗材清单审批
+                name: "baobiao",
+                component: () =>
+                  import("../pages/librarytube/OfficeList1/baobiao.vue")
+              }
+            ]
           },
           {
             path: "/librarytube/storage", //办公耗材入库
             name: "storage",
-            component: () => import("../pages/librarytube/storage/index.vue")
+            component: () => import("../pages/librarytube/storage/index.vue"),
+            redirect: "/librarytube/storage/shenpi",
+            children: [
+              {
+                path: "/librarytube/storage/shenpi", //办公耗材入库审批
+                name: "shenpi",
+                component: () =>
+                  import("../pages/librarytube/storage/shenpi.vue")
+              },
+              {
+                path: "/librarytube/storage/baobiao", //办公耗材入库报表
+                name: "shenpi",
+                component: () =>
+                  import("../pages/librarytube/storage/baobiao.vue")
+              }
+            ]
           },
           {
             path: "/librarytube/outLibrary", //办公耗材领用
             name: "outLibrary",
-            component: () => import("../pages/librarytube/outLibrary/index.vue")
+            component: () =>
+              import("../pages/librarytube/outLibrary/index.vue"),
+            redirect: "/librarytube/outLibrary/shenpi",
+            children: [
+              {
+                path: "/librarytube/outLibrary/shenpi", //办公耗材领用审批
+                name: "shenpi",
+                component: () =>
+                  import("../pages/librarytube/outLibrary/shenpi.vue")
+              },
+              {
+                path: "/librarytube/outLibrary/baobiao", //办公耗材领用报表
+                name: "baobiao",
+                component: () =>
+                  import("../pages/librarytube/outLibrary/baobiao.vue")
+              }
+            ]
           },
           {
             path: "/librarytube/returnLibrary", //办公耗材退库
             name: "returnLibrary",
             component: () =>
-              import("../pages/librarytube/returnLibrary/index.vue")
+              import("../pages/librarytube/returnLibrary/index.vue"),
+            redirect: "/librarytube/returnLibrary/shenpi",
+            children: [
+              {
+                path: "/librarytube/returnLibrary/shenpi", //办公耗材退库审批
+                name: "shenpi",
+                component: () =>
+                  import("../pages/librarytube/returnLibrary/shenpi.vue")
+              },
+              {
+                path: "/librarytube/returnLibrary/baobiao", //办公耗材退库报表
+                name: "baobiao",
+                component: () =>
+                  import("../pages/librarytube/returnLibrary/baobiao.vue")
+              }
+            ]
           },
           {
             path: "/librarytube/Allocate", //办公耗材调拨
             name: "Allocate",
-            component: () => import("../pages/librarytube/Allocate/index.vue")
+            component: () => import("../pages/librarytube/Allocate/index.vue"),
+            redirect: "/librarytube/Allocate/shenpi",
+            children: [
+              {
+                path: "/librarytube/Allocate/shenpi", //办公耗材调拨审批
+                name: "shenpi",
+                component: () =>
+                  import("../pages/librarytube/Allocate/shenpi.vue")
+              },
+              {
+                path: "/librarytube/Allocate/baobiao", //办公耗材调拨报表
+                name: "baobiao",
+                component: () =>
+                  import("../pages/librarytube/Allocate/baobiao.vue")
+              }
+            ]
           },
           {
             path: "/librarytube/peopleOut", //数据报表
@@ -193,8 +269,8 @@ const routes = [
           },
           {
             path: "/purchase/materialApply", //付款申请
-            name: "appIndex",
-            component: () => import("../pages/librarytube/OfficeList/index.vue")
+            name: "materialApply",
+            component: () => import("../pages/purchase/materialApply/index.vue")
           },
           {
             path: "/purchase/collectionReport", //统计报表

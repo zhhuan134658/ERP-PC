@@ -94,9 +94,12 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="申请人:">
-                <div class="el-input el-input--suffix names" @click="addManyP1">
-                  {{ formInline.namesa }}
-                </div>
+                <el-input
+                  @focus="addManyP1"
+                  v-model="formInline.namesa"
+                  clearable
+                  placeholder="请输入"
+                ></el-input>
               </el-form-item>
 
               <el-form-item label="项目性质:">
@@ -2685,7 +2688,7 @@ export default {
 
 <style lang="less" scoped>
 #projectApprovalList {
-  padding: 20px;
+//   padding: 20px;
 }
 .demo-form-inline {
   display: flex;
@@ -2711,6 +2714,8 @@ export default {
 }
 .hlBottom {
   width: 1240px !important;
+
+  margin: auto;
   .el-select,
   .el-input .el-input__inner {
     width: 280px;

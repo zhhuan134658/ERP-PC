@@ -26,7 +26,7 @@ export default {};
   .appHeaderLeft {
     display: flex;
     > div:nth-child(1) {
-      background-color: #409eff;
+    //   background-color: #409eff;
       width: 200px;
       border: 1px solid #409eff;
       box-sizing: border-box;

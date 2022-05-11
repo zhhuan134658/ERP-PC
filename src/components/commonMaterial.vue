@@ -41,7 +41,7 @@
           <el-table-column type="selection" width="55"> </el-table-column>
           <el-table-column prop="number" label="物品编码" align="left">
           </el-table-column>
-          <el-table-column prop="name" label="物品名称" align="left">
+          <el-table-column prop="name" label="物资名称" align="left">
           </el-table-column>
           <el-table-column prop="type_name" label="物品类型" align="left">
           </el-table-column>
@@ -82,7 +82,7 @@
 <script>
 export default {
   props: {
-    isClose: Number
+    isClose: Number,
   },
   data() {
     return {
@@ -92,13 +92,13 @@ export default {
       pagesize: 10,
       defaultProps: {
         children: "children",
-        label: "name"
+        label: "name",
       },
       houseList: [],
       conSearch: "",
       listNodeID: "0",
 
-      multipleSelection: []
+      multipleSelection: [],
     };
   },
   methods: {
@@ -109,21 +109,21 @@ export default {
     getBasicList() {
       this.$axios
         .post("/project/materialTypeList", {
-          name: ""
+          name: "",
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.AbasicList = [
               {
                 id: "0",
                 pid: "0",
                 name: "物资类型",
-                children: res.data.data
-              }
+                children: res.data.data,
+              },
             ];
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -147,9 +147,9 @@ export default {
           name: this.conSearch,
           page: this.currentPage,
           type: this.listNodeID,
-          number: this.pagesize
+          number: this.pagesize,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.total = res.data.count;
             this.houseList = res.data.data;
@@ -161,14 +161,14 @@ export default {
             this.$message({
               type: "warning",
               message: res.data.msg,
-              duration: 1500
+              duration: 1500,
             });
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
-    }
+    },
   },
   created() {
     this.getList();
@@ -186,8 +186,8 @@ export default {
           this.$refs.multipleTable.clearSelection();
         });
       },
-      immediate: true
-    }
-  }
+      immediate: true,
+    },
+  },
 };
 </script>

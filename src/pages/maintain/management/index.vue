@@ -294,7 +294,7 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
                   </el-table-column>
                   <el-table-column prop="number" label="物品编码" align="left">
                   </el-table-column>
-                  <el-table-column prop="name" label="物品名称" align="left">
+                  <el-table-column prop="name" label="物资名称" align="left">
                   </el-table-column>
                   <el-table-column
                     prop="ppsite"
@@ -472,7 +472,7 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
             ref="AddUserForm"
             label-width="126px"
           >
-            <el-tabs v-model="activeNewName" type="border-card">
+            <el-tabs v-model="activeNewName">
               <el-tab-pane :label="newDialogTitle + '位置'" name="basic">
                 <div class="dBasicInfo">
                   <el-form-item label="位置编号：" prop="" class="dRemarkList">
@@ -684,7 +684,7 @@ export default {
         name: [
           {
             required: true,
-            message: "请输入物品名称",
+            message: "请输入物资名称",
             trigger: "blur",
           },
         ],

@@ -1006,7 +1006,7 @@ export default {
         name: [
           {
             required: true,
-            message: "请输入物品名称",
+            message: "请输入物资名称",
             trigger: "blur",
           },
         ],

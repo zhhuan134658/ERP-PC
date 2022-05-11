@@ -453,5 +453,63 @@ export default {
     dd.error(function(err) {
       console.log(err);
     });
+  },
+  async commonAllPro() {
+    try {
+      const res = await axios.post("/project/projectInfoRegisterZbList");
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async commonAllaccount() {
+    try {
+      const res = await axios.post("/task/accountselect");
+      return res.data.content;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async commonAlltouProjectType() {
+    try {
+      const res = await axios.post("/spread/touProjectType");
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async commonAllProjece() {
+    try {
+      const res = await axios.post("/spread/projectNature");
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async commonAllProjece1() {
+    try {
+      const res = await axios.post("/spread/touprojectNature");
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async commontouProjectType() {
+    try {
+      const res = await axios.post("/projecttwo/zkProjectAllList");
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async commontouProjectType1() {
+    try {
+      const res = await axios.post("/projecttwo/zkProjectAllList", {
+        type: "all"
+      });
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
