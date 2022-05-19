@@ -61,7 +61,7 @@
                 >新增</el-button
               >
 
-              <el-dropdown
+              <!-- <el-dropdown
                 @command="handleCommand"
                 trigger="click"
                 size="medium"
@@ -77,9 +77,9 @@
                   <el-dropdown-item command="c">云入库(0)</el-dropdown-item>
                   <el-dropdown-item command="d">采购入库(12)</el-dropdown-item>
                 </el-dropdown-menu>
-              </el-dropdown>
+              </el-dropdown> -->
 
-              <el-dropdown
+              <!-- <el-dropdown
                 @command="handleCommand1"
                 trigger="click"
                 size="medium"
@@ -98,7 +98,7 @@
                   <el-dropdown-item command="e">借出归还</el-dropdown-item>
                   <el-dropdown-item command="f">变更领用人</el-dropdown-item>
                 </el-dropdown-menu>
-              </el-dropdown>
+              </el-dropdown> -->
 
               <el-dropdown
                 @command="editCommand"
@@ -117,7 +117,7 @@
                 </el-dropdown-menu>
               </el-dropdown>
 
-              <el-dropdown
+              <!-- <el-dropdown
                 @command="handleCommand"
                 trigger="click"
                 size="medium"
@@ -133,9 +133,9 @@
                   <el-dropdown-item command="b">打印入库单</el-dropdown-item>
                   <el-dropdown-item command="b">打印领用单</el-dropdown-item>
                 </el-dropdown-menu>
-              </el-dropdown>
+              </el-dropdown> -->
 
-              <el-dropdown
+              <!-- <el-dropdown
                 @command="handleCommand"
                 trigger="click"
                 size="medium"
@@ -151,7 +151,7 @@
                   <el-dropdown-item command="b">导出选择资产</el-dropdown-item>
                   <el-dropdown-item command="b">导出全部资产</el-dropdown-item>
                 </el-dropdown-menu>
-              </el-dropdown>
+              </el-dropdown> -->
             </div>
             <div class="mmbRight"></div>
           </el-row>
@@ -212,16 +212,26 @@
             >
               <el-form-item
                 label="领用人姓名："
+                prop="lycontent"
+                class="dRemarkList"
+                style="width: 31%"
+              >
+                <div class="DDselect" @click="DDselect('l')">
+                  {{ addUserForm.lyuserid ? addUserForm.lyuserid.name : "" }}
+                </div>
+              </el-form-item>
+              <!-- <el-form-item
+                label="领用人姓名："
                 prop="name"
                 style="width: 30%"
                 class="dRemarkList"
               >
                 <el-input
-                  v-model="addUserForm.lyusername"
+                  v-model="addUserForm.lyuserid"
                   placeholder="请输入人员姓名"
                   maxlength="50"
                 ></el-input>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 class="searchTime"
                 label="领用日期:"
@@ -230,6 +240,8 @@
               >
                 <el-date-picker
                   v-model="addUserForm.lytime"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
                   style="width: 165px"
@@ -237,30 +249,26 @@
               </el-form-item>
               <el-form-item
                 label="处理人姓名："
-                prop="name"
-                style="width: 30%"
+                prop="lycontent"
                 class="dRemarkList"
+                style="width: 31%"
               >
-                <el-input
-                  v-model="addUserForm.clusername"
-                  placeholder="请输入人员姓名"
-                  maxlength="50"
-                ></el-input>
+                <div class="DDselect" @click="DDselect('c')">
+                  {{ addUserForm.cluserid ? addUserForm.cluserid.name : "" }}
+                </div>
               </el-form-item>
+
               <el-form-item
-                style="width: 30%"
-                label="使用部门："
+                label="使用部门:"
                 prop="syorgid"
                 class="dRemarkList"
+                style="width: 31%"
               >
-                <el-select
-                  v-model="addUserForm.syorgid"
-                  placeholder="请选择使用公司"
-                >
-                  <el-option label="测试部门" style="width: 165px" value="1">
-                  </el-option>
-                </el-select>
+                <div class="DDselect" @click="DDorg('1')">
+                  {{ addUserForm.syorgid ? addUserForm.syorgid.name : "" }}
+                </div>
               </el-form-item>
+
               <el-form-item
                 style="width: 30%"
                 label="使用项目："
@@ -271,24 +279,48 @@
                   v-model="addUserForm.xmid"
                   placeholder="请选择使用项目"
                 >
-                  <el-option label="测试项目" style="width: 165px" value="1">
-                  </el-option>
+                  <el-option
+                    v-for="(item, index) in allProjectList"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item
-                style="width: 30%"
-                label="领用后位置:"
-                prop="extendone"
-                class="dRemarkList"
+                label="领用后位置"
+                class="dbasicList upOrg"
+                style="width: 30%; margin: 0"
               >
-                <el-select
-                  v-model="addUserForm.extendone"
-                  placeholder="请选择使用项目"
+                <el-button
+                  @click="selectAddCorp('in')"
+                  plain
+                  style="width: 165px"
                 >
-                  <el-option label="测试项目" style="width: 165px" value="1">
-                  </el-option>
-                </el-select>
+                  <span>{{ addUserForm.extendone || "" }}</span>
+                  <i class="el-icon-arrow-down el-icon--right"></i>
+                </el-button>
+                <div class="addNewDiv" v-if="newView">
+                  <div class="addNewMain">
+                    <div class="addNewList">
+                      <el-tree
+                        :data="LastList"
+                        show-checkbox
+                        :default-expand-all="false"
+                        :expand-on-click-node="false"
+                        node-key="id"
+                        ref="ftree"
+                        highlight-current
+                        check-strictly
+                        :props="defaultProps"
+                        @check="handleNewClick"
+                      >
+                      </el-tree>
+                    </div>
+                  </div>
+                </div>
               </el-form-item>
+
               <el-form-item
                 prop="remark"
                 style="width: 30%"
@@ -330,6 +362,8 @@
               >
                 <el-date-picker
                   v-model="addUserForm.tktime"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
                   style="width: 165px"
@@ -348,19 +382,35 @@
                 ></el-input>
               </el-form-item>
               <el-form-item
+                label="使用部门:"
+                prop="syorgid"
+                class="dRemarkList"
+                style="width: 31%"
+              >
+                <div class="DDselect" @click="DDorg('2')">
+                  {{ addUserForm.extendone ? addUserForm.extendone.name : "" }}
+                </div>
+              </el-form-item>
+
+              <!-- <el-form-item
                 style="width: 30%"
                 label="退库后使用部门"
-                prop="extendone"
+                prop="syorgid"
                 class="dRemarkList"
               >
                 <el-select
                   v-model="addUserForm.extendone"
-                  placeholder="请选择使用公司"
+                  placeholder="请选择退库后使用部门"
                 >
-                  <el-option label="测试部门" style="width: 165px" value="1">
-                  </el-option>
+                  <el-option
+                    v-for="(item, index) in allSupplier"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
                 </el-select>
-              </el-form-item>
+              </el-form-item> -->
+
               <el-form-item
                 style="width: 30%"
                 label="使用项目："
@@ -371,24 +421,48 @@
                   v-model="addUserForm.xmid"
                   placeholder="请选择使用项目"
                 >
-                  <el-option label="测试项目" style="width: 165px" value="1">
-                  </el-option>
+                  <el-option
+                    v-for="(item, index) in allProjectList"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item
-                style="width: 30%"
-                label="退库所在位置:"
-                prop="tkadress"
-                class="dRemarkList"
+                label="退库所在位置"
+                class="dbasicList upOrg"
+                style="width: 30%; margin: 0"
               >
-                <el-select
-                  v-model="addUserForm.tkadress"
-                  placeholder="请选择使用项目"
+                <el-button
+                  @click="selectAddCorp('out')"
+                  plain
+                  style="width: 165px"
                 >
-                  <el-option label="测试项目" style="width: 165px" value="1">
-                  </el-option>
-                </el-select>
+                  <span>{{ addUserForm.tkadress || "" }}</span>
+                  <i class="el-icon-arrow-down el-icon--right"></i>
+                </el-button>
+                <div class="addNewDiv" v-if="newAddView">
+                  <div class="addNewMain">
+                    <div class="addNewList">
+                      <el-tree
+                        :data="LastList"
+                        show-checkbox
+                        :default-expand-all="false"
+                        :expand-on-click-node="false"
+                        node-key="id"
+                        ref="ftree"
+                        highlight-current
+                        check-strictly
+                        :props="defaultProps"
+                        @check="handleNewaddClick"
+                      >
+                      </el-tree>
+                    </div>
+                  </div>
+                </div>
               </el-form-item>
+
               <el-form-item
                 prop="tkremark"
                 style="width: 30%"
@@ -527,6 +601,8 @@
           <el-form-item prop="starttime">
             <el-date-picker
               v-model="searchFormData.starttime"
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
               type="date"
               placeholder="购置起租开始日期"
             >
@@ -535,6 +611,8 @@
           <el-form-item prop="stoptime">
             <el-date-picker
               v-model="searchFormData.stoptime"
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
               type="date"
               placeholder="购置起租结束日期填"
             >
@@ -592,6 +670,8 @@ export default {
   },
   data() {
     return {
+      allProjectList: [],
+      allSupplier: [],
       activeindex: 0,
       toptitleList: [{ name: "派发" }, { name: "退库" }],
       showName: "派发", //设置显示字段 唯一标识
@@ -634,10 +714,9 @@ export default {
         xmid: "", //项目id
         // 领用
         lyuserid: "", //领用人
-        lyusername: "",
+
         lytime: "", //领用日期
         cluserid: "", //处理人
-        clusername: "", //处理人
 
         syorgid: "", //使用部门
         extendone: "", //领用后位置
@@ -650,13 +729,13 @@ export default {
 
         // 退库
 
-        tknumber: "退库单号",
-        tktime: "退库日期",
+        tknumber: "", //退库单号
+        tktime: "", //退库日期
         // cluserid: "处理人",
         // clusername: "处理人",
-        tkadress: "退库所在位置",
-        tkremark: "退库备注",
-        extendone: "退库后使用部门",
+        tkadress: "", //退库所在位置
+        tkremark: "", //退库备注
+        extendone: "", //退库后使用部门
       },
       //!分割线
       multSelectData1: [],
@@ -721,6 +800,7 @@ export default {
       newView: false,
       newAddView: false,
       noLastList: [],
+      LastList: [],
       noLastList1: [],
       manySelectData: [],
 
@@ -732,6 +812,131 @@ export default {
     };
   },
   methods: {
+    DDorg() {
+      const that = this;
+      dd.ready(function () {
+        dd.biz.contact.departmentsPicker({
+          title: "测试标题", //标题
+          corpId: that.$store.state.cid, //企业的corpId
+          multiple: false, //是否多选
+          limitTips: "超出了", //超过限定人数返回提示
+          maxDepartments: 100, //最大选择部门数量
+          pickedDepartments: [], //已选部门
+          disabledDepartments: [], //不可选部门
+          requiredDepartments: [], //必选部门（不可取消选中状态）
+          appId: "", //微应用的Id
+          permissionType: "GLOBAL", //选人权限，目前只有GLOBAL这个参数
+          onSuccess: function (result) {
+            if (val == "1") {
+              that.addUserForm.syorgid = result.departments[0];
+            } else if (val == "2") {
+              that.addUserForm.extendone = result.departments[0];
+            }
+          },
+          onFail: function (err) {},
+        });
+      });
+    },
+    DDselect(val) {
+      console.log("789798");
+      const that = this;
+      dd.ready(function () {
+        dd.biz.contact.complexPicker({
+          title: "通讯录", //标题
+          corpId: that.$store.state.cid, //企业的corpId
+          multiple: false, //是否多选
+          limitTips: "超出了", //超过限定人数返回提示
+          maxUsers: 99, //最大可选人数
+          pickedUsers: [], //已选用户
+          pickedDepartments: [], //已选部门
+          disabledUsers: [], //不可选用户
+          disabledDepartments: [], //不可选部门
+          requiredUsers: [], //必选用户（不可取消选中状态）
+          requiredDepartments: [], //必选部门（不可取消选中状态）
+          appId: "", //微应用的Id
+          permissionType: "GLOBAL", //可添加权限校验，选人权限，目前只有GLOBAL这个参数
+          responseUserOnly: true, //返回人，或者返回人和部门
+          startWithDepartmentId: 0, //仅支持0和-1
+          onSuccess: function (result) {
+            if (val === "l") {
+              that.addUserForm.lyuserid = result.lyuserid[0];
+            } else if (val === "c") {
+              that.addUserForm.cluserid = result.users[0];
+            } else if (val === "jy") {
+              that.addUserForm.userid = result.users[0];
+            } else if (val === "cl") {
+              that.addUserForm.cluserid = result.users[0];
+            }
+          },
+          onFail: function (err) {
+            console.log(err);
+          },
+        });
+      });
+      dd.error(function (err) {
+        console.log(err);
+      });
+    },
+    handleNewaddClick(a) {
+      console.log(a);
+      this.addUserForm.tkadress = a.name;
+      //   this.basicAddForm.pid = a.id;
+      this.newAddView = false;
+    },
+    selectAddCorp(val) {
+      if (val === "in") {
+        this.newView = !this.newView;
+      } else if (val === "out") {
+        this.newAddView = !this.newAddView;
+      }
+      this.getBasicList();
+    },
+    handleNewClick(a) {
+      console.log(a);
+      this.addUserForm.extendone = a.name;
+      //   this.basicAddForm.pid = a.id;
+      this.newView = false;
+    },
+    getBasicList() {
+      //   this.$axios
+      //     .post("/erp_check/assetxilatypelist", {
+      //       corp_id: this.$store.state.cid,
+      //     })
+      //     .then((res) => {
+      //       if (res.data.code == 1) {
+      //         this.noLastList = [
+      //           {
+      //             id: 0,
+      //             pid: "0",
+      //             name: "固定资产",
+      //             children: res.data.content,
+      //           },
+      //         ];
+      //       }
+      //     })
+      //     .catch(function (error) {
+      //       console.log(error);
+      //     });
+      this.$axios
+        .post("/erp_check/addressxilatypelist", {
+          corp_id: this.$store.state.cid,
+        })
+        .then((res) => {
+          if (res.data.code == 1) {
+            this.LastList = [
+              {
+                id: 0,
+                pid: "0",
+                name: "固定资产",
+                children: res.data.content,
+              },
+            ];
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     activechange(index) {
       this.activeindex = index;
       this.pierceTableid = +new Date();
@@ -1083,6 +1288,14 @@ export default {
   },
   created() {
     // this.$refs.child.getTitleList(); //设置显示字段
+    this.$utils.commonAllPro().then((res) => {
+      this.allProjectList = res;
+      console.log("9999", res); //res为公共接口返回的数据;返回的数据为utils.js中return的数据
+    });
+    this.$utils.commonAlltouSupplier().then((res) => {
+      this.allSupplier = res;
+      console.log("9999", res); //res为公共接口返回的数据;返回的数据为utils.js中return的数据
+    });
   },
   computed: {},
   watch: {
@@ -1098,17 +1311,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.el-select-dropdown {
+  width: 160px !important;
+}
 #basicInfo #contactCorp .phDialog .el-dialog__body .phdMain,
 #system #contactCorp .phDialog .el-dialog__body .phdMain,
 #basicInfo #materialBasic .phDialog .el-dialog__body .phdMain,
 #system #materialBasic .phDialog .el-dialog__body .phdMain {
   height: 100%;
 }
-#basicInfo #materialBasic .upOrg .addNewDiv,
-#system #materialBasic .upOrg .addNewDiv {
-  position: relative;
-  top: 0;
-}
+// #basicInfo #materialBasic .upOrg .addNewDiv,
+// #system #materialBasic .upOrg .addNewDiv {
+//   position: relative;
+//   top: 0;
+// }
 .headerBtn {
   display: flex;
   text-align: center;

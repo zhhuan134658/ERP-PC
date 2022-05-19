@@ -27,6 +27,8 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
               <el-form-item label="开始日期:">
                 <el-date-picker
                   v-model="formInline.start_time"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
                   value-format="yyyy-MM-dd"
@@ -36,6 +38,8 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
               <el-form-item label="结束日期:">
                 <el-date-picker
                   v-model="formInline.end_time"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
                   value-format="yyyy-MM-dd"
@@ -68,6 +72,8 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
               <el-form-item label="返现时间:">
                 <el-date-picker
                   v-model="formInline.ding_back_time"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
                   value-format="yyyy-MM-dd"
@@ -93,9 +99,10 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
               <el-form-item label="代理商返现时间:">
                 <el-date-picker
                   v-model="formInline.agent_back_time"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
-                  value-format="yyyy-MM-dd"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -264,9 +271,17 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
             label="发票状态"
           >
             <template slot-scope="scope">
-              <span v-if="scope.row.b_status == 2" @click="jupDetail(scope.row.id)">已开发票</span>
-              <span v-else-if="scope.row.b_status == 1" @click="jupDetail(scope.row.id)">开票中</span>
-              <span v-else-if="scope.row.b_status == 0" >未开票</span>
+              <span
+                v-if="scope.row.b_status == 2"
+                @click="jupDetail(scope.row.id)"
+                >已开发票</span
+              >
+              <span
+                v-else-if="scope.row.b_status == 1"
+                @click="jupDetail(scope.row.id)"
+                >开票中</span
+              >
+              <span v-else-if="scope.row.b_status == 0">未开票</span>
               <span v-else>数据有误</span>
             </template>
           </el-table-column>
@@ -338,6 +353,7 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
               v-model="bindForm.ding_back_time"
               type="date"
               placeholder="选择日期"
+              format="yyyy 年 MM 月 dd 日"
               value-format="yyyy-MM-dd"
             >
             </el-date-picker>
@@ -356,6 +372,7 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
               v-model="bindForm.agent_back_time"
               type="date"
               placeholder="选择日期"
+              format="yyyy 年 MM 月 dd 日"
               value-format="yyyy-MM-dd"
             >
             </el-date-picker>
@@ -442,7 +459,7 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
               :style="{
                 display: 'block',
                 maxWidth: '120px',
-                maxHeight: '90px'
+                maxHeight: '90px',
               }"
             />
           </el-descriptions-item>
@@ -470,11 +487,11 @@ export default {
   props: {
     type: {
       type: String,
-      default: "zk"
-    }
+      default: "zk",
+    },
   },
   components: {
-    ImgUpload
+    ImgUpload,
   },
   data() {
     return {
@@ -489,7 +506,7 @@ export default {
         customer_source: "",
         customer_person: "",
         agent_back_time: "",
-        status: ""
+        status: "",
       },
       loading: false,
       bindVisible: false,
@@ -498,33 +515,33 @@ export default {
         uploadInvoice: "/order/up_order",
         orderList: "/order/order",
         orderAddBind: "/order/order_news_add",
-        invoiceDetail: "/order/invoicingInfoDetails"
+        invoiceDetail: "/order/invoicingInfoDetails",
       },
       apiUrl: {
         zk: {
           uploadInvoice: "/order/up_order",
           orderList: "/order/order",
           orderAddBind: "/order/order_news_add",
-          invoiceDetail: "/order/invoicingInfoDetails"
+          invoiceDetail: "/order/invoicingInfoDetails",
         },
         labor: {
           uploadInvoice: "/order/laowuup_order",
           orderList: "/order/laowuorder",
           orderAddBind: "/order/laowuorder_news_add",
-          invoiceDetail: "/order/laowuordercontentfapiao"
+          invoiceDetail: "/order/laowuordercontentfapiao",
         },
         uniteConstruct: {
           uploadInvoice: "/order/xiezhuup_order",
           orderList: "/order/xiejianorder",
           orderAddBind: "/order/xiezhuorder_news_add",
-          invoiceDetail: "/order/xiezhuordercontentfapiao"
+          invoiceDetail: "/order/xiezhuordercontentfapiao",
         },
         cert: {
           uploadInvoice: "/order/zhengshuup_order",
           orderList: "/order/zhengshuorder",
           orderAddBind: "/order/zhengshuorder_news_add",
-          invoiceDetail: "/order/zhengshuordercontentfapiao"
-        }
+          invoiceDetail: "/order/zhengshuordercontentfapiao",
+        },
       },
       bindForm: {
         id: "",
@@ -535,11 +552,11 @@ export default {
         customer_source: "", //客户来源
         customer_person: "", //客服人员
         agent_back_time: "", //代理商返现时间
-        agent_back_money: "" //代理商返现金额
+        agent_back_money: "", //代理商返现金额
       },
       uploadInvoiceVisible: false,
       invoiceForm: {
-        invoiceNumber: ""
+        invoiceNumber: "",
       },
       upImgList: [],
       licenceImg: [],
@@ -560,7 +577,7 @@ export default {
         recipient_address: "",
         invoice_status: "",
         image: "",
-        recipient_email: ""
+        recipient_email: "",
       },
       currentPage: 1,
       total: 0,
@@ -576,24 +593,24 @@ export default {
       currentLabel: "",
       editForm: {
         label: "",
-        value: ""
+        value: "",
       },
       editingRow: "",
       showExtendEdit: false,
       extendForm: {
         extend_first: "",
-        extend_two: ""
+        extend_two: "",
       },
       checkedLists: [],
       titleList: [],
       allProjectList: [],
-      subTotalList: []
+      subTotalList: [],
     };
   },
   methods: {
-       jupDetail(data) {
-            this.$router.push({ path: '/spreadsheet/Invoice', query: { data } });
-        },
+    jupDetail(data) {
+      this.$router.push({ path: "/spreadsheet/Invoice", query: { data } });
+    },
     getMult(val) {
       this.multSelectData = val;
     },
@@ -616,7 +633,7 @@ export default {
       const uploadRes = await this.$axios.post(this.uploadUrl.uploadInvoice, {
         id: uploadId,
         invoice_number: this.invoiceForm.invoiceNumber,
-        invoice_image: uploadImg
+        invoice_image: uploadImg,
       });
       if (uploadRes.data.code === 1) {
         this.$message.success("上传成功");
@@ -643,7 +660,7 @@ export default {
     },
     async getInvoiceDetail(id) {
       const res = await this.$axios.post(this.uploadUrl.invoiceDetail, {
-        gl_id: id
+        gl_id: id,
       });
       if (res.data.code === 1) {
         this.invoiceDetail = res.data.data;
@@ -679,7 +696,7 @@ export default {
         customer_source: "", //客户来源
         customer_person: "", //客服人员
         agent_back_time: "", //代理商返现时间
-        agent_back_money: "" //代理商返现金额
+        agent_back_money: "", //代理商返现金额
       };
     },
     showBindForm(row) {
@@ -734,7 +751,7 @@ export default {
     async submitExtendEdit() {
       const form = {
         qc_number: this.editForm.value,
-        b_id: this.editForm.label
+        b_id: this.editForm.label,
       };
       const res = await this.$axios.post("/project/qiChuEdit", form);
       if (res.data.code === 1) {
@@ -772,7 +789,7 @@ export default {
         customer_source: "",
         customer_person: "",
         agent_back_time: "",
-        status: ""
+        status: "",
       };
       this.getList();
     },
@@ -786,16 +803,16 @@ export default {
         .post(this.uploadUrl.orderList, {
           page: this.currentPage,
           number: this.pagesize,
-          ...this.formInline
+          ...this.formInline,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.loading = false;
             if (ntype == 1) {
               this.$message({
                 message: "列表刷新成功",
                 type: "success",
-                duration: 1500
+                duration: 1500,
               });
             }
             this.total = res.data.count;
@@ -806,7 +823,7 @@ export default {
             }
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -815,12 +832,12 @@ export default {
       const _this = this;
       _this.$axios
         .post("/project/fileDownloadDel", { path: url })
-        .then(res => {
+        .then((res) => {
           if (res.data.code === 1) {
             return true;
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -830,42 +847,42 @@ export default {
       if (_this.multSelectData.length > 0) {
         _this.$axios
           .post("/project/stockDetailedDownload", {
-            id: JSON.stringify(_this.multSelectData)
+            id: JSON.stringify(_this.multSelectData),
           })
-          .then(res => {
+          .then((res) => {
             if (res.data.code == 1) {
               dd.biz.util.downloadFile({
                 url: res.data.data.url, //要下载的文件的url
                 name: res.data.data.name, //定义下载文件名字
-                onProgress: function() {
+                onProgress: function () {
                   // 文件下载进度回调
                 },
-                onSuccess: function() {
+                onSuccess: function () {
                   _this.deleteExport(res.data.data.path);
                 },
-                onFail: function() {
+                onFail: function () {
                   _this.deleteExport(res.data.data.path);
-                }
+                },
               });
             } else {
               _this.$message({
                 message: res.data.msg,
                 type: "warning",
-                duration: 1500
+                duration: 1500,
               });
             }
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       } else {
         _this.$message({
           message: "请先勾选要导出的数据！",
           type: "warning",
-          duration: 1500
+          duration: 1500,
         });
       }
-    }
+    },
   },
   mounted() {
     this.allProjectList = JSON.parse(this.$store.state.allPro);
@@ -882,15 +899,15 @@ export default {
   },
   watch: {
     "$route.params.type": {
-      handler: function(val) {
+      handler: function (val) {
         this.uploadUrl = this.apiUrl[val];
         this.getList();
       },
       deep: true,
-      immediate: true
-    }
+      immediate: true,
+    },
   },
-  computed: {}
+  computed: {},
 };
 </script>
 <style lang="less" scoped>

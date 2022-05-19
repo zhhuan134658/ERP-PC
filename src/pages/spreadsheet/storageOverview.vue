@@ -21,6 +21,7 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
                   v-model="formInline.start_riqi"
                   type="date"
                   placeholder="选择日期"
+                  format="yyyy 年 MM 月 dd 日"
                   value-format="yyyy-MM-dd"
                 >
                 </el-date-picker>
@@ -30,6 +31,7 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
                   v-model="formInline.end_riqi"
                   type="date"
                   placeholder="选择日期"
+                  format="yyyy 年 MM 月 dd 日"
                   value-format="yyyy-MM-dd"
                 >
                 </el-date-picker>
@@ -154,7 +156,7 @@ export default {
         status: "",
         start_riqi: "",
         end_riqi: "",
-        theme: ""
+        theme: "",
       },
       currentPage: 1,
       total: 0,
@@ -170,18 +172,18 @@ export default {
       currentLabel: "",
       editForm: {
         label: "",
-        value: ""
+        value: "",
       },
       editingRow: "",
       showExtendEdit: false,
       extendForm: {
         extend_first: "",
-        extend_two: ""
+        extend_two: "",
       },
       checkedLists: [],
       titleList: [],
       allProjectList: [],
-      subTotalList: []
+      subTotalList: [],
     };
   },
   methods: {
@@ -231,7 +233,7 @@ export default {
     async submitExtendEdit() {
       const form = {
         qc_number: this.editForm.value,
-        b_id: this.editForm.label
+        b_id: this.editForm.label,
       };
       const res = await this.$axios.post("/project/qiChuEdit", form);
       if (res.data.code === 1) {
@@ -264,7 +266,7 @@ export default {
         status: "",
         start_riqi: "",
         end_riqi: "",
-        theme: ""
+        theme: "",
       };
       this.getList();
     },
@@ -279,15 +281,15 @@ export default {
           number: this.pagesize,
           name: this.formInline.name,
           start_riqi: this.formInline.start_riqi,
-          end_riqi: this.formInline.end_riqi
+          end_riqi: this.formInline.end_riqi,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             if (ntype == 1) {
               this.$message({
                 message: "列表刷新成功",
                 type: "success",
-                duration: 1500
+                duration: 1500,
               });
             }
             this.total = res.data.count;
@@ -298,7 +300,7 @@ export default {
             }
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -307,12 +309,12 @@ export default {
       const _this = this;
       _this.$axios
         .post("/project/fileDownloadDel", { path: url })
-        .then(res => {
+        .then((res) => {
           if (res.data.code === 1) {
             return true;
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -322,42 +324,42 @@ export default {
       if (_this.multSelectData.length > 0) {
         _this.$axios
           .post("/project/stockDetailedDownload", {
-            id: JSON.stringify(_this.multSelectData)
+            id: JSON.stringify(_this.multSelectData),
           })
-          .then(res => {
+          .then((res) => {
             if (res.data.code == 1) {
               dd.biz.util.downloadFile({
                 url: res.data.data.url, //要下载的文件的url
                 name: res.data.data.name, //定义下载文件名字
-                onProgress: function() {
+                onProgress: function () {
                   // 文件下载进度回调
                 },
-                onSuccess: function() {
+                onSuccess: function () {
                   _this.deleteExport(res.data.data.path);
                 },
-                onFail: function() {
+                onFail: function () {
                   _this.deleteExport(res.data.data.path);
-                }
+                },
               });
             } else {
               _this.$message({
                 message: res.data.msg,
                 type: "warning",
-                duration: 1500
+                duration: 1500,
               });
             }
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       } else {
         _this.$message({
           message: "请先勾选要导出的数据！",
           type: "warning",
-          duration: 1500
+          duration: 1500,
         });
       }
-    }
+    },
   },
   mounted() {
     this.allProjectList = JSON.parse(this.$store.state.allPro);
@@ -371,17 +373,17 @@ export default {
   computed: {
     pickerStart() {
       return {
-        disabledDate: time => {
+        disabledDate: (time) => {
           let endDateVal = this.formInline.endTime;
           if (endDateVal) {
             return time.getTime() > new Date(endDateVal).getTime();
           }
-        }
+        },
       };
     },
     pickerEnd() {
       return {
-        disabledDate: time => {
+        disabledDate: (time) => {
           let beginDateVal = this.formInline.startTime;
           if (beginDateVal) {
             return (
@@ -389,9 +391,9 @@ export default {
               time.getTime() < new Date(beginDateVal).getTime() - 8.64e7
             );
           }
-        }
+        },
       };
-    }
-  }
+    },
+  },
 };
 </script>

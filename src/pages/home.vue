@@ -415,7 +415,7 @@ export default {
             });
             that.getMenuList();
             that.getLogo();
-            sessionStorage.setItem("errcode", 1);
+            // sessionStorage.setItem("errcode", 1);
             let userData = JSON.parse(JSON.stringify(res.data.data.content));
 
             that.$store.commit("setUname", userData.name);
@@ -453,20 +453,25 @@ export default {
       let newPath = this.$route.path,
         newUrl = "",
         valUrl = "";
+      console.log("99999999", this.$route.path);
       let index = newPath.lastIndexOf("/");
       let valIndex = val.lastIndexOf("/");
+
       newUrl = newPath.substring(0, index + 1);
+
       valUrl = val.substring(0, valIndex + 1);
-      console.log(newUrl, valUrl);
+
+      console.log("valUrl", valUrl);
+      console.log("newUrl", newUrl);
       if (valUrl == "/appIndex8/") {
         if (newUrl == "/appIndex8/") {
           return this.cNameOne;
         } else {
-          return this.cNameTwo;
+          return this.cNameFour;
         }
-      } else if (valUrl.includes("/libraryTube/")) {
+      } else if (valUrl == "/libraryTube/") {
         //库管
-        if (newUrl.includes("/libraryTube/")) {
+        if (newUrl == "/librarytube") {
           console.log("888787");
           return this.cNameOne;
         } else {
@@ -476,8 +481,10 @@ export default {
       } else if (valUrl == "/purchase/") {
         //   采购
         if (newUrl == "/purchase/") {
+          console.log("8887871111");
           return this.cNameOne;
         } else {
+          console.log("888787882222");
           return this.cNameFour;
         }
       } else if (valUrl == "/maintain/") {
@@ -622,7 +629,7 @@ export default {
       _this.$store.commit("setCid", "dingea47c602975497f935c2f4657eb6378f");
       _this.login();
 
-      //  _this.getReady();
+      //_this.getReady();
     } else {
       _this.getReady();
     }

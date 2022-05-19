@@ -150,12 +150,14 @@
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-input
+                <el-date-picker
                   v-model="addUserForm.starttime"
-                  placeholder="请选择日期"
-                  maxlength="50"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
+                  type="date"
+                  placeholder="选择日期"
                   style="width: 165px"
-                ></el-input>
+                ></el-date-picker>
               </el-form-item>
 
               <el-form-item
@@ -179,12 +181,9 @@
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-input
-                  v-model="addUserForm.bxuserid"
-                  placeholder="请选择报修人"
-                  maxlength="50"
-                  style="width: 165px"
-                ></el-input>
+                <div class="DDselect" @click="DDselect('b')">
+                  {{ addUserForm.bxusername }}
+                </div>
               </el-form-item>
 
               <el-form-item
@@ -193,12 +192,17 @@
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-input
+                <el-select
                   v-model="addUserForm.userteam"
-                  placeholder="请选择使用部门"
-                  maxlength="50"
-                  style="width: 165px"
-                ></el-input>
+                  placeholder="请选择保修人部门"
+                >
+                  <el-option
+                    v-for="(item, index) in allSupplier"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
               </el-form-item>
               <el-form-item
                 label="发起人："
@@ -206,72 +210,71 @@
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-select
-                  v-model="addUserForm.fquserid"
-                  placeholder="请选择管理员"
-                  style="margin-left: "
-                >
-                  <el-option label="管理员" style="width: 165px" value="管理员">
-                  </el-option>
-                </el-select>
+                <div class="DDselect" @click="DDselect('f')">
+                  {{ addUserForm.fqusername }}
+                </div>
               </el-form-item>
-
               <el-form-item
                 label="送修地点"
-                prop="sxaddress"
-                class="dRemarkList"
-                style="width: 31%"
+                class="dbasicList upOrg"
+                style="width: 30%; margin: 0"
               >
-                <el-select
-                  v-model="addUserForm.sxaddress"
-                  placeholder="请选择sxaddress"
-                  style="margin-left: "
+                <el-button
+                  @click="selectAddCorp('in')"
+                  plain
+                  style="width: 165px"
                 >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                  <span>{{ addUserForm.extendone || "" }}</span>
+                  <i class="el-icon-arrow-down el-icon--right"></i>
+                </el-button>
+                <div class="addNewDiv" v-if="newView">
+                  <div class="addNewMain">
+                    <div class="addNewList">
+                      <el-tree
+                        :data="LastList"
+                        show-checkbox
+                        :default-expand-all="false"
+                        :expand-on-click-node="false"
+                        node-key="id"
+                        ref="ftree"
+                        highlight-current
+                        check-strictly
+                        :props="defaultProps"
+                        @check="handleNewClick"
+                      >
+                      </el-tree>
+                    </div>
+                  </div>
+                </div>
               </el-form-item>
+
               <el-form-item
                 label="完成日期："
                 prop="stoptime"
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-select
+                <el-date-picker
                   v-model="addUserForm.stoptime"
-                  placeholder="请选择管理员"
-                  style="margin-left: "
-                >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
+                  type="date"
+                  placeholder="选择日期"
+                  style="width: 165px"
+                ></el-date-picker>
               </el-form-item>
               <el-form-item
-                label="本次维修金额合计:"
+                label="本次维修合计:"
                 prop="wxmoney"
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-select
+                <el-input
                   v-model="addUserForm.wxmoney"
-                  placeholder="请选择管理员"
-                  style="margin-left: "
-                >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                  placeholder="请填写"
+                  maxlength="50"
+                  style="width: 165px"
+                ></el-input>
               </el-form-item>
               <el-form-item
                 label="报修内容:"
@@ -279,18 +282,12 @@
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-select
+                <el-input
                   v-model="addUserForm.bxremark"
-                  placeholder="请选择管理员"
-                  style="margin-left: "
-                >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                  placeholder="请填写"
+                  maxlength="50"
+                  style="width: 165px"
+                ></el-input>
               </el-form-item>
 
               <el-form-item label="报修图片：" prop="remarks">
@@ -504,6 +501,8 @@
           <el-form-item prop="starttime">
             <el-date-picker
               v-model="searchFormData.starttime"
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
               type="date"
               placeholder="购置起租开始日期"
             >
@@ -512,6 +511,8 @@
           <el-form-item prop="stoptime">
             <el-date-picker
               v-model="searchFormData.stoptime"
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
               type="date"
               placeholder="购置起租结束日期填"
             >
@@ -569,6 +570,7 @@ export default {
   },
   data() {
     return {
+      allSupplier: [],
       showName: "派发", //设置显示字段 唯一标识
       wFormVisible: false,
       footerNumList: [],
@@ -604,13 +606,15 @@ export default {
         chengzuorg: "", //所属承租公司
       },
       addUserForm: {
-        corp_id: "", //企业ID
+        corp_id: this.$store.state.cid, //企业ID
         starttime: "", //创建日期
         wxnumber: "", //维修单号
         wxstatus: "", //维修状态
         bxuserid: "", //报修人
+        bxusername: "",
         userteam: "", //报修人部门
         fquserid: "", //发起人
+        fqusername: "", //发起人
         sxaddress: "", //送修地点
         stoptime: "", //完成日期
         bxremark: "", //保修内容
@@ -680,7 +684,7 @@ export default {
       basicGoods: [],
       newView: false,
       newAddView: false,
-      noLastList: [],
+      LastList: [],
       noLastList1: [],
       manySelectData: [],
 
@@ -692,6 +696,98 @@ export default {
     };
   },
   methods: {
+    DDselect(val) {
+      console.log("789798");
+      const that = this;
+      dd.ready(function () {
+        dd.biz.contact.complexPicker({
+          title: "通讯录", //标题
+          corpId: that.$store.state.cid, //企业的corpId
+          multiple: false, //是否多选
+          limitTips: "超出了", //超过限定人数返回提示
+          maxUsers: 99, //最大可选人数
+          pickedUsers: [], //已选用户
+          pickedDepartments: [], //已选部门
+          disabledUsers: [], //不可选用户
+          disabledDepartments: [], //不可选部门
+          requiredUsers: [], //必选用户（不可取消选中状态）
+          requiredDepartments: [], //必选部门（不可取消选中状态）
+          appId: "", //微应用的Id
+          permissionType: "GLOBAL", //可添加权限校验，选人权限，目前只有GLOBAL这个参数
+          responseUserOnly: true, //返回人，或者返回人和部门
+          startWithDepartmentId: 0, //仅支持0和-1
+          onSuccess: function (result) {
+            if (val === "b") {
+              that.addUserForm.bxuserid = result.users[0].emplId;
+              that.addUserForm.bxusername = result.users[0].name;
+            } else if (val === "f") {
+              that.addUserForm.fquserid = result.users[0].emplId;
+              that.addUserForm.fqusername = result.users[0].name;
+            }
+          },
+          onFail: function (err) {
+            console.log(err);
+          },
+        });
+      });
+      dd.error(function (err) {
+        console.log(err);
+      });
+    },
+    selectAddCorp(val) {
+      if (val === "in") {
+        this.newView = !this.newView;
+      } else if (val === "out") {
+        this.newAddView = !this.newAddView;
+      }
+      this.getBasicList();
+    },
+    handleNewClick(a) {
+      console.log(a);
+      this.addUserForm.extendone = a.name;
+      //   this.basicAddForm.pid = a.id;
+      this.newView = false;
+    },
+    getBasicList() {
+      //   this.$axios
+      //     .post("/erp_check/assetxilatypelist", {
+      //       corp_id: this.$store.state.cid,
+      //     })
+      //     .then((res) => {
+      //       if (res.data.code == 1) {
+      //         this.noLastList = [
+      //           {
+      //             id: 0,
+      //             pid: "0",
+      //             name: "固定资产",
+      //             children: res.data.content,
+      //           },
+      //         ];
+      //       }
+      //     })
+      //     .catch(function (error) {
+      //       console.log(error);
+      //     });
+      this.$axios
+        .post("/erp_check/addressxilatypelist", {
+          corp_id: this.$store.state.cid,
+        })
+        .then((res) => {
+          if (res.data.code == 1) {
+            this.LastList = [
+              {
+                id: 0,
+                pid: "0",
+                name: "固定资产",
+                children: res.data.content,
+              },
+            ];
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     wqeasd() {
       console.log("778888", this.$refs.headerChild.checkedList);
     },
@@ -1026,6 +1122,10 @@ export default {
   },
   created() {
     // this.$refs.child.getTitleList(); //设置显示字段
+    this.$utils.commonAlltouSupplier().then((res) => {
+      this.allSupplier = res;
+      console.log("9999", res); //res为公共接口返回的数据;返回的数据为utils.js中return的数据
+    });
   },
   computed: {},
   watch: {

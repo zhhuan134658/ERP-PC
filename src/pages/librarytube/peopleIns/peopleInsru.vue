@@ -1759,11 +1759,13 @@ export default {
 #system #materialBasic .phDialog .el-dialog__body .phdMain {
   height: 100%;
 }
+
 #basicInfo #materialBasic .upOrg .addNewDiv,
 #system #materialBasic .upOrg .addNewDiv {
   position: relative;
   top: 0;
 }
+
 .headerBtn {
   display: flex;
   text-align: center;

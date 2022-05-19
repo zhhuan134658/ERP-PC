@@ -51,7 +51,7 @@
                 >新增</el-button
               >
 
-              <el-dropdown
+              <!-- <el-dropdown
                 @command="handleCommand"
                 trigger="click"
                 size="medium"
@@ -67,9 +67,9 @@
                   <el-dropdown-item command="c">云入库(0)</el-dropdown-item>
                   <el-dropdown-item command="d">采购入库(12)</el-dropdown-item>
                 </el-dropdown-menu>
-              </el-dropdown>
+              </el-dropdown> -->
 
-              <el-dropdown
+              <!-- <el-dropdown
                 @command="handleCommand1"
                 trigger="click"
                 size="medium"
@@ -88,7 +88,7 @@
                   <el-dropdown-item command="e">借出归还</el-dropdown-item>
                   <el-dropdown-item command="f">变更领用人</el-dropdown-item>
                 </el-dropdown-menu>
-              </el-dropdown>
+              </el-dropdown> -->
 
               <el-dropdown
                 @command="editCommand"
@@ -107,7 +107,7 @@
                 </el-dropdown-menu>
               </el-dropdown>
 
-              <el-dropdown
+              <!-- <el-dropdown
                 @command="handleCommand"
                 trigger="click"
                 size="medium"
@@ -123,9 +123,9 @@
                   <el-dropdown-item command="b">打印入库单</el-dropdown-item>
                   <el-dropdown-item command="b">打印领用单</el-dropdown-item>
                 </el-dropdown-menu>
-              </el-dropdown>
+              </el-dropdown> -->
 
-              <el-dropdown
+              <!-- <el-dropdown
                 @command="handleCommand"
                 trigger="click"
                 size="medium"
@@ -141,7 +141,7 @@
                   <el-dropdown-item command="b">导出选择资产</el-dropdown-item>
                   <el-dropdown-item command="b">导出全部资产</el-dropdown-item>
                 </el-dropdown-menu>
-              </el-dropdown>
+              </el-dropdown> -->
             </div>
             <div class="mmbRight"></div>
           </el-row>
@@ -427,6 +427,8 @@
           </el-form-item>
           <el-form-item prop="starttime">
             <el-date-picker
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
               v-model="searchFormData.starttime"
               type="date"
               placeholder="购置起租开始日期"
@@ -435,6 +437,8 @@
           </el-form-item>
           <el-form-item prop="stoptime">
             <el-date-picker
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
               v-model="searchFormData.stoptime"
               type="date"
               placeholder="购置起租结束日期填"

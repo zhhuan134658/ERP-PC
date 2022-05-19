@@ -13,7 +13,12 @@
           >
             <div class="hlBottom">
               <el-form-item label="项目名称:">
-                <el-select
+                <el-input
+                  v-model="formInline.name"
+                  clearable
+                  placeholder="请输入"
+                ></el-input>
+                <!-- <el-select
                   v-model="formInline.name"
                   clearable
                   filterable
@@ -25,7 +30,7 @@
                     :label="item.name"
                     :value="item.name"
                   ></el-option>
-                </el-select>
+                </el-select> -->
               </el-form-item>
               <el-form-item class="searchTime" label="开始时间:">
                 <el-date-picker
@@ -113,20 +118,18 @@
                   <el-option label="联营" value="2"></el-option>
                 </el-select>
               </el-form-item>
-              <div style="text-align: center">
-                <el-button
-                  type="primary"
-                  size="medium"
-                  @click="searchClick"
-                  style="margin-right: 10px"
-                  >搜索</el-button
-                >
-                <el-button plain size="medium" @click="resetClick"
-                  >重置</el-button
-                >
-              </div>
             </div>
           </el-form>
+          <div style="text-align: center; background-color: #fff">
+            <el-button
+              type="primary"
+              size="medium"
+              @click="searchClick"
+              style="margin-right: 10px"
+              >搜索</el-button
+            >
+            <el-button plain size="medium" @click="resetClick">重置</el-button>
+          </div>
         </div>
       </div>
       <div class="mainContent">
@@ -1416,7 +1419,7 @@ export default {
     },
     etPrintableStatus1() {
       this.$axios
-        .post(" /project/projectInfoRegisterZbList", {
+        .post("/project/projectInfoRegisterZbList", {
           type: "all",
         })
         .then((res) => {
@@ -2602,9 +2605,17 @@ export default {
   created() {
     this.getPrintableStatus();
     this.$utils.checkding();
-    this.projectType = JSON.parse(this.$store.state.pType);
+    // this.projectType = JSON.parse(this.$store.state.pType);
+    this.$utils.commonAlltouProjectTypenew().then((res) => {
+      console.log("778945678", res);
+      this.projectType = res;
+    });
+    this.$utils.commonAlltouProjectStatus().then((res) => {
+      console.log("778945678", res);
+      this.projectStatus = res;
+    });
     this.approvalStatus = this.$utils.utilApprovalStatus();
-    this.projectStatus = JSON.parse(this.$store.state.pStatus);
+    // this.projectStatus = JSON.parse(this.$store.state.pStatus);
     this.getProvinceList();
     this.getTitleList();
     this.etPrintableStatus1();
@@ -2688,7 +2699,7 @@ export default {
 
 <style lang="less" scoped>
 #projectApprovalList {
-//   padding: 20px;
+  //   padding: 20px;
 }
 .demo-form-inline {
   display: flex;
@@ -2714,6 +2725,8 @@ export default {
 }
 .hlBottom {
   width: 1240px !important;
+  display: flex;
+  flex-wrap: wrap;
 
   margin: auto;
   .el-select,

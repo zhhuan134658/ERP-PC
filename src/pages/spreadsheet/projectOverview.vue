@@ -368,6 +368,7 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
                 v-model="extendForm.extend_two"
                 type="date"
                 placeholder="选择日期"
+                format="yyyy 年 MM 月 dd 日"
                 value-format="yyyy-MM-dd"
               />
             </el-form-item>

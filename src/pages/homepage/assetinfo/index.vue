@@ -1279,6 +1279,8 @@ export default {
 }
 .hlBottom {
   width: 1240px !important;
+  display: flex;
+  flex-wrap: wrap;
   margin: auto;
   .el-select,
   .el-input {

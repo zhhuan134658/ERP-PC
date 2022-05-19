@@ -147,20 +147,20 @@
               @keyup.enter.native="zsearchClick"
             ></el-input>
           </el-form-item>
-          <div style="text-align: center">
-            <el-button
-              type="primary"
-              size="medium"
-              @click="zsearchClick('formInline')"
-              style="margin-right: 10px"
-              >搜索</el-button
-            >
-            <el-button plain size="medium" @click="resetClick('formInline')"
-              >重置</el-button
-            >
-          </div>
         </div>
       </el-form>
+      <div style="text-align: center; background-color: #fff">
+        <el-button
+          type="primary"
+          size="medium"
+          @click="zsearchClick('formInline')"
+          style="margin-right: 10px"
+          >搜索</el-button
+        >
+        <el-button plain size="medium" @click="resetClick('formInline')"
+          >重置</el-button
+        >
+      </div>
     </div>
   </div>
 </template>

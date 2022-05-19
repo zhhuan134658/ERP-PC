@@ -282,6 +282,7 @@ export default {
     DistributedList: Boolean,
     tableloading: Boolean,
     assetlist: Boolean,
+    lendlist: Boolean,
     hasPrint: {
       type: Boolean,
       default: false,
@@ -313,6 +314,7 @@ export default {
   },
   data: (props) => {
     return {
+      userShow: false,
       options: [
         {
           value: "已结算",

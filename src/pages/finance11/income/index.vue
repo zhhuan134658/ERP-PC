@@ -28,6 +28,7 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
                   v-model="formInline.start_riqi"
                   type="date"
                   placeholder="选择日期"
+                  format="yyyy 年 MM 月 dd 日"
                   value-format="yyyy-MM-dd"
                 >
                 </el-date-picker>
@@ -37,6 +38,7 @@ NorthWind * @Last Modified time: 2022-01-13 09:31:02 */
                   v-model="formInline.end_riqi"
                   type="date"
                   placeholder="选择日期"
+                  format="yyyy 年 MM 月 dd 日"
                   value-format="yyyy-MM-dd"
                 >
                 </el-date-picker>

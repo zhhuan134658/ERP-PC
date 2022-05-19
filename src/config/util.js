@@ -478,6 +478,30 @@ export default {
       console.log(error);
     }
   },
+  async commonAlltouProjectTypenew() {
+    try {
+      const res = await axios.post("/spread/ProjectType");
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async commonAlltouProjectStatus() {
+    try {
+      const res = await axios.post("/spread/projectStatus");
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async commonAlltouSupplier() {
+    try {
+      const res = await axios.post("/project/supplierInfoList");
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
   async commonAllProjece() {
     try {
       const res = await axios.post("/spread/projectNature");

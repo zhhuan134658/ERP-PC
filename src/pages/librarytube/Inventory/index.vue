@@ -148,7 +148,7 @@ NorthWind * @Last Modified time: 2022-01-13 11:09:25 */
 <script>
 import * as dd from 'dingtalk-jsapi';
 import draggable from 'vuedraggable';
-import commonTable from '@/components/commonTable.vue';
+import commonTable from '@/components/commonTablenew.vue';
 import commonSearch from '@/components/commonSearch.vue';
 
 export default {

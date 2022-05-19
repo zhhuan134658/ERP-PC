@@ -595,7 +595,8 @@
 .header {
   .hlBottom {
     width: 1240px !important;
-
+    display: flex;
+    flex-wrap: wrap;
     margin: auto;
     .el-select,
     .el-date-editor {
@@ -610,6 +611,8 @@
 .hlBottom {
   margin: auto;
   width: 1240px !important;
+  display: flex;
+  flex-wrap: wrap;
   .el-select,
   .el-input,
   .el-input__inner {
@@ -697,4 +700,11 @@
       }
     }
   }
+}
+.DDselect {
+  padding: 0 10px;
+  width: 165px;
+  height: 40px;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
 }

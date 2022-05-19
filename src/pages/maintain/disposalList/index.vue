@@ -68,15 +68,9 @@
                 </el-dropdown-menu>
               </el-dropdown>
 
-              <el-button type="primary" size="medium" @click="newAdd"
-                >导出查询结果</el-button
-              >
-              <el-button type="primary" size="medium" @click="newAdd"
-                >打印</el-button
-              >
-              <el-button type="primary" size="medium" @click="newAdd"
-                >审批提醒</el-button
-              >
+              <el-button type="primary" size="medium">导出查询结果</el-button>
+              <el-button type="primary" size="medium">打印</el-button>
+              <el-button type="primary" size="medium">审批提醒</el-button>
             </div>
             <div class="mmbRight"></div>
           </el-row>
@@ -138,7 +132,7 @@
               >
                 <el-input
                   v-model="addUserForm.cznumber"
-                  placeholder="请输入借用人"
+                  placeholder="请输入处置单号"
                   maxlength="50"
                   style="width: 165px"
                 ></el-input>
@@ -150,12 +144,14 @@
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-input
+                <el-date-picker
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
                   v-model="addUserForm.starttime"
-                  placeholder="请选择验收日期"
-                  maxlength="50"
+                  type="date"
+                  placeholder="选择日期"
                   style="width: 165px"
-                ></el-input>
+                ></el-date-picker>
               </el-form-item>
 
               <el-form-item
@@ -190,38 +186,39 @@
                   style="width: 165px"
                 ></el-input>
               </el-form-item>
-
               <el-form-item
                 label="发起人部门："
                 prop="userteam"
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-input
+                <el-select
                   v-model="addUserForm.userteam"
-                  placeholder="请选择使用部门"
-                  maxlength="50"
-                  style="width: 165px"
-                ></el-input>
+                  placeholder="请选择部门"
+                >
+                  <el-option
+                    v-for="(item, index) in allSupplier"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
               </el-form-item>
+
               <el-form-item
                 label="完成日期："
                 prop="stoptime"
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-select
+                <el-date-picker
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
                   v-model="addUserForm.stoptime"
-                  placeholder="请选择管理员"
-                  style="margin-left: "
-                >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                  type="date"
+                  placeholder="选择日期"
+                  style="width: 165px"
+                ></el-date-picker>
               </el-form-item>
 
               <el-form-item
@@ -249,18 +246,12 @@
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-select
+                <el-input
                   v-model="addUserForm.czmoney"
-                  placeholder="请选择管理员"
-                  style="margin-left: "
-                >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                  placeholder="请填写"
+                  maxlength="50"
+                  style="width: 165px"
+                ></el-input>
               </el-form-item>
               <el-form-item
                 label="处置费用:"
@@ -268,18 +259,12 @@
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-select
+                <el-input
                   v-model="addUserForm.czxiaofei"
-                  placeholder="请选择管理员"
-                  style="margin-left: "
-                >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                  placeholder="请填写"
+                  maxlength="50"
+                  style="width: 165px"
+                ></el-input>
               </el-form-item>
               <el-form-item
                 label="资产原值合计:"
@@ -287,18 +272,12 @@
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-select
+                <el-input
                   v-model="addUserForm.zcyuanzhi"
-                  placeholder="请选择管理员"
-                  style="margin-left: "
-                >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                  placeholder="请填写"
+                  maxlength="50"
+                  style="width: 165px"
+                ></el-input>
               </el-form-item>
               <el-form-item
                 label="资产残值合计:"
@@ -306,18 +285,12 @@
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <el-select
+                <el-input
                   v-model="addUserForm.zccanzhi"
-                  placeholder="请选择管理员"
-                  style="margin-left: "
-                >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                  placeholder="请填写"
+                  maxlength="50"
+                  style="width: 165px"
+                ></el-input>
               </el-form-item>
               <el-form-item
                 label="处置说明："
@@ -329,7 +302,7 @@
                   v-model="addUserForm.czremark"
                   maxlength="240"
                   show-word-limit
-                  placeholder="请输入报修内容"
+                  placeholder="请填写"
                 ></el-input>
               </el-form-item>
 
@@ -469,11 +442,15 @@
               v-model="searchFormData.starttime"
               type="date"
               placeholder="购置起租开始日期"
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
             >
             </el-date-picker>
           </el-form-item>
           <el-form-item prop="stoptime">
             <el-date-picker
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
               v-model="searchFormData.stoptime"
               type="date"
               placeholder="购置起租结束日期填"
@@ -532,6 +509,7 @@ export default {
   },
   data() {
     return {
+      allSupplier: [],
       showName: "派发", //设置显示字段 唯一标识
       wFormVisible: false,
       footerNumList: [],
@@ -657,6 +635,7 @@ export default {
     };
   },
   methods: {
+    show() {},
     wqeasd() {
       console.log("778888", this.$refs.headerChild.checkedList);
     },
@@ -991,6 +970,10 @@ export default {
   },
   created() {
     // this.$refs.child.getTitleList(); //设置显示字段
+    this.$utils.commonAlltouSupplier().then((res) => {
+      this.allSupplier = res;
+      console.log("9999", res); //res为公共接口返回的数据;返回的数据为utils.js中return的数据
+    });
   },
   computed: {},
   watch: {
