@@ -469,14 +469,12 @@ export default {
         } else {
           return this.cNameFour;
         }
-      } else if (valUrl == "/libraryTube/") {
+      } else if (valUrl == "/librarytube/") {
         //库管
-        if (newUrl == "/librarytube") {
-          console.log("888787");
+        if (newUrl == "/librarytube/") {
           return this.cNameOne;
         } else {
-          console.log("88878788");
-          return this.cNameTwo;
+          return this.cNameFour;
         }
       } else if (valUrl == "/purchase/") {
         //   采购

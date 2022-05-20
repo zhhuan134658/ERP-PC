@@ -1093,7 +1093,7 @@ export default {
               {
                 id: 0,
                 pid: "0",
-                name: "固定资产",
+                name: "资产位置",
                 children: res.data.content,
               },
             ];
@@ -1115,7 +1115,7 @@ export default {
               {
                 id: "0",
                 pid: "0",
-                name: "固定资产",
+                name: "资产分类",
                 children: res.data.content,
                 disabled: true,
               },

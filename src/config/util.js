@@ -535,5 +535,17 @@ export default {
     } catch (error) {
       console.log(error);
     }
+  },
+  async commontouallCk() {
+    try {
+      const res = await axios.post("/project/cangKuList", {
+        name: "",
+        number: 99999,
+        page: 1
+      });
+      return res.data.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 };

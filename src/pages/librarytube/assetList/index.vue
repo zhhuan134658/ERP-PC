@@ -222,7 +222,21 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <div class="DDselect" v-if="newDialogTitle == '编辑'">
+                <el-input
+                  v-if="newDialogTitle == '编辑'"
+                  v-model="addUserForm.lycontent.lyuserid.name"
+                  placeholder="请输入调入部门"
+                  readonly
+                ></el-input>
+                <el-input
+                  v-else
+                  v-model="addUserForm.lycontent.lyuserid.name"
+                  placeholder="请输入调入部门"
+                  @click.native="DDselect('r')"
+                  readonly
+                ></el-input>
+
+                <!-- <div class="DDselect" v-if="newDialogTitle == '编辑'">
                   {{
                     addUserForm.lycontent.lyuserid
                       ? addUserForm.lycontent.lyuserid.name
@@ -235,7 +249,7 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
                       ? addUserForm.lycontent.lyuserid.name
                       : ""
                   }}
-                </div>
+                </div> -->
               </el-form-item>
               <el-form-item
                 style="width: 30%"
@@ -263,7 +277,21 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <div class="DDselect" v-if="newDialogTitle == '编辑'">
+                <el-input
+                  v-if="newDialogTitle == '编辑'"
+                  v-model="addUserForm.lycontent.orgname.name"
+                  placeholder="请输入调入部门"
+                  readonly
+                ></el-input>
+                <el-input
+                  v-else
+                  v-model="addUserForm.lycontent.orgname.name"
+                  placeholder="请输入调入部门"
+                  @click.native="DDorg"
+                  readonly
+                ></el-input>
+
+                <!-- <div class="DDselect" v-if="newDialogTitle == '编辑'">
                   {{
                     addUserForm.lycontent.orgname
                       ? addUserForm.lycontent.orgname.name
@@ -276,7 +304,7 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
                       ? addUserForm.lycontent.orgname.name
                       : ""
                   }}
-                </div>
+                </div> -->
               </el-form-item>
 
               <el-form-item
@@ -385,9 +413,16 @@ mikey.zhaopeng * @Last Modified time: 2022-02-24 16:49:54 */
                 class="dRemarkList"
                 style="width: 31%"
               >
-                <div class="DDselect" @click="DDselect('g')">
+                <el-input
+                  v-model="addUserForm.adminuser.name"
+                  placeholder="请输入管理员"
+                  @click.native="DDselect('g')"
+                  readonly
+                ></el-input>
+
+                <!-- <div class="DDselect" @click="DDselect('g')">
                   {{ addUserForm.adminuser ? addUserForm.adminuser.name : "" }}
-                </div>
+                </div> -->
               </el-form-item>
               <el-form-item
                 label="品牌："

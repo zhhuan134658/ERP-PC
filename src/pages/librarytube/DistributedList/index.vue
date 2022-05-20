@@ -189,54 +189,38 @@
         :title="newDialogTitle"
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
-        width="1020px"
+        width="1200px"
         @close="editCancel('addUserForm')"
         class="phDialog"
       >
         <div class="phdMain" style="padding: 0 15px">
-          <el-form
-            @submit.native.prevent
-            :model="addUserForm"
-            label-position="right"
-            ref="addUserForm"
-            label-width="120px"
-            style="width: 100%"
-          >
-            <div
-              v-if="activeindex == 0"
-              style="
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-              "
+          <div class="cDrawerContent">
+            <el-form
+              @submit.native.prevent
+              :model="addUserForm"
+              label-position="right"
+              ref="addUserForm"
+              label-width="120px"
+              style="width: 100%"
             >
               <el-form-item
                 label="领用人姓名："
+                v-if="activeindex == 0"
                 prop="lycontent"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <div class="DDselect" @click="DDselect('l')">
-                  {{ addUserForm.lyuserid ? addUserForm.lyuserid.name : "" }}
-                </div>
-              </el-form-item>
-              <!-- <el-form-item
-                label="领用人姓名："
-                prop="name"
-                style="width: 30%"
-                class="dRemarkList"
               >
                 <el-input
-                  v-model="addUserForm.lyuserid"
-                  placeholder="请输入人员姓名"
-                  maxlength="50"
+                  v-model="addUserForm.lyuserid.name"
+                  placeholder="请输入管理员"
+                  @click.native="DDselect('l')"
+                  readonly
                 ></el-input>
-              </el-form-item> -->
+              </el-form-item>
+
               <el-form-item
                 class="searchTime"
                 label="领用日期:"
-                style="width: 30%"
                 prop="lytime"
+                v-if="activeindex == 0"
               >
                 <el-date-picker
                   v-model="addUserForm.lytime"
@@ -244,36 +228,38 @@
                   value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
-                  style="width: 165px"
                 ></el-date-picker>
               </el-form-item>
               <el-form-item
+                v-if="activeindex == 0"
                 label="处理人姓名："
                 prop="lycontent"
-                class="dRemarkList"
-                style="width: 31%"
               >
-                <div class="DDselect" @click="DDselect('c')">
-                  {{ addUserForm.cluserid ? addUserForm.cluserid.name : "" }}
-                </div>
+                <el-input
+                  v-model="addUserForm.cluserid.name"
+                  placeholder="请输入管理员"
+                  @click.native="DDselect('c')"
+                  readonly
+                ></el-input>
               </el-form-item>
 
               <el-form-item
+                v-if="activeindex == 0"
                 label="使用部门:"
                 prop="syorgid"
-                class="dRemarkList"
-                style="width: 31%"
               >
-                <div class="DDselect" @click="DDorg('1')">
-                  {{ addUserForm.syorgid ? addUserForm.syorgid.name : "" }}
-                </div>
+                <el-input
+                  v-model="addUserForm.syorgid.name"
+                  placeholder="请输入使用部门"
+                  @click.native="DDorg('1')"
+                  readonly
+                ></el-input>
               </el-form-item>
 
               <el-form-item
-                style="width: 30%"
+                v-if="activeindex == 0"
                 label="使用项目："
                 prop="xmid"
-                class="dRemarkList"
               >
                 <el-select
                   v-model="addUserForm.xmid"
@@ -290,16 +276,15 @@
               <el-form-item
                 label="领用后位置"
                 class="dbasicList upOrg"
-                style="width: 30%; margin: 0"
+                style="width: 45%; margin: 0"
+                v-if="activeindex == 0"
               >
-                <el-button
-                  @click="selectAddCorp('in')"
-                  plain
-                  style="width: 165px"
-                >
-                  <span>{{ addUserForm.extendone || "" }}</span>
-                  <i class="el-icon-arrow-down el-icon--right"></i>
-                </el-button>
+                <el-input
+                  v-model="addUserForm.extendone"
+                  placeholder="请输入调入位置"
+                  @click.native="selectAddCorp('in')"
+                  readonly
+                ></el-input>
                 <div class="addNewDiv" v-if="newView">
                   <div class="addNewMain">
                     <div class="addNewList">
@@ -322,10 +307,9 @@
               </el-form-item>
 
               <el-form-item
+                v-if="activeindex == 0"
                 prop="remark"
-                style="width: 30%"
                 label="领用备注:"
-                class="dRemarkList"
               >
                 <el-input
                   v-model="addUserForm.lyremark"
@@ -333,20 +317,11 @@
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
-            </div>
-            <div
-              v-else
-              style="
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-              "
-            >
+
               <el-form-item
                 label="退库处理人："
+                v-if="activeindex != 0"
                 prop="clusername"
-                style="width: 30%"
-                class="dRemarkList"
               >
                 <el-input
                   v-model="addUserForm.clusername"
@@ -355,9 +330,9 @@
                 ></el-input>
               </el-form-item>
               <el-form-item
+                v-if="activeindex != 0"
                 class="searchTime"
                 label="退库日期:"
-                style="width: 30%"
                 prop="tktime"
               >
                 <el-date-picker
@@ -366,14 +341,12 @@
                   value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
-                  style="width: 165px"
                 ></el-date-picker>
               </el-form-item>
               <el-form-item
+                v-if="activeindex != 0"
                 label="处理人姓名："
                 prop="clusername"
-                style="width: 30%"
-                class="dRemarkList"
               >
                 <el-input
                   v-model="addUserForm.clusername"
@@ -382,40 +355,22 @@
                 ></el-input>
               </el-form-item>
               <el-form-item
+                v-if="activeindex != 0"
                 label="使用部门:"
                 prop="syorgid"
-                class="dRemarkList"
-                style="width: 31%"
               >
-                <div class="DDselect" @click="DDorg('2')">
-                  {{ addUserForm.extendone ? addUserForm.extendone.name : "" }}
-                </div>
+                <el-input
+                  v-model="addUserForm.extendone.name"
+                  placeholder="请输入管理员"
+                  @click.native="DDorg('2')"
+                  readonly
+                ></el-input>
               </el-form-item>
 
-              <!-- <el-form-item
-                style="width: 30%"
-                label="退库后使用部门"
-                prop="syorgid"
-                class="dRemarkList"
-              >
-                <el-select
-                  v-model="addUserForm.extendone"
-                  placeholder="请选择退库后使用部门"
-                >
-                  <el-option
-                    v-for="(item, index) in allSupplier"
-                    :key="index"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item> -->
-
               <el-form-item
-                style="width: 30%"
+                v-if="activeindex != 0"
                 label="使用项目："
                 prop="xmid"
-                class="dRemarkList"
               >
                 <el-select
                   v-model="addUserForm.xmid"
@@ -430,18 +385,17 @@
                 </el-select>
               </el-form-item>
               <el-form-item
+                v-if="activeindex != 0"
                 label="退库所在位置"
                 class="dbasicList upOrg"
-                style="width: 30%; margin: 0"
+                style="width: 45%; margin: 0"
               >
-                <el-button
-                  @click="selectAddCorp('out')"
-                  plain
-                  style="width: 165px"
-                >
-                  <span>{{ addUserForm.tkadress || "" }}</span>
-                  <i class="el-icon-arrow-down el-icon--right"></i>
-                </el-button>
+                <el-input
+                  v-model="addUserForm.tkadress"
+                  placeholder="请输入调入位置"
+                  @click.native="selectAddCorp('out')"
+                  readonly
+                ></el-input>
                 <div class="addNewDiv" v-if="newAddView">
                   <div class="addNewMain">
                     <div class="addNewList">
@@ -464,10 +418,9 @@
               </el-form-item>
 
               <el-form-item
+                v-if="activeindex != 0"
                 prop="tkremark"
-                style="width: 30%"
                 label="退库备注:"
-                class="dRemarkList"
               >
                 <el-input
                   v-model="addUserForm.tkremark"
@@ -475,9 +428,10 @@
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
-            </div>
-            <choiceList ref="headerChild"></choiceList>
-          </el-form>
+
+              <choiceList ref="headerChild"></choiceList>
+            </el-form>
+          </div>
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button size="medium" @click="editCancel('addUserForm')"
@@ -812,7 +766,7 @@ export default {
     };
   },
   methods: {
-    DDorg() {
+    DDorg(val) {
       const that = this;
       dd.ready(function () {
         dd.biz.contact.departmentsPicker({
@@ -859,7 +813,7 @@ export default {
           startWithDepartmentId: 0, //仅支持0和-1
           onSuccess: function (result) {
             if (val === "l") {
-              that.addUserForm.lyuserid = result.lyuserid[0];
+              that.addUserForm.lyuserid = result.users[0];
             } else if (val === "c") {
               that.addUserForm.cluserid = result.users[0];
             } else if (val === "jy") {

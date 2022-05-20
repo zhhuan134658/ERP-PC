@@ -68,7 +68,7 @@
                 </el-dropdown-menu>
               </el-dropdown>
 
-              <el-button type="primary" size="medium" @click="newAdd"
+              <!-- <el-button type="primary" size="medium" @click="newAdd"
                 >导出查询结果</el-button
               >
               <el-button type="primary" size="medium" @click="newAdd"
@@ -76,7 +76,7 @@
               >
               <el-button type="primary" size="medium" @click="newAdd"
                 >审批提醒</el-button
-              >
+              > -->
             </div>
             <div class="mmbRight"></div>
           </el-row>
@@ -114,58 +114,41 @@
         :title="newDialogTitle"
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
-        width="1020px"
+        width="1200px"
         @close="editCancel('addUserForm')"
         class="phDialog"
       >
         <div class="phdMain" style="padding: 0 15px">
-          <el-form
-            @submit.native.prevent
-            :model="addUserForm"
-            label-position="right"
-            ref="addUserForm"
-            label-width="120px"
-            style="width: 100%"
-          >
-            <!-- 基础信息 -->
+          <div class="cDrawerContent">
+            <el-form
+              @submit.native.prevent
+              :model="addUserForm"
+              label-position="right"
+              ref="addUserForm"
+              label-width="130px"
+              style="width: 100%"
+            >
+              <!-- 基础信息 -->
 
-            <div class="dBasicInfo" style="flex-wrap: wrap; display: flex">
-              <el-form-item
-                label="维修单号："
-                prop="wxnumber"
-                class="dRemarkList"
-                style="width: 31%"
-              >
+              <el-form-item label="维修单号：" prop="wxnumber">
                 <el-input
                   v-model="addUserForm.wxnumber"
                   placeholder="请输入维修单号"
                   maxlength="50"
-                  style="width: 165px"
                 ></el-input>
               </el-form-item>
 
-              <el-form-item
-                label="创建日期："
-                prop="starttime"
-                class="dRemarkList"
-                style="width: 31%"
-              >
+              <el-form-item label="创建日期：" prop="starttime">
                 <el-date-picker
                   v-model="addUserForm.starttime"
                   format="yyyy 年 MM 月 dd 日"
                   value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
-                  style="width: 165px"
                 ></el-date-picker>
               </el-form-item>
 
-              <el-form-item
-                label="维修状态："
-                prop="wxstatus"
-                class="dRemarkList"
-                style="width: 31%"
-              >
+              <el-form-item label="维修状态：" prop="wxstatus">
                 <el-select
                   v-model="addUserForm.wxstatus"
                   placeholder="请选择位置"
@@ -175,58 +158,51 @@
                 </el-select>
               </el-form-item>
 
-              <el-form-item
-                label="报修人："
-                prop="bxuserid"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <div class="DDselect" @click="DDselect('b')">
-                  {{ addUserForm.bxusername }}
-                </div>
+              <el-form-item label="报修人：" prop="bxuserid">
+                <el-input
+                  v-model="addUserForm.bxusername.name"
+                  placeholder="请输入使用部门"
+                  @click.native="DDselect('b')"
+                  readonly
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="保修人部门:" prop="syorgid">
+                <el-input
+                  v-model="addUserForm.userteam.name"
+                  placeholder="请输入使用部门"
+                  @click.native="DDorg"
+                  readonly
+                ></el-input>
               </el-form-item>
 
-              <el-form-item
-                label="保修人部门："
-                prop="userteam"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-select
-                  v-model="addUserForm.userteam"
-                  placeholder="请选择保修人部门"
-                >
-                  <el-option
-                    v-for="(item, index) in allSupplier"
-                    :key="index"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="发起人："
-                prop="fquserid"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <div class="DDselect" @click="DDselect('f')">
-                  {{ addUserForm.fqusername }}
-                </div>
+              <el-form-item label="发起人：" prop="fquserid">
+                <el-input
+                  v-model="addUserForm.fquserid.name"
+                  placeholder="请输入使用部门"
+                  @click.native="DDselect('f')"
+                  readonly
+                ></el-input>
               </el-form-item>
               <el-form-item
                 label="送修地点"
                 class="dbasicList upOrg"
-                style="width: 30%; margin: 0"
+                style="width: 45%; margin: 0"
               >
-                <el-button
+                <!-- <el-button
                   @click="selectAddCorp('in')"
                   plain
                   style="width: 165px"
                 >
                   <span>{{ addUserForm.extendone || "" }}</span>
                   <i class="el-icon-arrow-down el-icon--right"></i>
-                </el-button>
+                </el-button> -->
+
+                <el-input
+                  v-model="addUserForm.extendone"
+                  placeholder="请输入调入位置"
+                  @click.native="selectAddCorp('in')"
+                  readonly
+                ></el-input>
                 <div class="addNewDiv" v-if="newView">
                   <div class="addNewMain">
                     <div class="addNewList">
@@ -248,45 +224,27 @@
                 </div>
               </el-form-item>
 
-              <el-form-item
-                label="完成日期："
-                prop="stoptime"
-                class="dRemarkList"
-                style="width: 31%"
-              >
+              <el-form-item label="完成日期：" prop="stoptime">
                 <el-date-picker
                   v-model="addUserForm.stoptime"
                   format="yyyy 年 MM 月 dd 日"
                   value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
-                  style="width: 165px"
                 ></el-date-picker>
               </el-form-item>
-              <el-form-item
-                label="本次维修合计:"
-                prop="wxmoney"
-                class="dRemarkList"
-                style="width: 31%"
-              >
+              <el-form-item label="本次维修合计:" prop="wxmoney">
                 <el-input
                   v-model="addUserForm.wxmoney"
                   placeholder="请填写"
                   maxlength="50"
-                  style="width: 165px"
                 ></el-input>
               </el-form-item>
-              <el-form-item
-                label="报修内容:"
-                prop="bxremark"
-                class="dRemarkList"
-                style="width: 31%"
-              >
+              <el-form-item label="报修内容:" prop="bxremark">
                 <el-input
                   v-model="addUserForm.bxremark"
                   placeholder="请填写"
                   maxlength="50"
-                  style="width: 165px"
                 ></el-input>
               </el-form-item>
 
@@ -298,86 +256,93 @@
                   v-on:listenToChildEvent="show"
                 ></imgupload>
               </el-form-item>
-            </div>
-            <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-              <el-tab-pane label="用户管理" name="first">
-                <choiceList ref="headerChild"></choiceList>
-              </el-tab-pane>
-              <el-tab-pane label="配置管理" name="second">
-                <div style="margin: 10px 0">
-                  仓库:
-                  <el-select
-                    v-model="value"
-                    placeholder="请选择仓库"
-                    style="width: 185px"
-                  >
-                    <el-option label="item.label" value="item.value">
-                    </el-option>
-                  </el-select>
-                </div>
-                <el-button type="primary" @click="dialogFormVisible2 = true"
-                  >选择物料</el-button
-                >
-                <el-button type="primary">移除物料</el-button>
-                <el-button type="primary">导入物料</el-button>
 
-                <el-table
-                  :border="true"
-                  :data="houseList"
-                  :header-cell-style="tableHeaderClass"
-                  :cell-style="tableRowClass"
-                  max-height="547"
-                  style="
-                    width: 100%;
-                    border: 1px solid #ebeef5;
-                    margin-top: 10px;
-                  "
-                  ref="multipleTable"
-                  size="mini"
-                  :row-class-name="tableRowClassName"
-                >
-                  <el-table-column type="selection" width="55" fixed>
-                  </el-table-column>
-                  <el-table-column
-                    prop="sitenumber"
-                    label="物料编码"
-                    align="left"
+              <el-tabs
+                v-model="activeName"
+                type="card"
+                @tab-click="handleClick"
+                style="width: 100%"
+              >
+                <el-tab-pane label="资产" name="first">
+                  <choiceList ref="headerChild"></choiceList>
+                </el-tab-pane>
+                <el-tab-pane label="耗材" name="second">
+                  <commonMa ref="marheaderChild"></commonMa>
+                  <!-- <div style="margin: 10px 0">
+                    仓库:
+                    <el-select
+                      v-model="value"
+                      placeholder="请选择仓库"
+                      style="width: 185px"
+                    >
+                      <el-option label="item.label" value="item.value">
+                      </el-option>
+                    </el-select>
+                  </div>
+                  <el-button type="primary" @click="dialogFormVisible2 = true"
+                    >选择物料</el-button
                   >
-                  </el-table-column>
-                  <el-table-column prop="name" label="资产名称" align="left">
-                  </el-table-column>
-                  <el-table-column prop="name" label="物料分类" align="left">
-                  </el-table-column>
-                  <el-table-column prop="name" label="品牌" align="left">
-                  </el-table-column>
-                  <el-table-column prop="name" label="规格型号" align="left">
-                  </el-table-column>
-                  <el-table-column prop="name" label="库存单位" align="left">
-                  </el-table-column>
-                  <el-table-column prop="name" label="当前库存" align="left">
-                  </el-table-column>
-                  <el-table-column prop="name" label="出库数量" align="left">
-                  </el-table-column>
-                  <el-table-column
-                    prop="name"
-                    label="出库物料备注"
-                    align="left"
-                    width="120"
+                  <el-button type="primary">移除物料</el-button>
+                  <el-button type="primary">导入物料</el-button>
+
+                  <el-table
+                    :border="true"
+                    :data="houseList"
+                    :header-cell-style="tableHeaderClass"
+                    :cell-style="tableRowClass"
+                    max-height="547"
+                    style="
+                      width: 100%;
+                      border: 1px solid #ebeef5;
+                      margin-top: 10px;
+                    "
+                    ref="multipleTable"
+                    size="mini"
+                    :row-class-name="tableRowClassName"
                   >
-                  </el-table-column>
-                </el-table>
-                <el-pagination
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                  :current-page.sync="currentPage"
-                  :page-sizes="[10, 50, 100, 150, 200]"
-                  :page-size="pagesize"
-                  layout="sizes,prev, pager, next, jumper"
-                  :total="total"
-                ></el-pagination>
-              </el-tab-pane>
-            </el-tabs>
-          </el-form>
+                    <el-table-column type="selection" width="55" fixed>
+                    </el-table-column>
+                    <el-table-column
+                      prop="sitenumber"
+                      label="物料编码"
+                      align="left"
+                    >
+                    </el-table-column>
+                    <el-table-column prop="name" label="资产名称" align="left">
+                    </el-table-column>
+                    <el-table-column prop="name" label="物料分类" align="left">
+                    </el-table-column>
+                    <el-table-column prop="name" label="品牌" align="left">
+                    </el-table-column>
+                    <el-table-column prop="name" label="规格型号" align="left">
+                    </el-table-column>
+                    <el-table-column prop="name" label="库存单位" align="left">
+                    </el-table-column>
+                    <el-table-column prop="name" label="当前库存" align="left">
+                    </el-table-column>
+                    <el-table-column prop="name" label="出库数量" align="left">
+                    </el-table-column>
+                    <el-table-column
+                      prop="name"
+                      label="出库物料备注"
+                      align="left"
+                      width="120"
+                    >
+                    </el-table-column>
+                  </el-table>
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="currentPage"
+                    :page-sizes="[10, 50, 100, 150, 200]"
+                    :page-size="pagesize"
+                    layout="sizes,prev, pager, next, jumper"
+                    :total="total"
+                  ></el-pagination> -->
+                </el-tab-pane>
+              </el-tabs>
+            </el-form>
+          </div>
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button size="medium" @click="editCancel('addUserForm')"
@@ -554,6 +519,9 @@ import eupload from "../../../components/excelUpload.vue";
 import commonTable from "@/components/commonTable.vue";
 import commondraggable from "@/components/commondraggable.vue";
 import choiceList from "@/components/choiceList.vue";
+import materList from "@/components/materList.vue";
+import commonMa from "@/components/commonMaterial.vue";
+
 import { regionData, CodeToText } from "element-china-area-data";
 import imgupload from "../../../components/imgUpload.vue";
 import draggable from "vuedraggable";
@@ -567,6 +535,8 @@ export default {
     draggable,
     commondraggable,
     choiceList,
+    materList,
+    commonMa,
   },
   data() {
     return {
@@ -676,7 +646,7 @@ export default {
         uname: "",
         pid: "",
       },
-
+      isClose: 1,
       cid: this.$store.state.cid,
       agentid: "",
       listNodeID: "0",
@@ -696,6 +666,31 @@ export default {
     };
   },
   methods: {
+    //获取子传父选择的值
+    getSelect(val) {
+      this.listenTable = val;
+    },
+    DDorg() {
+      const that = this;
+      dd.ready(function () {
+        dd.biz.contact.departmentsPicker({
+          title: "测试标题", //标题
+          corpId: that.$store.state.cid, //企业的corpId
+          multiple: false, //是否多选
+          limitTips: "超出了", //超过限定人数返回提示
+          maxDepartments: 100, //最大选择部门数量
+          pickedDepartments: [], //已选部门
+          disabledDepartments: [], //不可选部门
+          requiredDepartments: [], //必选部门（不可取消选中状态）
+          appId: "", //微应用的Id
+          permissionType: "GLOBAL", //选人权限，目前只有GLOBAL这个参数
+          onSuccess: function (result) {
+            that.addUserForm.userteam = result.departments[0];
+          },
+          onFail: function (err) {},
+        });
+      });
+    },
     DDselect(val) {
       console.log("789798");
       const that = this;
@@ -718,11 +713,11 @@ export default {
           startWithDepartmentId: 0, //仅支持0和-1
           onSuccess: function (result) {
             if (val === "b") {
-              that.addUserForm.bxuserid = result.users[0].emplId;
-              that.addUserForm.bxusername = result.users[0].name;
+              that.addUserForm.bxuserid = result.users[0];
+              //   that.addUserForm.bxusername = result.users[0].name;
             } else if (val === "f") {
-              that.addUserForm.fquserid = result.users[0].emplId;
-              that.addUserForm.fqusername = result.users[0].name;
+              that.addUserForm.fquserid = result.users[0];
+              //   that.addUserForm.fqusername = result.users[0].name;
             }
           },
           onFail: function (err) {
@@ -952,12 +947,17 @@ export default {
     changeShow(res) {
       this.wFormVisible = res;
     },
+    show(val) {
+      console.log(val);
+    },
     editInfo(formName) {
       const _this = this;
 
       _this.loading = true;
       _this.addUserForm.corp_id = _this.$store.state.cid;
       _this.addUserForm.assetcontent = _this.$refs.headerChild.checkedList;
+      //!
+      //   _this.addUserForm.assetcontent = _this.$refs.marheaderChild.chemList;
       _this.$refs[formName].validate((valid) => {
         if (valid) {
           let newData = JSON.parse(JSON.stringify(_this.addUserForm));

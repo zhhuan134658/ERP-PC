@@ -190,42 +190,48 @@
         :title="newDialogTitle"
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
-        width="1020px"
+        width="1200px"
         @close="editCancel('addUserForm')"
         class="phDialog"
       >
         <div class="phdMain" style="padding: 0 15px">
-          <el-form
-            @submit.native.prevent
-            :model="addUserForm"
-            label-position="right"
-            ref="addUserForm"
-            label-width="120px"
-            style="width: 100%"
-          >
-            <div
-              v-if="activeindex == 0"
-              style="
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-              "
+          <div class="cDrawerContent">
+            <el-form
+              @submit.native.prevent
+              :model="addUserForm"
+              label-position="right"
+              ref="addUserForm"
+              label-width="120px"
+              style="width: 100%"
             >
               <el-form-item
+                v-if="activeindex == 0"
                 label="借用人姓名："
                 prop="lycontent"
-                class="dRemarkList"
-                style="width: 31%"
               >
-                <div class="DDselect" @click="DDselect('j')">
-                  {{ addUserForm.userid ? addUserForm.userid.name : "" }}
-                </div>
+                <el-input
+                  v-model="addUserForm.userid.name"
+                  placeholder="请输入管理员"
+                  @click.native="DDselect('j')"
+                  readonly
+                ></el-input>
               </el-form-item>
-
               <el-form-item
+                v-if="activeindex == 0"
+                label="处理人姓名："
+                prop="lycontent"
+              >
+                <el-input
+                  v-model="addUserForm.cluserid.name"
+                  placeholder="请输入处理人姓名"
+                  @click.native="DDselect('c')"
+                  readonly
+                ></el-input>
+              </el-form-item>
+              <el-form-item
+                v-if="activeindex == 0"
                 class="searchTime"
                 label="借用时间:"
-                style="width: 30%"
                 prop="jytime"
               >
                 <el-date-picker
@@ -234,13 +240,12 @@
                   value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
-                  style="width: 165px"
                 ></el-date-picker>
               </el-form-item>
               <el-form-item
+                v-if="activeindex == 0"
                 class="searchTime"
                 label="预计归还时间:"
-                style="width: 30%"
                 prop="jytime"
               >
                 <el-date-picker
@@ -249,36 +254,26 @@
                   value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
-                  style="width: 165px"
                 ></el-date-picker>
               </el-form-item>
-              <el-form-item
-                label="处理人姓名："
-                prop="lycontent"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <div class="DDselect" @click="DDselect('c')">
-                  {{ addUserForm.cluserid ? addUserForm.cluserid.name : "" }}
-                </div>
-              </el-form-item>
 
               <el-form-item
+                v-if="activeindex == 0"
                 label="使用部门:"
                 prop="syorgid"
-                class="dRemarkList"
-                style="width: 31%"
               >
-                <div class="DDselect" @click="DDorg">
-                  {{ addUserForm.syorgid ? addUserForm.syorgid.name : "" }}
-                </div>
+                <el-input
+                  v-model="addUserForm.syorgid.name"
+                  placeholder="请输入使用部门"
+                  @click.native="DDorg"
+                  readonly
+                ></el-input>
               </el-form-item>
 
               <el-form-item
-                style="width: 30%"
+                v-if="activeindex == 0"
                 label="使用项目："
                 prop="xmid"
-                class="dRemarkList"
               >
                 <el-select
                   v-model="addUserForm.xmid"
@@ -292,34 +287,28 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <!-- <el-form-item
-                style="width: 30%"
-                label="领用后位置:"
-                prop="jyaddress"
-                class="dRemarkList"
-              >
-                <el-select
-                  v-model="addUserForm.jyaddress"
-                  placeholder="请选择使用项目"
-                >
-                  <el-option label="测试项目" style="width: 165px" value="1">
-                  </el-option>
-                </el-select>
-              </el-form-item> -->
 
               <el-form-item
+                v-if="activeindex == 0"
                 label="领用后位置"
                 class="dbasicList upOrg"
-                style="width: 30%; margin: 0"
+                style="width: 45%; margin: 0"
               >
-                <el-button
+                <!-- <el-button
                   @click="selectAddCorp('in')"
                   plain
-                  style="width: 165px"
+                     
                 >
                   <span>{{ addUserForm.jyaddress || "" }}</span>
                   <i class="el-icon-arrow-down el-icon--right"></i>
-                </el-button>
+                </el-button> -->
+
+                <el-input
+                  v-model="addUserForm.jyaddress"
+                  placeholder="请输入领用后位置"
+                  @click.native="selectAddCorp('in')"
+                  readonly
+                ></el-input>
                 <div class="addNewDiv" v-if="newView">
                   <div class="addNewMain">
                     <div class="addNewList">
@@ -341,10 +330,9 @@
                 </div>
               </el-form-item>
               <el-form-item
+                v-if="activeindex == 0"
                 prop="jyremark"
-                style="width: 30%"
                 label="领用备注:"
-                class="dRemarkList"
               >
                 <el-input
                   v-model="addUserForm.jyremark"
@@ -352,31 +340,36 @@
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
-              <el-form-item></el-form-item>
-            </div>
-            <div
-              v-else
-              style="
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-              "
-            >
-              <el-form-item
-                label="借用人"
-                prop="lycontent"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <div class="DDselect" @click="DDselect('jy')">
-                  {{ addUserForm.userid ? addUserForm.userid.name : "" }}
-                </div>
-              </el-form-item>
+              <!-- <el-form-item></el-form-item> -->
 
               <el-form-item
+                v-if="activeindex != 0"
+                label="借用人"
+                prop="lycontent"
+              >
+                <el-input
+                  v-model="addUserForm.userid.name"
+                  placeholder="请输入使用部门"
+                  @click.native="DDselect('jy')"
+                  readonly
+                ></el-input>
+              </el-form-item>
+              <el-form-item
+                v-if="activeindex != 0"
+                label="处理人姓名"
+                prop="lycontent"
+              >
+                <el-input
+                  v-model="addUserForm.cluserid.name"
+                  placeholder="请输入使用部门"
+                  @click.native="DDselect('cl')"
+                  readonly
+                ></el-input>
+              </el-form-item>
+              <el-form-item
+                v-if="activeindex != 0"
                 class="searchTime"
                 label="借用时间:"
-                style="width: 30%"
                 prop="jytime"
               >
                 <el-date-picker
@@ -385,13 +378,12 @@
                   value-format="yyyy-MM-dd"
                   type="date"
                   placeholder="选择日期"
-                  style="width: 165px"
                 ></el-date-picker>
               </el-form-item>
               <el-form-item
+                v-if="activeindex != 0"
                 class="searchTime"
                 label="预计归还时间:"
-                style="width: 30%"
                 prop="yjghtime"
               >
                 <el-date-picker
@@ -400,26 +392,13 @@
                   format="yyyy 年 MM 月 dd 日"
                   value-format="yyyy-MM-dd"
                   placeholder="选择日期"
-                  style="width: 165px"
                 ></el-date-picker>
               </el-form-item>
 
               <el-form-item
-                label="处理人姓名"
-                prop="lycontent"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <div class="DDselect" @click="DDselect('cl')">
-                  {{ addUserForm.cluserid ? addUserForm.cluserid.name : "" }}
-                </div>
-              </el-form-item>
-
-              <el-form-item
-                style="width: 30%"
+                v-if="activeindex != 0"
                 label="使用项目："
                 prop="xmid"
-                class="dRemarkList"
               >
                 <el-select
                   v-model="addUserForm.xmid"
@@ -433,34 +412,28 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <!-- <el-form-item
-                style="width: 30%"
-                label="借用后位置:"
-                prop="jyaddress"
-                class="dRemarkList"
-              >
-                <el-select
-                  v-model="addUserForm.jyaddress"
-                  placeholder="请选择使用项目"
-                >
-                  <el-option label="测试项目" style="width: 165px" value="1">
-                  </el-option>
-                </el-select>
-              </el-form-item> -->
 
               <el-form-item
+                v-if="activeindex != 0"
                 label="借用后位置"
                 class="dbasicList upOrg"
-                style="width: 30%; margin: 0"
+                style="width: 45%; margin: 0"
               >
-                <el-button
+                <!-- <el-button
                   @click="selectAddCorp('out')"
                   plain
-                  style="width: 165px"
+                     
                 >
                   <span>{{ addUserForm.jyaddress || "" }}</span>
                   <i class="el-icon-arrow-down el-icon--right"></i>
-                </el-button>
+                </el-button> -->
+
+                <el-input
+                  v-model="addUserForm.jyaddress"
+                  placeholder="请输入借用后位置"
+                  @click.native="selectAddCorp('out')"
+                  readonly
+                ></el-input>
                 <div class="addNewDiv" v-if="newAddView">
                   <div class="addNewMain">
                     <div class="addNewList">
@@ -482,10 +455,9 @@
                 </div>
               </el-form-item>
               <el-form-item
+                v-if="activeindex != 0"
                 prop="jyremark"
-                style="width: 30%"
                 label="借用备注:"
-                class="dRemarkList"
               >
                 <el-input
                   v-model="addUserForm.jyremark"
@@ -493,9 +465,10 @@
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
-            </div>
-            <choiceList ref="headerChild"></choiceList>
-          </el-form>
+
+              <choiceList ref="headerChild"></choiceList>
+            </el-form>
+          </div>
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button size="medium" @click="editCancel('addUserForm')"

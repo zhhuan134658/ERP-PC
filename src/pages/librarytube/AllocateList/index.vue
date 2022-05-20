@@ -179,132 +179,111 @@
         :title="newDialogTitle"
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
-        width="1020px"
+        width="1200px"
         @close="editCancel('addUserForm')"
         class="phDialog"
       >
         <div class="phdMain" style="padding: 0 15px">
-          <el-form
-            @submit.native.prevent
-            :model="addUserForm"
-            label-position="right"
-            ref="addUserForm"
-            label-width="120px"
-            style="width: 100%"
-          >
-            <div
-              style="
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-              "
+          <div class="cDrawerContent">
+            <el-form
+              @submit.native.prevent
+              :model="addUserForm"
+              label-position="right"
+              ref="addUserForm"
+              label-width="130px"
+              style="width: 100%"
             >
-              <el-form-item
-                label="调拨单号"
-                prop="dbnumber"
-                style="width: 30%"
-                class="dRemarkList"
-              >
+              <el-form-item label="调拨单号" prop="dbnumber">
                 <el-input
                   v-model="addUserForm.dbnumber"
                   placeholder="请输入人员姓名"
                   maxlength="50"
                 ></el-input>
               </el-form-item>
-              <!-- <el-form-item
-                class="searchTime"
-                label="退库日期:"
-                style="width: 30%"
-                prop="tktime"
-              >
-                <el-date-picker
-                  v-model="addUserForm.tktime"
-                  type="date"
-                  placeholder="选择日期"
-                  style="width: 165px"
-                ></el-date-picker>
-              </el-form-item> -->
-              <el-form-item
-                label="调出管理员"
-                prop="dcuserid"
-                style="width: 30%"
-                class="dRemarkList"
-              >
+
+              <el-form-item label="调出管理员" prop="lycontent">
                 <el-input
-                  v-model="addUserForm.dcuserid"
-                  placeholder="请输入人员姓名"
-                  maxlength="50"
+                  v-model="addUserForm.dcuserid.name"
+                  placeholder="请输入调出管理员"
+                  @click.native="DDselect('dc')"
+                  readonly
                 ></el-input>
               </el-form-item>
-              <el-form-item
-                style="width: 30%"
-                label="调拨前所属项目"
-                prop="dbssorg"
-                class="dRemarkList"
-              >
+              <el-form-item label="调拨前所属项目" prop="dbssorg">
                 <el-select
-                  v-model="addUserForm.dbssorg"
-                  placeholder="请选择使用公司"
-                >
-                  <el-option label="测试部门" style="width: 165px" value="1">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                style="width: 30%"
-                label="调入管理员"
-                prop="druserid"
-                class="dRemarkList"
-              >
-                <el-select
-                  v-model="addUserForm.druserid"
+                  v-model="addUserForm.xmid"
                   placeholder="请选择使用项目"
                 >
-                  <el-option label="测试项目" style="width: 165px" value="1">
-                  </el-option>
+                  <el-option
+                    v-for="(item, index) in allProjectList"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item
-                style="width: 30%"
-                label="调入部门:"
-                prop="drbumen"
-                class="dRemarkList"
-              >
-                <el-select
-                  v-model="addUserForm.drbumen"
-                  placeholder="请选择使用项目"
-                >
-                  <el-option label="测试项目" style="width: 165px" value="1">
-                  </el-option>
-                </el-select>
+
+              <el-form-item label="调入管理员" prop="lycontent">
+                <el-input
+                  v-model="addUserForm.druserid.name"
+                  placeholder="请输入调入管理员"
+                  @click.native="DDselect('dr')"
+                  readonly
+                ></el-input>
               </el-form-item>
+
+              <el-form-item label="调入部门:" prop="syorgid">
+                <el-input
+                  v-model="addUserForm.drbumen.name"
+                  placeholder="请输入调入部门"
+                  @click.native="DDorg"
+                  readonly
+                ></el-input>
+              </el-form-item>
+
               <el-form-item
-                prop="draddress"
-                style="width: 30%"
-                label="调入位置:"
-                class="dRemarkList"
+                label="调入位置"
+                class="dbasicList upOrg"
+                style="width: 45%; margin: 0"
               >
                 <el-input
                   v-model="addUserForm.draddress"
-                  placeholder="领用备注"
-                  autocomplete="off"
+                  placeholder="请输入调入位置"
+                  @click.native="selectAddCorp('in')"
+                  readonly
                 ></el-input>
+                <div class="addNewDiv" v-if="newAddView">
+                  <div class="addNewMain">
+                    <div class="addNewList">
+                      <el-tree
+                        :data="LastList"
+                        show-checkbox
+                        :default-expand-all="false"
+                        :expand-on-click-node="false"
+                        node-key="id"
+                        ref="ftree"
+                        highlight-current
+                        check-strictly
+                        :props="defaultProps"
+                        @check="handleNewaddClick"
+                      >
+                      </el-tree>
+                    </div>
+                  </div>
+                </div>
               </el-form-item>
-              <el-form-item
-                prop="dbremark"
-                style="width: 30%"
-                label="调拨备注:"
-                class="dRemarkList"
-              >
+
+              <el-form-item prop="dbremark" label="调拨备注:">
                 <el-input
                   v-model="addUserForm.dbremark"
                   placeholder="调拨备注"
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
-            </div>
-            <choiceList ref="headerChild"></choiceList>
-          </el-form>
+
+              <choiceList ref="headerChild"></choiceList>
+            </el-form>
+          </div>
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button size="medium" @click="editCancel('addUserForm')"
@@ -497,6 +476,11 @@ export default {
   },
   data() {
     return {
+      allProjectList: [],
+      defaultProps: {
+        children: "children",
+        label: "name",
+      },
       showName: "派发", //设置显示字段 唯一标识
       wFormVisible: false,
       footerNumList: [],
@@ -603,7 +587,7 @@ export default {
       listNodeID: "0",
       basicNodeID: "0",
       basicGoods: [],
-      newView: false,
+
       newAddView: false,
       noLastList: [],
       noLastList1: [],
@@ -614,9 +598,119 @@ export default {
       deleArr1: [],
       deleArr2: [],
       pierceTableid: +new Date(),
+      newView: false,
     };
   },
   methods: {
+    DDorg() {
+      const that = this;
+      dd.ready(function () {
+        dd.biz.contact.departmentsPicker({
+          title: "测试标题", //标题
+          corpId: that.$store.state.cid, //企业的corpId
+          multiple: false, //是否多选
+          limitTips: "超出了", //超过限定人数返回提示
+          maxDepartments: 100, //最大选择部门数量
+          pickedDepartments: [], //已选部门
+          disabledDepartments: [], //不可选部门
+          requiredDepartments: [], //必选部门（不可取消选中状态）
+          appId: "", //微应用的Id
+          permissionType: "GLOBAL", //选人权限，目前只有GLOBAL这个参数
+          onSuccess: function (result) {
+            that.addUserForm.drbumen = result.departments[0];
+          },
+          onFail: function (err) {},
+        });
+      });
+    },
+    selectAddCorp(val) {
+      if (val === "in") {
+        this.newAddView = !this.newAddView;
+      }
+      this.getBasicList();
+    },
+    handleNewaddClick(a) {
+      console.log(a);
+      this.addUserForm.draddress = a.name;
+
+      this.newAddView = false;
+    },
+    getBasicList() {
+      this.$axios
+        .post("/erp_check/assetxilatypelist", {
+          corp_id: this.$store.state.cid,
+        })
+        .then((res) => {
+          if (res.data.code == 1) {
+            this.noLastList = [
+              {
+                id: 0,
+                pid: "0",
+                name: "固定资产",
+                children: res.data.content,
+              },
+            ];
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      this.$axios
+        .post("/erp_check/addressxilatypelist", {
+          corp_id: this.$store.state.cid,
+        })
+        .then((res) => {
+          if (res.data.code == 1) {
+            this.LastList = [
+              {
+                id: 0,
+                pid: "0",
+                name: "固定资产",
+                children: res.data.content,
+              },
+            ];
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    DDselect(val) {
+      console.log("789798");
+      const that = this;
+      dd.ready(function () {
+        dd.biz.contact.complexPicker({
+          title: "通讯录", //标题
+          corpId: that.$store.state.cid, //企业的corpId
+          multiple: false, //是否多选
+          limitTips: "超出了", //超过限定人数返回提示
+          maxUsers: 99, //最大可选人数
+          pickedUsers: [], //已选用户
+          pickedDepartments: [], //已选部门
+          disabledUsers: [], //不可选用户
+          disabledDepartments: [], //不可选部门
+          requiredUsers: [], //必选用户（不可取消选中状态）
+          requiredDepartments: [], //必选部门（不可取消选中状态）
+          appId: "", //微应用的Id
+          permissionType: "GLOBAL", //可添加权限校验，选人权限，目前只有GLOBAL这个参数
+          responseUserOnly: true, //返回人，或者返回人和部门
+          startWithDepartmentId: 0, //仅支持0和-1
+          onSuccess: function (result) {
+            if (val === "dc") {
+              that.addUserForm.dcuserid = result.users[0];
+            } else if (val === "dr") {
+              that.addUserForm.druserid = result.users[0];
+            }
+          },
+          onFail: function (err) {
+            console.log(err);
+          },
+        });
+      });
+      dd.error(function (err) {
+        console.log(err);
+      });
+    },
     wqeasd() {
       console.log("778888", this.$refs.headerChild.checkedList);
     },
@@ -951,6 +1045,11 @@ export default {
   },
   created() {
     // this.$refs.child.getTitleList(); //设置显示字段
+    this.getBasicList();
+    this.$utils.commonAllPro().then((res) => {
+      this.allProjectList = res;
+      console.log("9999", res); //res为公共接口返回的数据;返回的数据为utils.js中return的数据
+    });
   },
   computed: {},
   watch: {

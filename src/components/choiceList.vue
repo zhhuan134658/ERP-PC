@@ -1,5 +1,8 @@
 <template>
-  <div id="commonMateRial" style="background-color: #fff; padding: 20px 0">
+  <div
+    id="commonMateRial"
+    style="background-color: #fff; padding: 20px 0; width: 100%"
+  >
     <div style="margin: 10px 0">
       <el-button size="medium" type="primary" @click="openDialog"
         >选择资产</el-button

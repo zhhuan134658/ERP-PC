@@ -68,9 +68,9 @@
                 </el-dropdown-menu>
               </el-dropdown>
 
-              <el-button type="primary" size="medium">导出查询结果</el-button>
+              <!-- <el-button type="primary" size="medium">导出查询结果</el-button>
               <el-button type="primary" size="medium">打印</el-button>
-              <el-button type="primary" size="medium">审批提醒</el-button>
+              <el-button type="primary" size="medium">审批提醒</el-button> -->
             </div>
             <div class="mmbRight"></div>
           </el-row>
@@ -108,215 +108,146 @@
         :title="newDialogTitle"
         :visible.sync="dialogFormVisible"
         :close-on-click-modal="false"
-        width="1020px"
+        width="1200px"
         @close="editCancel('addUserForm')"
         class="phDialog"
       >
         <div class="phdMain" style="padding: 0 15px">
-          <el-form
-            @submit.native.prevent
-            :model="addUserForm"
-            label-position="right"
-            ref="addUserForm"
-            label-width="120px"
-            style="width: 100%"
-          >
-            <!-- 基础信息 -->
+          <div class="cDrawerContent">
+            <el-form
+              @submit.native.prevent
+              :model="addUserForm"
+              label-position="right"
+              ref="addUserForm"
+              label-width="120px"
+              style="width: 100%"
+            >
+              <!-- 基础信息 -->
 
-            <div class="dBasicInfo" style="flex-wrap: wrap; display: flex">
-              <el-form-item
-                label="处置单号："
-                prop="cznumber"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-input
-                  v-model="addUserForm.cznumber"
-                  placeholder="请输入处置单号"
-                  maxlength="50"
-                  style="width: 165px"
-                ></el-input>
-              </el-form-item>
+              <div class="dBasicInfo" style="flex-wrap: wrap; display: flex">
+                <el-form-item label="处置单号：" prop="cznumber">
+                  <el-input
+                    v-model="addUserForm.cznumber"
+                    placeholder="请输入处置单号"
+                    maxlength="50"
+                  ></el-input>
+                </el-form-item>
 
-              <el-form-item
-                label="创建日期："
-                prop="starttime"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-date-picker
-                  format="yyyy 年 MM 月 dd 日"
-                  value-format="yyyy-MM-dd"
-                  v-model="addUserForm.starttime"
-                  type="date"
-                  placeholder="选择日期"
-                  style="width: 165px"
-                ></el-date-picker>
-              </el-form-item>
+                <el-form-item label="创建日期：" prop="starttime">
+                  <el-date-picker
+                    format="yyyy 年 MM 月 dd 日"
+                    value-format="yyyy-MM-dd"
+                    v-model="addUserForm.starttime"
+                    type="date"
+                    placeholder="选择日期"
+                  ></el-date-picker>
+                </el-form-item>
 
-              <el-form-item
-                label="单据状态："
-                prop="czstatus"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-select
-                  v-model="addUserForm.czstatus"
-                  placeholder="请选择位置"
-                >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
+                <el-form-item label="单据状态：" prop="czstatus">
+                  <el-select
+                    v-model="addUserForm.czstatus"
+                    placeholder="请选择位置"
                   >
-                  </el-option>
-                </el-select>
-              </el-form-item>
+                    <el-option label="item.label" value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
 
-              <el-form-item
-                label="处置发起人："
-                prop="czuserid"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-input
-                  v-model="addUserForm.czuserid"
-                  placeholder="请选择使用公司"
-                  maxlength="50"
-                  style="width: 165px"
-                ></el-input>
-              </el-form-item>
-              <el-form-item
-                label="发起人部门："
-                prop="userteam"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-select
-                  v-model="addUserForm.userteam"
-                  placeholder="请选择部门"
-                >
-                  <el-option
-                    v-for="(item, index) in allSupplier"
-                    :key="index"
-                    :label="item.name"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-
-              <el-form-item
-                label="完成日期："
-                prop="stoptime"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-date-picker
-                  format="yyyy 年 MM 月 dd 日"
-                  value-format="yyyy-MM-dd"
-                  v-model="addUserForm.stoptime"
-                  type="date"
-                  placeholder="选择日期"
-                  style="width: 165px"
-                ></el-date-picker>
-              </el-form-item>
-
-              <el-form-item
-                label="处置类型："
-                prop="cztype"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-select
-                  v-model="addUserForm.cztype"
-                  placeholder="请选择管理员"
-                  style="margin-left: "
-                >
-                  <el-option
-                    label="item.label"
-                    style="width: 165px"
-                    value="item.value"
+                <el-form-item label="处置发起人：" prop="czuserid">
+                  <el-input
+                    v-model="addUserForm.czuserid"
+                    placeholder="请选择使用公司"
+                    maxlength="50"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="发起人部门：" prop="userteam">
+                  <el-select
+                    v-model="addUserForm.userteam"
+                    placeholder="请选择部门"
                   >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="处置金额："
-                prop="czmoney"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-input
-                  v-model="addUserForm.czmoney"
-                  placeholder="请填写"
-                  maxlength="50"
-                  style="width: 165px"
-                ></el-input>
-              </el-form-item>
-              <el-form-item
-                label="处置费用:"
-                prop="czxiaofei"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-input
-                  v-model="addUserForm.czxiaofei"
-                  placeholder="请填写"
-                  maxlength="50"
-                  style="width: 165px"
-                ></el-input>
-              </el-form-item>
-              <el-form-item
-                label="资产原值合计:"
-                prop="zcyuanzhi"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-input
-                  v-model="addUserForm.zcyuanzhi"
-                  placeholder="请填写"
-                  maxlength="50"
-                  style="width: 165px"
-                ></el-input>
-              </el-form-item>
-              <el-form-item
-                label="资产残值合计:"
-                prop="zccanzhi"
-                class="dRemarkList"
-                style="width: 31%"
-              >
-                <el-input
-                  v-model="addUserForm.zccanzhi"
-                  placeholder="请填写"
-                  maxlength="50"
-                  style="width: 165px"
-                ></el-input>
-              </el-form-item>
-              <el-form-item
-                label="处置说明："
-                prop="czremark"
-                style="width: 65%"
-              >
-                <el-input
-                  type="textarea"
-                  v-model="addUserForm.czremark"
-                  maxlength="240"
-                  show-word-limit
-                  placeholder="请填写"
-                ></el-input>
-              </el-form-item>
+                    <el-option
+                      v-for="(item, index) in allSupplier"
+                      :key="index"
+                      :label="item.name"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
 
-              <el-form-item label="上传附件：" prop="remarks">
-                <imgupload
-                  :upImgList="upImgList"
-                  :licenceImg="licenceImg"
-                  :isShow="isShow"
-                  v-on:listenToChildEvent="show"
-                ></imgupload>
-              </el-form-item>
-            </div>
-            <choiceList ref="headerChild"></choiceList>
-          </el-form>
+                <el-form-item label="完成日期：" prop="stoptime">
+                  <el-date-picker
+                    format="yyyy 年 MM 月 dd 日"
+                    value-format="yyyy-MM-dd"
+                    v-model="addUserForm.stoptime"
+                    type="date"
+                    placeholder="选择日期"
+                  ></el-date-picker>
+                </el-form-item>
+
+                <el-form-item label="处置类型：" prop="cztype">
+                  <el-select
+                    v-model="addUserForm.cztype"
+                    placeholder="请选择管理员"
+                    style="margin-left: "
+                  >
+                    <el-option label="item.label" value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="处置金额：" prop="czmoney">
+                  <el-input
+                    v-model="addUserForm.czmoney"
+                    placeholder="请填写"
+                    maxlength="50"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="处置费用:" prop="czxiaofei">
+                  <el-input
+                    v-model="addUserForm.czxiaofei"
+                    placeholder="请填写"
+                    maxlength="50"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="资产原值合计:" prop="zcyuanzhi">
+                  <el-input
+                    v-model="addUserForm.zcyuanzhi"
+                    placeholder="请填写"
+                    maxlength="50"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="资产残值合计:" prop="zccanzhi">
+                  <el-input
+                    v-model="addUserForm.zccanzhi"
+                    placeholder="请填写"
+                    maxlength="50"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item
+                  label="处置说明："
+                  prop="czremark"
+                  style="width: 65%"
+                >
+                  <el-input
+                    type="textarea"
+                    v-model="addUserForm.czremark"
+                    maxlength="240"
+                    show-word-limit
+                    placeholder="请填写"
+                  ></el-input>
+                </el-form-item>
+
+                <el-form-item label="上传附件：" prop="remarks">
+                  <imgupload
+                    :upImgList="upImgList"
+                    :licenceImg="licenceImg"
+                    :isShow="isShow"
+                    v-on:listenToChildEvent="show"
+                  ></imgupload>
+                </el-form-item>
+              </div>
+              <choiceList ref="headerChild"></choiceList>
+            </el-form>
+          </div>
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button size="medium" @click="editCancel('addUserForm')"

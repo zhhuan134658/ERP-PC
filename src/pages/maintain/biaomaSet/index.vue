@@ -1,29 +1,31 @@
 <template>
-  <div id="box">
-    <div>
-      <p>温馨提示：通过选择一个或者多个字段，来设置编码规则</p>
-      <p style="margin-left: 69px">
-        可通过多项选择
-        <span style="color: #3296fa"
-          >（编码分类、所属/承租公司编号、自定义文本、购置起止日期+流水号）</span
-        >
-        的方式组成编号
-      </p>
-    </div>
-
-    <div class="lineS" v-if="isShow">
-      <div class="line">
-        <div class="box" style="border-right: 1px solid #999">
-          <div class="title">
-            <span
-              :class="{ active: leftSelect === data1.length }"
-              @click="selectAll(data1)"
-              >可选字段</span
-            >
-            <!-- <span>{{ leftSelect ? leftSelect : 0 }}/{{ data1.length }}</span> -->
+  <div id="materialBasic">
+    <div class="main">
+      <div class="content">
+        <div class="mainContent">
+          <div>
+            <p>温馨提示：通过选择一个或者多个字段，来设置编码规则</p>
+            <p style="margin-left: 69px">
+              可通过多项选择
+              <span style="color: #3296fa"
+                >（编码分类、所属/承租公司编号、自定义文本、购置起止日期+流水号）</span
+              >
+              的方式组成编号
+            </p>
           </div>
+          <div class="lineS" v-if="isShow">
+            <div class="line">
+              <div class="box" style="border-right: 1px solid #999">
+                <div class="title">
+                  <span
+                    :class="{ active: leftSelect === data1.length }"
+                    @click="selectAll(data1)"
+                    >可选字段</span
+                  >
+                  <!-- <span>{{ leftSelect ? leftSelect : 0 }}/{{ data1.length }}</span> -->
+                </div>
 
-          <!-- <div class="search_parent">
+                <!-- <div class="search_parent">
         <div class="search_div">
         <input
           class="search_input"
@@ -37,49 +39,49 @@
         </div>
       </div> -->
 
-          <div @drop="dropPub($event, 2)" @dragover.prevent class="left">
-            <div
-              @drag="ondrag"
-              @dragstart="dragstart($event, item, 1)"
-              @dragend="dragend"
-              draggable="true"
-              class="hover-color"
-              :class="{ active: item.isSelect }"
-              v-on:click="hanldleClick(data1, item.id)"
-              v-for="(item, index) in changeSourceData"
-              :key="index"
-            >
-              {{ item.value }}
-            </div>
-          </div>
-        </div>
+                <div @drop="dropPub($event, 2)" @dragover.prevent class="left">
+                  <div
+                    @drag="ondrag"
+                    @dragstart="dragstart($event, item, 1)"
+                    @dragend="dragend"
+                    draggable="true"
+                    class="hover-color"
+                    :class="{ active: item.isSelect }"
+                    v-on:click="hanldleClick(data1, item.id)"
+                    v-for="(item, index) in changeSourceData"
+                    :key="index"
+                  >
+                    {{ item.value }}
+                  </div>
+                </div>
+              </div>
 
-        <div class="middle">
-          <div
-            v-on:click="moveItem(data2, data1, 1)"
-            :class="{ active: rightSelect > 0 }"
-          >
-            <i class="el-icon-arrow-left"></i>
-          </div>
-          <div
-            v-on:click="moveItem(data1, data2, 2)"
-            :class="{ active: leftSelect > 0 }"
-          >
-            <i class="el-icon-arrow-right"></i>
-          </div>
-        </div>
+              <div class="middle">
+                <div
+                  v-on:click="moveItem(data2, data1, 1)"
+                  :class="{ active: rightSelect > 0 }"
+                >
+                  <i class="el-icon-arrow-left"></i>
+                </div>
+                <div
+                  v-on:click="moveItem(data1, data2, 2)"
+                  :class="{ active: leftSelect > 0 }"
+                >
+                  <i class="el-icon-arrow-right"></i>
+                </div>
+              </div>
 
-        <div class="box rightBox" style="border-left: 1px solid #999">
-          <div class="title">
-            <span
-              :class="{ active: rightSelect === data2.length }"
-              @click="selectAll(data2)"
-              >已选字段</span
-            >
-            <!-- <span>{{ rightSelect ? rightSelect : 0 }}/{{ data2.length }}</span> -->
-          </div>
+              <div class="box rightBox" style="border-left: 1px solid #999">
+                <div class="title">
+                  <span
+                    :class="{ active: rightSelect === data2.length }"
+                    @click="selectAll(data2)"
+                    >已选字段</span
+                  >
+                  <!-- <span>{{ rightSelect ? rightSelect : 0 }}/{{ data2.length }}</span> -->
+                </div>
 
-          <!-- <div class="search_parent">
+                <!-- <div class="search_parent">
         <div class="search_div">
         <input
           class="search_input"
@@ -93,90 +95,108 @@
         </div>
       </div> -->
 
-          <div @drop="dropPub($event, 1)" @dragover.prevent class="right">
-            <div class="nameZd">
-              <div class="itemOne">字段名</div>
-              <div class="itemTwo">连字符</div>
-            </div>
-            <div
-              class="hover-color"
-              @drag="ondrag"
-              @dragstart="dragstart($event, item, 2)"
-              @dragend="dragend"
-              draggable="true"
-              :class="{ active: item.isSelect }"
-              v-on:click="hanldleClick(data2, item.id)"
-              v-for="(item, index) in changeTargetData"
-              :key="index"
-            >
-              <span style="display: inline-block; width: 46%; margin-top: 10px">
-                {{ item.value }}
-              </span>
-              <el-select
-                v-model="item.zifu"
-                placeholder="连字符"
-                style="width: 100px; margin-left: px"
-              >
-                <el-option label="_" value="_"> </el-option>
-                <el-option label="-" value="-"> </el-option>
-              </el-select>
-              <el-input
-                v-model="item.message"
-                placeholder=""
-                style="width: 100px; margin-left: 10px"
-                v-if="item.value == '自定义文本'"
-              ></el-input>
-            </div>
+                <div @drop="dropPub($event, 1)" @dragover.prevent class="right">
+                  <div class="nameZd">
+                    <div class="itemOne">字段名</div>
+                    <div class="itemTwo">连字符</div>
+                  </div>
+                  <div
+                    class="hover-color"
+                    @drag="ondrag"
+                    @dragstart="dragstart($event, item, 2)"
+                    @dragend="dragend"
+                    draggable="true"
+                    :class="{ active: item.isSelect }"
+                    v-on:click="hanldleClick(data2, item.id)"
+                    v-for="(item, index) in changeTargetData"
+                    :key="index"
+                  >
+                    <span
+                      style="
+                        display: inline-block;
+                        width: 46%;
+                        margin-top: 10px;
+                      "
+                    >
+                      {{ item.value }}
+                    </span>
+                    <el-select
+                      v-model="item.zifu"
+                      placeholder="连字符"
+                      style="width: 100px; margin-left: px"
+                    >
+                      <el-option label="_" value="_"> </el-option>
+                      <el-option label="-" value="-"> </el-option>
+                    </el-select>
+                    <el-input
+                      v-model="item.message"
+                      placeholder=""
+                      style="width: 100px; margin-left: 10px"
+                      v-if="item.value == '自定义文本'"
+                    ></el-input>
+                  </div>
 
-            <div>
-              <span style="display: inline-block; width: 46%; margin-top: 10px">
-                流水号 <a-icon style="margin-left: 5px" type="question-circle"
-              /></span>
-              <el-select
-                v-model="infos[0].weishu"
-                placeholder="位数"
-                style="width: 100px; margin-left: px"
-              >
-                <el-option label="4位" value="4位"> </el-option>
-                <el-option label="5位" value="5位"> </el-option>
-                <el-option label="6位" value="6位"> </el-option>
-                <el-option label="7位" value="7位"> </el-option>
-              </el-select>
-              <el-select
-                v-model="infos[0].liushui"
-                placeholder="流水"
-                style="width: 100px; margin-left: 10px"
-              >
-                <el-option label="小流水" value="小流水"> </el-option>
-                <el-option label="大流水" value="大流水"> </el-option>
-              </el-select>
+                  <div>
+                    <span
+                      style="
+                        display: inline-block;
+                        width: 46%;
+                        margin-top: 10px;
+                      "
+                    >
+                      流水号
+                      <a-icon style="margin-left: 5px" type="question-circle"
+                    /></span>
+                    <el-select
+                      v-model="infos[0].weishu"
+                      placeholder="位数"
+                      style="width: 100px; margin-left: px"
+                    >
+                      <el-option label="4位" value="4位"> </el-option>
+                      <el-option label="5位" value="5位"> </el-option>
+                      <el-option label="6位" value="6位"> </el-option>
+                      <el-option label="7位" value="7位"> </el-option>
+                    </el-select>
+                    <el-select
+                      v-model="infos[0].liushui"
+                      placeholder="流水"
+                      style="width: 100px; margin-left: 10px"
+                    >
+                      <el-option label="小流水" value="小流水"> </el-option>
+                      <el-option label="大流水" value="大流水"> </el-option>
+                    </el-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="botm">
+              <div>
+                如需手工输入资产编码 ,请<span
+                  @click="dialogVisible = true"
+                  style="color: #3296fa"
+                  >关闭</span
+                >该功能
+              </div>
+              <div>
+                <el-button type="primary" @click="save">保存</el-button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="botm">
-        <div>
-          如需手工输入资产编码 ,请<span
-            @click="dialogVisible = true"
-            style="color: #3296fa"
-            >关闭</span
-          >该功能
-        </div>
-        <div><el-button type="primary" @click="save">保存</el-button></div>
-      </div>
-    </div>
 
-    <div class="lineS" v-else>
-      <div class="line">
-        <div style="height: 290px; line-height: 290px">
-          当前仅支持手工输入"资产编码" ,如需自动生成 ,请点击开启
-        </div>
-      </div>
-      <div class="botm" style="justify-content: end">
-        <div>
-          <el-button type="primary" @click="dialogVisible = true"
-            >开启</el-button
-          >
+          <div class="lineS" v-else>
+            <div class="line">
+              <div style="height: 290px; line-height: 290px">
+                当前仅支持手工输入"资产编码" ,如需自动生成 ,请点击开启
+              </div>
+            </div>
+            <div class="botm" style="justify-content: end">
+              <div>
+                <el-button type="primary" @click="dialogVisible = true"
+                  >开启</el-button
+                >
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -608,8 +628,7 @@ export default {
   margin: 0;
   padding: 0;
 }
-#box {
-}
+
 .line {
   display: flex;
   justify-content: center;
