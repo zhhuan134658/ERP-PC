@@ -1,9 +1,4 @@
-/*
- * @Author: NorthWind 
- * @Date: 2020-12-08 10:23:06 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2022-04-28 16:23:06
- */
+
 <template>
   <div id="incomeContractList">
     <!-- 收入合同列表 -->

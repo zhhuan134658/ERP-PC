@@ -1,5 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-12-14 09:32:45 * @Last Modified by:
-mikey.zhaopeng * @Last Modified time: 2022-01-21 16:54:16 */
 <template>
   <div id="basicHouseManage">
     <!-- 仓库列表 -->

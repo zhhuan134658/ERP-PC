@@ -1,9 +1,4 @@
-/*
- * @Author: NorthWind 
- * @Date: 2021-01-20 08:35:11 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2022-04-28 18:12:43
- */
+
 <template>
   <div id="materialPlanReport">
     <!-- 材料期初报表 -->

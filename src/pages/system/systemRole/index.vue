@@ -1,5 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-12-21 10:35:31 * @Last Modified by:
-mikey.zhaopeng * @Last Modified time: 2022-01-07 17:22:54 */
 <template>
   <div id="systemRole">
     <div class="main">
@@ -104,13 +102,42 @@ mikey.zhaopeng * @Last Modified time: 2022-01-07 17:22:54 */
 
               <div v-if="viewPage" class="appCRHRight">
                 <span v-if="!isDisa">
-                  <el-checkbox v-model="xmu" @change="addFcn1" :disabled="isDisa">参与的项目</el-checkbox>
-                  <el-checkbox v-model="xmCh" @change="addFcn2" :disabled="isDisa">全部项目</el-checkbox>
-                  <el-checkbox v-model="add" @change="addFcn" :disabled="isDisa">新增</el-checkbox>
-                  <el-checkbox v-model="set" @change="addFcn"  :disabled="isDisa">修改</el-checkbox>
-                  <el-checkbox v-model="daochu" @change="addFcn"  :disabled="isDisa">导出</el-checkbox>
-                  <el-checkbox v-model="daoru" @change="addFcn"  :disabled="isDisa">导入</el-checkbox>
-                  <el-checkbox v-model="deletes" @change="addFcn"  :disabled="isDisa" style="margin-right: 50px">
+                  <el-checkbox
+                    v-model="xmu"
+                    @change="addFcn1"
+                    :disabled="isDisa"
+                    >参与的项目</el-checkbox
+                  >
+                  <el-checkbox
+                    v-model="xmCh"
+                    @change="addFcn2"
+                    :disabled="isDisa"
+                    >全部项目</el-checkbox
+                  >
+                  <el-checkbox v-model="add" @change="addFcn" :disabled="isDisa"
+                    >新增</el-checkbox
+                  >
+                  <el-checkbox v-model="set" @change="addFcn" :disabled="isDisa"
+                    >修改</el-checkbox
+                  >
+                  <el-checkbox
+                    v-model="daochu"
+                    @change="addFcn"
+                    :disabled="isDisa"
+                    >导出</el-checkbox
+                  >
+                  <el-checkbox
+                    v-model="daoru"
+                    @change="addFcn"
+                    :disabled="isDisa"
+                    >导入</el-checkbox
+                  >
+                  <el-checkbox
+                    v-model="deletes"
+                    @change="addFcn"
+                    :disabled="isDisa"
+                    style="margin-right: 50px"
+                  >
                     删除</el-checkbox
                   >
                 </span>
@@ -132,7 +159,7 @@ mikey.zhaopeng * @Last Modified time: 2022-01-07 17:22:54 */
             <div class="appCRHeader">
               <div class="appCRHLeft">
                 <div :class="'activeRoleClass'" style="font-weight: bold">
-                  {{ '用户详情' }}
+                  {{ "用户详情" }}
                 </div>
               </div>
             </div>
@@ -235,7 +262,7 @@ mikey.zhaopeng * @Last Modified time: 2022-01-07 17:22:54 */
                               index,
                               liindex,
                               lindex,
-                              item.content,
+                              item.content
                             )
                           "
                           >{{ ilist.value }}</el-checkbox
@@ -337,7 +364,7 @@ mikey.zhaopeng * @Last Modified time: 2022-01-07 17:22:54 */
                             ? searchingUserInfo.name
                             : searchingUserInfo.name.substr(
                                 searchingUserInfo.name.length - 2,
-                                2,
+                                2
                               )
                         }}
                       </div>
@@ -345,8 +372,8 @@ mikey.zhaopeng * @Last Modified time: 2022-01-07 17:22:54 */
                         {{ `${searchingUserInfo.name}`
                         }}<span class="roles">{{
                           `角色：${searchingUserInfo.role
-                            .map(role => role['role_name'])
-                            .join('、')}`
+                            .map((role) => role["role_name"])
+                            .join("、")}`
                         }}</span>
                       </div>
                     </div>
@@ -475,25 +502,25 @@ mikey.zhaopeng * @Last Modified time: 2022-01-07 17:22:54 */
   </div>
 </template>
 <script>
-import * as dd from 'dingtalk-jsapi';
-import draggable from 'vuedraggable';
+import * as dd from "dingtalk-jsapi";
+import draggable from "vuedraggable";
 export default {
-  name: 'systemRole',
+  name: "systemRole",
   components: { draggable },
   data() {
     return {
       AllCheckedList: [],
       alldeleteVisible: false,
       checkList: [],
-      newRoleName: '',
+      newRoleName: "",
       editVisible: false,
       isDisa: true,
-      activeNames: '1',
+      activeNames: "1",
       dialogVisible: false,
       isIndeterminate: false,
       deleteVisible: false,
-      deleteRoleName: '',
-      searchKey: '',
+      deleteRoleName: "",
+      searchKey: "",
       roleNum: 0,
       searchingUser: false,
       searchingUserInfo: {},
@@ -501,8 +528,8 @@ export default {
         name: [
           {
             required: true,
-            message: '角色名称不能为空',
-            trigger: 'blur',
+            message: "角色名称不能为空",
+            trigger: "blur",
           },
         ],
       },
@@ -511,8 +538,8 @@ export default {
       activeAppRole: 0,
       activeAppItem: 0,
       titleList: [
-        { name: '功能权限', value: '1' },
-        { name: '角色成员', value: '2' },
+        { name: "功能权限", value: "1" },
+        { name: "角色成员", value: "2" },
       ],
       viewPage: true,
       loaded: false,
@@ -521,128 +548,127 @@ export default {
       subbranchList: [],
       subbranchVisible: false,
       addForm: {
-        name: '',
+        name: "",
       },
-      roleId: '1', //角色id
+      roleId: "1", //角色id
       roleUserList: [],
       deleteRoleUserData: {}, //删除角色数据
       deleteRoleUserIndex: 0, //删除角色索引
       PowerList: [],
       rolePower: [],
       postPowerId: [],
-      deleteRoleId: '',
-      deleteRoleIdName: '',
+      deleteRoleId: "",
+      deleteRoleIdName: "",
       deleteRoleIdIndex: 0,
-      editRoleId: '',
-      editRoleIdName: '',
+      editRoleId: "",
+      editRoleIdName: "",
       editRoleIdIndex: 0,
       addUserId: [],
-      isEditId: '1',
+      isEditId: "1",
       add: false,
-      xmu:true,
-      xmCh:false,
-      deletes:false,
-      set:false,
-      daochu:false,
-      daoru:false
+      xmu: true,
+      xmCh: false,
+      deletes: false,
+      set: false,
+      daochu: false,
+      daoru: false,
     };
   },
   methods: {
     checkAlls(type, fas) {
-      if (fas == '1') {
-        this.PowerList.forEach(e => {
-          e.children.forEach(i => {
-            i.content.forEach(k => {
+      if (fas == "1") {
+        this.PowerList.forEach((e) => {
+          e.children.forEach((i) => {
+            i.content.forEach((k) => {
               if (k.value == type) {
-                k.status = '1';
+                k.status = "1";
               }
             });
           });
         });
       } else {
-        this.PowerList.forEach(e => {
-          e.children.forEach(i => {
-            i.content.forEach(k => {
+        this.PowerList.forEach((e) => {
+          e.children.forEach((i) => {
+            i.content.forEach((k) => {
               if (k.value == type) {
-                k.status = '2';
+                k.status = "2";
               }
             });
           });
         });
       }
-      console.log(this.PowerList)
+      console.log(this.PowerList);
     },
-     checkAlls1(type, fas) {
-      if (fas == '1') {
-        this.PowerList.forEach(e => {
-          e.children.forEach(i => {
-        //    console.log(i)
-           i.pop=1;
+    checkAlls1(type, fas) {
+      if (fas == "1") {
+        this.PowerList.forEach((e) => {
+          e.children.forEach((i) => {
+            //    console.log(i)
+            i.pop = 1;
           });
         });
         // this.xmCh = false;
       } else {
-       this.PowerList.forEach(e => {
-          e.children.forEach(i => {
-        //    console.log(i)
-           i.pop=2;
+        this.PowerList.forEach((e) => {
+          e.children.forEach((i) => {
+            //    console.log(i)
+            i.pop = 2;
           });
         });
         // this.xmu = false;
       }
-      console.log(this.PowerList)
+      console.log(this.PowerList);
     },
 
     addFcn() {
       if (this.add) {
-        this.checkAlls('新增', '1');
+        this.checkAlls("新增", "1");
       } else {
-        this.checkAlls('新增', '2');
+        this.checkAlls("新增", "2");
       }
-       if (this.set) {
-        this.checkAlls('修改', '1');
+      if (this.set) {
+        this.checkAlls("修改", "1");
       } else {
-        this.checkAlls('修改', '2');
+        this.checkAlls("修改", "2");
       }
-         if (this.daochu) {
-        this.checkAlls('导出', '1');
+      if (this.daochu) {
+        this.checkAlls("导出", "1");
       } else {
-        this.checkAlls('导出', '2');
+        this.checkAlls("导出", "2");
       }
-     if (this.daoru) {
-        this.checkAlls('导入', '1');
+      if (this.daoru) {
+        this.checkAlls("导入", "1");
       } else {
-        this.checkAlls('导入', '2');
+        this.checkAlls("导入", "2");
       }
-    if (this.deletes) {
-        this.checkAlls('删除', '1');
+      if (this.deletes) {
+        this.checkAlls("删除", "1");
       } else {
-        this.checkAlls('删除', '2');
+        this.checkAlls("删除", "2");
       }
-  
     },
-    addFcn1(){
-    if(this.xmu){
-        this.checkAlls1('','1')
+    addFcn1() {
+      if (this.xmu) {
+        this.checkAlls1("", "1");
         this.xmCh = false;
-        console.log('this.xmu = false')
+        console.log("this.xmu = false");
       }
     },
-    addFcn2(){
-           if(this.xmCh){
-        this.checkAlls1('','2')
+    addFcn2() {
+      if (this.xmCh) {
+        this.checkAlls1("", "2");
         this.xmu = false;
 
-        console.log('this.xmu = true')
+        console.log("this.xmu = true");
       }
     },
     //   批量删除dialog
     allDelete() {
       if (this.AllCheckedList.length == 0) {
         this.$message({
-          message: '请您先选择要删除的角色',
-          type: 'success',
-          duration: '2000',
+          message: "请您先选择要删除的角色",
+          type: "success",
+          duration: "2000",
         });
       } else {
         this.alldeleteVisible = true;
@@ -658,19 +684,19 @@ export default {
       const _this = this;
       _this.loaded = true;
       _this.$axios
-        .post('/erp_check/roleuserdelete', {
+        .post("/erp_check/roleuserdelete", {
           users: _this.AllCheckedList,
           id: _this.roleId,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             _this.getRoleUserList();
             _this.loaded = false;
             _this.alldeleteVisible = false;
             _this.$message({
-              message: '删除成功',
-              type: 'success',
-              duration: '2000',
+              message: "删除成功",
+              type: "success",
+              duration: "2000",
             });
 
             _this.dialogVisible = false;
@@ -678,8 +704,8 @@ export default {
             _this.loaded = false;
             _this.$message({
               message: res.data.msg,
-              type: 'error',
-              duration: '2000',
+              type: "error",
+              duration: "2000",
             });
           }
         })
@@ -689,28 +715,28 @@ export default {
     },
     //启动编辑
     editRole() {
-      if (this.isEditId !== '1') {
+      if (this.isEditId !== "1") {
         this.isDisa = false;
       }
     },
     saveRole() {
       console.log(this.PowerList);
       this.$axios
-        .post('/erp_check/qxusercontent', {
+        .post("/erp_check/qxusercontent", {
           id: this.roleId,
           rules: JSON.stringify(this.PowerList),
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.roleUserList = res.data.content;
             this.$message({
-              type: 'success',
-              message: '编辑成功',
+              type: "success",
+              message: "编辑成功",
               duration: 1500,
             });
           } else {
             this.$message({
-              type: 'warning',
+              type: "warning",
               message: res.data.msg,
               duration: 1500,
             });
@@ -742,7 +768,7 @@ export default {
             childArray[i].check = 0;
             childArray[i].isCheckNum = 0;
           }
-          childArray[i].children.forEach(element => {
+          childArray[i].children.forEach((element) => {
             element.checkAll = e;
             if (e) {
               element.check = 1;
@@ -810,7 +836,7 @@ export default {
       } else {
         ilist.check = 0;
       }
-      console.log('123', e, ilist);
+      console.log("123", e, ilist);
       // if (ilist.name != '修改' && ilist.checkAll) {
       //     // if (e) {
       //     //     list[2].checkAll = true;
@@ -820,11 +846,11 @@ export default {
       //     }
       // }
 
-      if (ilist.title == '新增') {
-        console.log('122', list);
+      if (ilist.title == "新增") {
+        console.log("122", list);
         if (e) {
           list.map((item, index) => {
-            if (item.title == '查看') {
+            if (item.title == "查看") {
               list[index].checkAll = true;
               list[index].check = 1;
             }
@@ -874,9 +900,9 @@ export default {
     changeRole(item, index) {
       this.checkList = [];
       this.isDisa = true;
-      console.log(item, 'itemitemitem');
-      if (item.name == '管理员') {
-        this.isEditId = item.extend_first || '1';
+      console.log(item, "itemitemitem");
+      if (item.name == "管理员") {
+        this.isEditId = item.extend_first || "1";
       } else {
         this.isEditId = null;
       }
@@ -904,7 +930,7 @@ export default {
         this.getRoleList();
         return false;
       }
-      const res = await this.$axios.post('/finance/personnel_search', {
+      const res = await this.$axios.post("/finance/personnel_search", {
         user_name: userName,
       });
       if (res.data.code === 1) {
@@ -914,13 +940,13 @@ export default {
           this.changeSearchUser(
             res.data.data[0].name,
             res.data.data[0].group,
-            res.data.data[0].avatar,
+            res.data.data[0].avatar
           );
         }
       }
     },
     async changeSearchUser(userName, group, avatar) {
-      const res = await this.$axios.post('/finance/personnel', {
+      const res = await this.$axios.post("/finance/personnel", {
         name: userName,
         group: group,
         avatar: avatar,
@@ -932,10 +958,10 @@ export default {
     //获取角色成员列表
     getRoleUserList() {
       this.$axios
-        .post('/erp_check/roleuserlist', {
+        .post("/erp_check/roleuserlist", {
           id: this.roleId,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.roleUserList = res.data.data;
           }
@@ -946,8 +972,8 @@ export default {
     },
     changeRoleList() {
       this.$axios
-        .post('/finance/rolelist')
-        .then(res => {
+        .post("/finance/rolelist")
+        .then((res) => {
           if (res.data.code == 1) {
             this.roleList = res.data.content;
             this.getAllPower();
@@ -960,8 +986,8 @@ export default {
     // 获取角色数量
     getRoleListNum() {
       this.$axios
-        .post('/finance/rolelist')
-        .then(res => {
+        .post("/finance/rolelist")
+        .then((res) => {
           if (res.data.code == 1) {
             this.roleList = res.data.content;
             this.roleId = res.data.content[0].id;
@@ -976,15 +1002,15 @@ export default {
     //获取角色列表
     getRoleList() {
       this.$axios
-        .post('/erp_check/qxuserlist', { corp_id: this.$store.state.cid })
-        .then(res => {
+        .post("/erp_check/qxuserlist", { corp_id: this.$store.state.cid })
+        .then((res) => {
           if (res.data.code == 1) {
             this.roleList = res.data.data;
             this.roleId = res.data.data[0].id;
             this.getAllPower();
             this.getRoleUserList();
             if (res.data.data && res.data.data.length >= 1) {
-              const roleNums = res.data.data.map(item => item.num);
+              const roleNums = res.data.data.map((item) => item.num);
               this.roleNum = roleNums.reduce((a, b) => a + b, 0);
             }
           }
@@ -997,31 +1023,31 @@ export default {
     addSave(formName) {
       const _this = this;
       _this.loaded = true;
-      _this.$refs[formName].validate(valid => {
+      _this.$refs[formName].validate((valid) => {
         if (valid) {
           _this.$axios
-            .post('/erp_check/addqxuser', {
+            .post("/erp_check/addqxuser", {
               //   user_id: '',
               //   rules: [],
               name: this.addForm.name,
               corp_id: this.$store.state.cid,
             })
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 1) {
                 _this.getRoleList();
                 _this.loaded = false;
                 _this.addFormVisible = false;
                 _this.$refs[formName].resetFields();
                 _this.$message({
-                  message: '添加角色成功',
-                  type: 'success',
+                  message: "添加角色成功",
+                  type: "success",
                   duration: 1500,
                 });
               } else {
                 _this.loaded = false;
                 _this.$message({
                   message: res.data.msg,
-                  type: 'error',
+                  type: "error",
                   duration: 1500,
                 });
               }
@@ -1032,7 +1058,7 @@ export default {
             });
         } else {
           _this.loaded = false;
-          console.log('error submit!!');
+          console.log("error submit!!");
           return false;
         }
       });
@@ -1057,17 +1083,17 @@ export default {
       const _this = this;
       _this.loaded = true;
       _this.$axios
-        .post('/finance/ryqx_del', {
+        .post("/finance/ryqx_del", {
           userid: [_this.deleteRoleUserData.userid],
           j_id: _this.roleId,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             _this.loaded = false;
             _this.$message({
-              message: '删除成功',
-              type: 'success',
-              duration: '2000',
+              message: "删除成功",
+              type: "success",
+              duration: "2000",
             });
             _this.roleUserList.splice(_this.deleteRoleUserIndex, 1);
             _this.dialogVisible = false;
@@ -1075,8 +1101,8 @@ export default {
             _this.loaded = false;
             _this.$message({
               message: res.data.msg,
-              type: 'error',
-              duration: '2000',
+              type: "error",
+              duration: "2000",
             });
           }
         })
@@ -1087,22 +1113,22 @@ export default {
     //获取所有权限
     getAllPower() {
       this.$axios
-        .post('/erp_check/qxuserrolelist', {
+        .post("/erp_check/qxuserrolelist", {
           id: this.roleId,
           corp_id: this.$store.state.cid,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             this.PowerList = res.data.data;
-            this.PowerList = this.PowerList.map(item => {
+            this.PowerList = this.PowerList.map((item) => {
               return Object.assign(item, {
                 isIndeterminate: false,
                 checkAll: false,
                 checkedRole: false,
               });
             });
-            this.PowerList.forEach(item => {
-              item.children = item.children.map(item => {
+            this.PowerList.forEach((item) => {
+              item.children = item.children.map((item) => {
                 return Object.assign(item, {
                   isIndeterminate: false,
                   checkAll: false,
@@ -1111,9 +1137,9 @@ export default {
                 });
               });
             });
-            this.PowerList.forEach(item => {
-              item.children.forEach(element => {
-                element.children = element.children.map(element => {
+            this.PowerList.forEach((item) => {
+              item.children.forEach((element) => {
+                element.children = element.children.map((element) => {
                   return Object.assign(element, {
                     checkAll: false,
                   });
@@ -1125,7 +1151,7 @@ export default {
               //     });
               // });
             });
-            this.PowerList.forEach(item => {
+            this.PowerList.forEach((item) => {
               if (item.check == 1) {
                 item.isIndeterminate = false;
                 item.checkAll = true;
@@ -1136,7 +1162,7 @@ export default {
                 item.checkedRole = false;
               }
               if (item.children.length > 0) {
-                item.children.forEach(list => {
+                item.children.forEach((list) => {
                   if (list.check == 1) {
                     list.isIndeterminate = false;
                     list.checkAll = true;
@@ -1147,7 +1173,7 @@ export default {
                     list.checkedRole = false;
                   }
                   if (list.children.length > 0) {
-                    list.children.forEach(element => {
+                    list.children.forEach((element) => {
                       if (element.check == 1) {
                         element.checkAll = true;
                         list.isCheckNum = 1;
@@ -1224,11 +1250,11 @@ export default {
       const _this = this;
       _this.getPostPowerId();
       _this.$axios
-        .post('/index.php/api/dapplication/distributeRoleAuth', {
+        .post("/index.php/api/dapplication/distributeRoleAuth", {
           id: _this.roleId,
           rules: _this.postPowerId.toString(),
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             _this.getAllPower();
           } else {
@@ -1246,7 +1272,10 @@ export default {
       for (let i = 0, len = _this.PowerList.length; i < len; i++) {
         if (_this.PowerList[i].checkAll == true)
           _this.postPowerId.push(_this.PowerList[i].id);
-        if (_this.PowerList[i].children && _this.PowerList[i].children.length > 0) {
+        if (
+          _this.PowerList[i].children &&
+          _this.PowerList[i].children.length > 0
+        ) {
           let sonPermissionArray = _this.PowerList[i].children;
           for (let j = 0, leng = sonPermissionArray.length; j < leng; j++)
             if (sonPermissionArray[j].checkAll == true) {
@@ -1277,25 +1306,25 @@ export default {
 
       if (_this.newRoleName) {
         _this.$axios
-          .post('/erp_check/updateqxuser', {
-            type: 'update',
+          .post("/erp_check/updateqxuser", {
+            type: "update",
             id: _this.editRoleId,
             name: _this.newRoleName,
             corp_id: _this.$store.state.cid,
           })
-          .then(res => {
+          .then((res) => {
             if (res.data.code == 1) {
               _this.editVisible = false;
               _this.getRoleList();
-              _this.newRoleName = '';
+              _this.newRoleName = "";
               _this.$message({
-                type: 'success',
-                message: '角色修改成功',
+                type: "success",
+                message: "角色修改成功",
                 duration: 1500,
               });
             } else {
               _this.$message({
-                type: 'warning',
+                type: "warning",
                 message: res.data.msg,
                 duration: 1500,
               });
@@ -1306,8 +1335,8 @@ export default {
           });
       } else {
         _this.$message({
-          type: 'warning',
-          message: '请输入新的角色名',
+          type: "warning",
+          message: "请输入新的角色名",
           duration: 1500,
         });
       }
@@ -1316,23 +1345,23 @@ export default {
     deleteRoleIdSure() {
       const _this = this;
       _this.$axios
-        .post('/erp_check/updateqxuser', {
-          type: 'delete',
+        .post("/erp_check/updateqxuser", {
+          type: "delete",
           id: _this.deleteRoleId,
           corp_id: _this.$store.state.cid,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             _this.roleList.splice(_this.deleteRoleIdIndex, 1);
             _this.deleteVisible = false;
             _this.$message({
-              type: 'success',
-              message: '删除角色成功',
+              type: "success",
+              message: "删除角色成功",
               duration: 1500,
             });
           } else {
             _this.$message({
-              type: 'warning',
+              type: "warning",
               message: res.data.msg,
               duration: 1500,
             });
@@ -1346,21 +1375,21 @@ export default {
     addRoleUser(newarr) {
       const _this = this;
       _this.$axios
-        .post('/erp_check/roleuseradd', {
+        .post("/erp_check/roleuseradd", {
           id: _this.roleId,
           users: newarr,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 1) {
             _this.getRoleUserList();
             _this.$message({
-              type: 'success',
-              message: '添加人员成功',
+              type: "success",
+              message: "添加人员成功",
               duration: 1500,
             });
           } else {
             _this.$message({
-              type: 'warning',
+              type: "warning",
               message: res.data.msg,
               duration: 2000,
             });
@@ -1376,7 +1405,7 @@ export default {
       this.subbranchVisible = true;
     },
     async getSubbranch(cover_set_id) {
-      const url = '/finance/two_power_list';
+      const url = "/finance/two_power_list";
       const res = await this.$axios.post(url, {
         cover_set_id,
       });
@@ -1387,19 +1416,19 @@ export default {
       }
     },
     async deleteSubbranch(subId) {
-      const url = '/finance/two_power_del';
+      const url = "/finance/two_power_del";
       const res = await this.$axios.post(url, {
         id: subId,
       });
       if (res.data.code === 1) {
-        this.$message.success('删除成功');
+        this.$message.success("删除成功");
         this.getSubbranch(this.cover_set_id);
       } else {
         this.$message.error(res.data.msg);
       }
     },
     async addSubbranch(users) {
-      const url = '/finance/two_power';
+      const url = "/finance/two_power";
       const res = await this.$axios.post(url, {
         user: users,
         j_id: this.roleId,
@@ -1407,12 +1436,12 @@ export default {
       });
       if (res.data.code == 1) {
         this.$message({
-          type: 'success',
+          type: "success",
           message: res.data.msg,
         });
       } else {
         this.$message({
-          type: 'warning',
+          type: "warning",
           message: res.data.msg,
         });
       }
@@ -1422,10 +1451,10 @@ export default {
       _this.cover_set_id = id;
       dd.ready(() => {
         dd.biz.contact.complexPicker({
-          title: '通讯录', //标题
+          title: "通讯录", //标题
           corpId: _this.$store.state.cid, //企业的corpId
           multiple: true, //是否多选
-          limitTips: '超出了', //超过限定人数返回提示
+          limitTips: "超出了", //超过限定人数返回提示
           maxUsers: 99, //最大可选人数
           pickedUsers: [], //已选用户
           pickedDepartments: [], //已选部门
@@ -1434,7 +1463,7 @@ export default {
           requiredUsers: [], //必选用户（不可取消选中状态）
           requiredDepartments: [], //必选部门（不可取消选中状态）
           appId: _this.agentid, //微应用的Id
-          permissionType: 'GLOBAL', //可添加权限校验，选人权限，目前只有GLOBAL这个参数
+          permissionType: "GLOBAL", //可添加权限校验，选人权限，目前只有GLOBAL这个参数
           responseUserOnly: true, //返回人，或者返回人和部门
           startWithDepartdeptId: 0, //仅支持0和-1
           onSuccess: function (result) {
@@ -1458,10 +1487,10 @@ export default {
       const that = this;
       dd.ready(function () {
         dd.biz.contact.complexPicker({
-          title: '通讯录', //标题
+          title: "通讯录", //标题
           corpId: that.$store.state.cid, //企业的corpId
           multiple: true, //是否多选
-          limitTips: '超出了', //超过限定人数返回提示
+          limitTips: "超出了", //超过限定人数返回提示
           maxUsers: 99, //最大可选人数
           pickedUsers: [], //已选用户
           pickedDepartments: [], //已选部门
@@ -1470,7 +1499,7 @@ export default {
           requiredUsers: [], //必选用户（不可取消选中状态）
           requiredDepartments: [], //必选部门（不可取消选中状态）
           appId: that.agentid, //微应用的Id
-          permissionType: 'GLOBAL', //可添加权限校验，选人权限，目前只有GLOBAL这个参数
+          permissionType: "GLOBAL", //可添加权限校验，选人权限，目前只有GLOBAL这个参数
           responseUserOnly: true, //返回人，或者返回人和部门
           startWithDepartdeptId: 0, //仅支持0和-1
           onSuccess: function (result) {
@@ -1497,10 +1526,10 @@ export default {
   },
   computed: {
     comEdit() {
-      if (this.isEditId == '1') {
-        return 'crhrSpan';
+      if (this.isEditId == "1") {
+        return "crhrSpan";
       } else {
-        return '';
+        return "";
       }
     },
   },

@@ -1,6 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-11-13 08:39:39 * @Last Modified by:
-NorthWind * @Last Modified time: 2020-12-21 14:08:51 */
-
 <template>
   <div class="commonMain">
     <el-aside class="homeBottomMenu">

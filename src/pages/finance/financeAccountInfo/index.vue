@@ -1,5 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-12-15 14:17:29 * @Last Modified by:
-NorthWind * @Last Modified time: 2022-01-13 14:17:20 */
 <template>
   <div id="financeAccountInfo">
     <!-- 账户信息列表 -->

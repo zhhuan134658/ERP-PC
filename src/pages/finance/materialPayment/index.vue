@@ -1,5 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-12-17 10:54:41 * @Last Modified by:
-NorthWind * @Last Modified time: 2022-01-13 14:19:00 */
 <template>
   <div id="otherPayment">
     <!-- 其他付款列表 -->

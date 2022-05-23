@@ -1,5 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-12-08 15:14:25 * @Last Modified by:
-NorthWind * @Last Modified time: 2022-01-13 11:36:28 */
 <template>
   <div id="materialAllot">
     <!-- 材料调拨列表 -->

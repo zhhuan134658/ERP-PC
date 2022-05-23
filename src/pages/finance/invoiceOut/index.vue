@@ -1,5 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-12-12 13:41:12 * @Last Modified by:
-NorthWind * @Last Modified time: 2022-01-13 14:01:40 */
 <template>
   <div id="invoiceOut">
     <!-- 开票列表 -->

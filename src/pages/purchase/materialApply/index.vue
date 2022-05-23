@@ -1,5 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-12-08 14:42:38 * @Last Modified by:
-NorthWind * @Last Modified time: 2022-01-13 14:18:48 */
 <template>
   <div id="collectionReport">
 

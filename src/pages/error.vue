@@ -1,5 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-11-13 09:02:39 * @Last Modified by:
-NorthWind * @Last Modified time: 2021-03-04 18:29:30 */
 <template>
   <div id="error">
     <div class="errorMain">

@@ -11,7 +11,7 @@ export default {
   name: "app",
   data() {
     return {
-      version: "0.1.0rc1",
+      version: "0.0.0-version",
     };
   },
   methods: {},

@@ -624,10 +624,10 @@ export default {
     if (process.env.VUE_APP_AUTH_CODE == 666) {
       console.log("测试1环境");
       _this.$message(`测试1环境`);
-      _this.$store.commit("setCid", "dingea47c602975497f935c2f4657eb6378f");
-      _this.login();
+      //   _this.$store.commit("setCid", "dingea47c602975497f935c2f4657eb6378f");
+      //   _this.login();
 
-      //_this.getReady();
+      _this.getReady();
     } else {
       _this.getReady();
     }

@@ -424,6 +424,7 @@ export default {
   },
   //钉钉通讯录选人
   DDaddPeople(isMultiple) {
+    let peopleList = [];
     dd.ready(function() {
       dd.biz.contact.complexPicker({
         title: "通讯录", //标题
@@ -443,7 +444,7 @@ export default {
         startWithDepartmentId: 0, //仅支持0和-1
         onSuccess: function(result) {
           console.log(result);
-          return result;
+          peopleList = result;
         },
         onFail: function(err) {
           console.log(err);
@@ -453,6 +454,7 @@ export default {
     dd.error(function(err) {
       console.log(err);
     });
+    return peopleList;
   },
   async commonAllPro() {
     try {

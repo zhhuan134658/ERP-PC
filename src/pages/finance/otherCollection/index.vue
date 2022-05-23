@@ -1,5 +1,3 @@
-/* * @Author: NorthWind * @Date: 2020-12-17 11:41:45 * @Last Modified by:
-NorthWind * @Last Modified time: 2022-01-13 14:19:53 */
 <template>
   <div id="otherCollection">
     <!-- 其他收款列表 -->

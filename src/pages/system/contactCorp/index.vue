@@ -1,9 +1,4 @@
-/*
- * @Author: NorthWind 
- * @Date: 2020-12-14 13:44:42 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2022-05-19 09:21:29
- */
+
 <template>
   <div id="contactCorp">
     <div class="main">
