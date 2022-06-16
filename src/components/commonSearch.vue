@@ -139,6 +139,18 @@
                 :value="item.name"
               ></el-option>
             </el-select>
+
+            <el-select
+              v-else-if="item.labelName === '项目性质'"
+              v-model="formInline[item.labelData]"
+              clearable
+              filterable
+              placeholder="请选择项目性质"
+            >
+              <el-option label="自营" value="1"></el-option>
+              <el-option label="联营" value="2"></el-option>
+            </el-select>
+
             <el-input
               v-else
               v-model="formInline[item.labelData]"

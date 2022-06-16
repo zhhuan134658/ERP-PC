@@ -15,17 +15,13 @@
                 >
               </el-row>
             </div>
-
+            <div class="main_toptitle">
+              温馨提示:
+              web端配置打印机纸张长、宽比为2.5可得到最佳打印效果。如：纸带宽度为18mm，设置长度为45mm最佳；纸带宽度为24mm，设置长度为60mm最佳
+            </div>
             <div class="center">
               <el-row>
                 <el-col :span="24">
-                  <div class="centerItem">
-                    <div style="width: 20%; color: red">温馨提示</div>
-                    <div style="width: 70%">
-                      web端配置打印机纸张长、宽比为2.5可得到最佳打印效果。如：纸带宽度为18mm，设置长度为45mm最佳；纸带宽度为24mm，设置长度为60最佳
-                    </div>
-                  </div>
-
                   <div class="centerItem">
                     <div style="width: 20%">选择标签模板</div>
                     <div style="width: 70%" class="biaoqian">
@@ -50,7 +46,9 @@
                               src="../../../assets/images/erwe.jpg"
                               alt=""
                             />
-                            <div style="padding-left: 0">自定义选取字段</div>
+                            <div style="padding-left: 0; color: #828282">
+                              自定义选取字段
+                            </div>
                           </div>
                           <div>
                             <img
@@ -97,7 +95,7 @@
                       <div>
                         <el-button type="primary" @click="addZ"
                           >添加字段</el-button
-                        ><span style="margin-left: 25px"
+                        ><span style="margin-left: 25px; color: #828282"
                           >注: 三个字段为最佳效果</span
                         >
                       </div>
@@ -111,12 +109,22 @@
                           <!-- :style="(index % 2)== 0 ? 'marginLeft:10px' : ''" -->
 
                           {{ item }}
-                          <span style="font-size: 16px" @click="close(index)"
+                          <span
+                            style="font-size: 16px; cursor: pointer"
+                            @click="close(index)"
                             >x</span
                           >
                         </span>
                         <span class="line"></span>
-                        <span class="xuanzh" @click="clear" style="width: 50px"
+                        <span
+                          class="xuanzh"
+                          @click="clear"
+                          style="
+                            width: 50px;
+                            cursor: pointer;
+                            color: #f56c6c;
+                            border: 1px solid #f56c6c;
+                          "
                           >清空</span
                         >
                       </div>
@@ -180,7 +188,9 @@
                           <!-- :style="(index % 2)== 0 ? 'marginLeft:10px' : ''" -->
 
                           {{ item }}
-                          <span style="font-size: 16px" @click="close1(index)"
+                          <span
+                            style="font-size: 16px; cursor: pointer"
+                            @click="close1(index)"
                             >x</span
                           >
                         </span>
@@ -188,7 +198,12 @@
                         <span
                           class="xuanzh"
                           @click="newList1 = []"
-                          style="width: 50px"
+                          style="
+                            width: 50px;
+                            cursor: pointer;
+                            color: #f56c6c;
+                            border: 1px solid #f56c6c;
+                          "
                           >清空</span
                         >
                       </div>
@@ -215,7 +230,7 @@
                         controls-position="right"
                         :min="0"
                       ></el-input-number>
-                      <span style="margin-left: 25px"
+                      <span style="margin-left: 25px; color: #828282"
                         >注: 10号字体大小为最佳效果</span
                       >
                     </div>
@@ -236,7 +251,11 @@
                               :key="index"
                             />
                             <div
-                              style="color: black; margin-top: 5px"
+                              style="
+                                color: black;
+                                margin-top: 5px;
+                                color: #828282;
+                              "
                               v-if="item != 'logo'"
                               v-for="(item, index) in newList"
                               :key="index"
@@ -517,8 +536,18 @@ export default {
 .homeMain {
   background-color: white;
 }
+.main_toptitle {
+  margin-top: 20px;
+  padding-left: 20px;
+  background-color: #e8f4ff;
+  color: #419bf9;
+  border: 1px solid #c4e0ff;
+  text-align: left;
+  line-height: 50px;
+}
 .center {
-  padding: 20px 300px;
+  padding: 20px;
+  text-align: left;
   .centerItem {
     display: flex;
     justify-content: center;
@@ -563,6 +592,13 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+    .left {
+      img {
+        width: 110px;
+        height: 40px;
+        margin-bottom: 0px;
+      }
+    }
     .right {
       width: 50px;
       height: 20px;
@@ -576,21 +612,25 @@ export default {
     width: 100%;
   }
   .xuanzh {
+    border-radius: 5px;
     margin-top: 10px;
     // width: 16%;
-    font-size: 12px;
-    padding: 2px 8px;
-    border: 1px solid #999;
+    font-size: 13px;
+    padding: 0px 10px;
+    line-height: 26px;
+    border: 1px solid #a3a3a3;
     display: inline-block;
     margin-left: 10px;
     text-align: center;
+    color: #a3a3a3;
   }
   .line {
+    color: #a3a3a3;
     width: 1px;
-    margin: 0 20px;
-    height: 15px;
+    margin: 0 25px;
+    height: 10px;
     display: inline-block;
-    background-color: #999;
+    background-color: #797979;
   }
 }
 </style>

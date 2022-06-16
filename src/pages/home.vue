@@ -34,12 +34,11 @@
               <ul>
                 <li>
                   <div class="noticeBox" style="width: 24px; height: 24px">
-                    <img
+                    <!-- <img
                       src="../assets/images/notice.png"
                       alt=""
                       @click="viewMore"
-                    />
-                    <!-- <span>*</span> -->
+                    /> -->
                   </div>
                 </li>
               </ul>
@@ -48,6 +47,7 @@
               <img :src="Image" v-if="Image" />
               <img src="../assets/menu/YH.png" v-else />
               <div
+                @click="gophone"
                 style="white-space: nowrap; margin-left: 20px; overflow: hidden"
               >
                 {{ uname }}
@@ -296,15 +296,17 @@ export default {
     },
     gophone() {
       let newP = window.location.protocol;
-      if (
-        this.$store.state.userInfo.uid == "1955162522782338" ||
-        this.$store.state.userInfo.uid == "1743511105903146" ||
-        this.$store.state.userInfo.uid == "195516252224279904" ||
-        this.$store.state.userInfo.uid == "manager9288"
-      ) {
+      const newData = [
+        "612812294724352370",
+        "1955162522782338",
+        "1743511105903146",
+        "195516252224279904",
+        "manager9288",
+      ];
+      if (newData.includes(this.$store.state.userInfo.uid)) {
         if (newP == "http:") {
           window.location.href =
-            "http://glzhukuai.zzdingyun.comapp/mobile/index.html";
+            "http://zkpd.zzdingyun.com/app/erpmobile/index.html";
         } else {
           window.location.href =
             "https://dingzhukuai.zzdingyun.com/app/mobile/index.html";
@@ -417,7 +419,7 @@ export default {
             that.getLogo();
             // sessionStorage.setItem("errcode", 1);
             let userData = JSON.parse(JSON.stringify(res.data.data.content));
-
+            that.uname = "本地测试";
             that.$store.commit("setUname", userData.name);
             that.$store.commit("setCname", userData.company);
             that.$store.commit("setAvatar", that.Image);
@@ -623,11 +625,17 @@ export default {
     // _this.getallrouter();
     if (process.env.VUE_APP_AUTH_CODE == 666) {
       console.log("测试1环境");
-      _this.$message(`测试1环境`);
-      //   _this.$store.commit("setCid", "dingea47c602975497f935c2f4657eb6378f");
-      //   _this.login();
 
-      _this.getReady();
+      const hostname = ["localhost", "192.168.31.252"];
+      if (hostname.includes(location.hostname)) {
+        _this.$message(`本地测试环境`);
+        _this.$store.commit("setCid", "dingea47c602975497f935c2f4657eb6378f");
+        _this.login();
+      } else {
+        _this.$message(`服务器测试环境`);
+
+        _this.getReady();
+      }
     } else {
       _this.getReady();
     }

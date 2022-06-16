@@ -223,7 +223,7 @@
                 {{ item.name }}
               </div>
               <div class="apps" style="padding: 0px">
-                <div v-for="(list, lindex) in item.itemlist" :key="lindex">
+                <div v-for="(list, lindex) in item.children" :key="lindex">
                   <div class="useIcon" @click="addNow(list, lindex)">
                     <i class="el-icon-circle-plus"></i>
                   </div>
@@ -454,7 +454,7 @@ export default {
     },
     getUseList() {
       this.$axios
-        .post("/mobile/commonlyTypeList", { type: 1 })
+        .post("/erp_check/changyongphoneroles", { type: 1 })
         .then((res) => {
           if (res.data.code == 1) {
             this.useTypeList = res.data.data;
@@ -472,7 +472,7 @@ export default {
     },
     getAllList() {
       this.$axios
-        .post("/mobile/commonlyTypeAllList", { type: 1 })
+        .post("/erp_check/phoneroles", { type: 1 })
         .then((res) => {
           if (res.data.code == 1) {
             this.allTypeList = res.data.data;
@@ -521,6 +521,7 @@ export default {
     },
     addNow(list) {
       if (this.isUse) {
+          
         if (list.isselected == 0) {
           this.$axios
             .post("/mobile/commonlyTypeAdd", { cid: list.id })
@@ -687,6 +688,7 @@ export default {
       width: 280px;
       height: 120px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
       .text {
         margin-left: 40px;
@@ -856,8 +858,9 @@ export default {
     border-radius: 10px;
     display: flex;
     flex-direction: row;
+    align-items: center;
     .img {
-      margin-top: 19px;
+    //   margin-top: 19px;
       margin-left: 30px;
       width: 52px;
       height: 52px;
@@ -879,7 +882,7 @@ export default {
   .useIcon {
     position: relative;
     margin-top: -10px;
-    margin-left: 240px;
+    margin-left: 220px;
     i {
       font-size: 20px;
       color: #b9bdc1 !important;

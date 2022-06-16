@@ -26,7 +26,7 @@
                   v-for="(item, index) in zhekList"
                   :key="index"
                   style="
-                    border: 1px solid #999;
+                    border: 1px solid #eeeff4;
                     padding-bottom: 30px;
                     margin-top: 10px;
                   "
@@ -36,7 +36,7 @@
                       display: flex;
                       justify-content: space-between;
                       align-items: center;
-                      background-color: #d8e0e6;
+                      background-color: #f8f9fb;
                       padding: 10px;
                     "
                   >
@@ -49,27 +49,51 @@
                         style="margin-right: 10px"
                         >修改</el-button
                       >
-                      <el-popconfirm
-                        title="确定删除吗？"
-                        @confirm="deleteFiles(item)"
+
+                      <el-button
+                        type="primary"
+                        @click="deleteFiles(item)"
+                        slot="reference"
+                        size="medium"
+                        >删除</el-button
                       >
-                        <el-button type="primary" slot="reference" size="medium"
-                          >删除</el-button
-                        >
-                      </el-popconfirm>
                     </div>
                   </div>
-                  <div style="margin-top: 30px">
-                    <div style="text-align: left; margin-left: 20px">
+                  <div style="margin-top: 30px; color: #666666">
+                    <div
+                      style="
+                        text-align: left;
+                        margin-left: 20px;
+                        line-height: 34px;
+                      "
+                    >
                       折旧方式:{{ item.deprecitiontype }}
                     </div>
-                    <div style="text-align: left; margin-left: 20px">
+                    <div
+                      style="
+                        text-align: left;
+                        margin-left: 20px;
+                        line-height: 34px;
+                      "
+                    >
                       首次折旧时间:{{ item.deprecitiontime }}
                     </div>
-                    <div style="text-align: left; margin-left: 20px">
+                    <div
+                      style="
+                        text-align: left;
+                        margin-left: 20px;
+                        line-height: 34px;
+                      "
+                    >
                       预计残值率:{{ item.deprecitionnumber }}
                     </div>
-                    <div style="text-align: left; margin-left: 20px">
+                    <div
+                      style="
+                        text-align: left;
+                        margin-left: 20px;
+                        line-height: 34px;
+                      "
+                    >
                       适用分类:{{ item.typename }}
                     </div>
                   </div>
@@ -89,7 +113,7 @@
         @close="editCancel('AddUserForm')"
         class="phDialog"
       >
-        <div class="phdMain">
+        <div class="phdMain" style="height: inherit">
           <el-form
             @submit.native.prevent
             :model="info"
@@ -151,12 +175,19 @@
 
               <el-form-item
                 label="适用分类:"
-                class="dbasicList upOrg"
+                class="dRemarkList"
                 prop="deprecitioncontent"
               >
                 <el-button @click="selectAddCorp" plain style="width: 100%">
-                  <div style="display: flex">
-                    <div style="width: 145px; display: flex; flex-wrap: wrap">
+                  <div style="display: flex; width: 100%">
+                    <div
+                      style="
+                        width: 145px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        width: 100%;
+                      "
+                    >
                       <div
                         v-for="(item, index) in info.deprecitioncontentName"
                         style="margin: 5px 0 0 10px"
@@ -183,6 +214,14 @@
                       >
                       </el-tree>
                     </div>
+                  </div>
+                  <div style="text-align: center">
+                    <el-button
+                      size="mini"
+                      type="primary"
+                      @click="newAddView = false"
+                      >确 定</el-button
+                    >
                   </div>
                 </div>
               </el-form-item>
@@ -1127,22 +1166,35 @@ export default {
       }
     },
     deleteFiles(index) {
-      this.$axios
-        .post("/erp_check/extendcontendelete", {
-          id: index.id,
-        })
-        .then((res) => {
-          if (res.data.code == 1) {
-            this.getList();
-            this.$message({
-              message: res.data.msg,
-              type: "",
-              duration: 1500,
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$axios
+            .post("/erp_check/extendcontendelete", {
+              id: index.id,
+            })
+            .then((res) => {
+              if (res.data.code == 1) {
+                this.getList();
+                this.$message({
+                  message: res.data.msg,
+                  type: "success",
+                  duration: 1500,
+                });
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
             });
-          }
         })
-        .catch(function (error) {
-          console.log(error);
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
         });
     },
     //关闭覆盖层
